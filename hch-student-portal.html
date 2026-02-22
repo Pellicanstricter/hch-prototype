@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <title>HCH Student Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-deep: #1a2e1e;
+      --green-mid: #2d4a32;
+      --green-light: #4a7a52;
+      --cream: #f5f0e8;
+      --cream-dark: #ede5d4;
+      --gold: #c9a84c;
+      --gold-light: #e2c97a;
+      --text-dark: #1a2e1e;
+      --text-mid: #4a4a42;
+      --text-light: #8a8a7a;
+      --sidebar-width: 240px;
+    }
+
+    html, body {
+      font-family: 'Jost', sans-serif;
+      background: #f0ece4;
+      color: var(--text-dark);
+      min-height: 100%;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    .app { display: flex; min-height: 100vh; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--green-deep);
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 50;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      padding: 2rem 1.5rem 1.5rem;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .sidebar-logo-main {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--cream);
+      display: block;
+    }
+
+    .sidebar-logo-sub {
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-top: 0.2rem;
+    }
+
+    .sidebar-badge {
+      display: inline-block;
+      background: rgba(201,168,76,0.15);
+      color: var(--gold-light);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      margin-top: 0.6rem;
+      text-transform: uppercase;
+    }
+
+    .sidebar-nav { flex: 1; padding: 1.5rem 0; }
+
+    .nav-section { margin-bottom: 2rem; }
+
+    .nav-section-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.3);
+      padding: 0 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 1.5rem;
+      color: rgba(245,240,232,0.55);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-left: 2px solid transparent;
+      text-decoration: none;
+    }
+
+    .nav-item:hover { color: var(--cream); background: rgba(255,255,255,0.04); }
+    .nav-item.active { color: var(--cream); border-left-color: var(--gold); background: rgba(201,168,76,0.08); }
+    .nav-item svg { opacity: 0.7; flex-shrink: 0; }
+    .nav-item.active svg { opacity: 1; }
+
+    .sidebar-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .user-pill { display: flex; align-items: center; gap: 0.75rem; }
+
+    .user-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--green-mid);
+      border: 1px solid rgba(201,168,76,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      color: var(--gold-light);
+      flex-shrink: 0;
+    }
+
+    .user-name { font-size: 0.78rem; color: var(--cream); }
+    .user-role { font-size: 0.62rem; color: rgba(245,240,232,0.4); }
+
+    /* ── MAIN ── */
+    .main { margin-left: var(--sidebar-width); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+
+    .topbar {
+      background: white;
+      border-bottom: 1px solid rgba(26,46,30,0.08);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .topbar-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--green-deep);
+    }
+
+    .topbar-right { display: flex; align-items: center; gap: 1rem; }
+
+    .topbar-btn {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border-radius: 3px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-gold { background: var(--gold); color: var(--green-deep); }
+    .btn-gold:hover { background: var(--gold-light); }
+    .btn-outline { background: white; color: var(--text-mid); border: 1px solid rgba(26,46,30,0.15); }
+    .btn-outline:hover { border-color: var(--green-mid); color: var(--green-deep); }
+
+    .content { padding: 2rem; flex: 1; }
+
+    /* ── PANELS ── */
+    .panel {
+      background: white;
+      border-radius: 4px;
+      border: 1px solid rgba(26,46,30,0.06);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid rgba(26,46,30,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .panel-title { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em; color: var(--text-dark); }
+    .panel-action { font-size: 0.7rem; color: var(--gold); cursor: pointer; border: none; background: none; font-family: 'Jost', sans-serif; letter-spacing: 0.05em; }
+    .panel-action:hover { color: var(--green-deep); }
+
+    /* ── GRIDS ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+    .grid-3-2 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+
+    /* ── WELCOME BANNER ── */
+    .welcome-banner {
+      background: var(--green-deep);
+      border-radius: 4px;
+      padding: 2rem 2.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-banner::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.06);
+    }
+
+    .welcome-eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .welcome-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+
+    .welcome-sub { font-size: 0.8rem; color: rgba(245,240,232,0.5); }
+
+    .welcome-cta {
+      background: var(--gold);
+      color: var(--green-deep);
+      padding: 0.6rem 1.4rem;
+      border-radius: 3px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      font-family: 'Jost', sans-serif;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── COURSE CARDS ── */
+    .course-card {
+      background: white;
+      border-radius: 4px;
+      border: 1px solid rgba(26,46,30,0.06);
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+
+    .course-card:hover { box-shadow: 0 4px 20px rgba(26,46,30,0.1); }
+
+    .course-card-thumb {
+      height: 120px;
+      background: var(--green-mid);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .course-card-thumb.yr1 { background: linear-gradient(135deg, #1a2e1e 0%, #2d4a32 100%); }
+    .course-card-thumb.yr2 { background: linear-gradient(135deg, #2d4a32 0%, #4a7a52 100%); }
+    .course-card-thumb.cert { background: linear-gradient(135deg, #3a2a10 0%, #c9a84c 100%); }
+
+    .thumb-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.15);
+      position: absolute;
+      bottom: 0.5rem;
+      right: 1rem;
+    }
+
+    .thumb-icon {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .course-card-body { padding: 1.25rem; }
+
+    .course-tag {
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .course-card-name {
+      font-size: 0.88rem;
+      color: var(--text-dark);
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .progress-bar-wrap {
+      background: rgba(26,46,30,0.08);
+      border-radius: 2px;
+      height: 3px;
+      margin-bottom: 0.4rem;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: var(--gold);
+    }
+
+    .progress-label { font-size: 0.62rem; color: var(--text-light); }
+
+    .course-card-footer {
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid rgba(26,46,30,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .continue-btn {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+    }
+
+    .continue-btn:hover { color: var(--green-deep); }
+
+    .module-badge {
+      font-size: 0.6rem;
+      color: var(--text-light);
+    }
+
+    /* ── VIDEO PLAYER ── */
+    .video-section { margin-bottom: 1.5rem; }
+
+    .video-player-wrap {
+      background: #0a0a0a;
+      border-radius: 4px 4px 0 0;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .video-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0d1a0f 0%, #1a2e1e 100%);
+      opacity: 0.9;
+    }
+
+    .play-btn {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.9);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      z-index: 1;
+      transition: transform 0.2s, background 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .play-btn:hover { transform: scale(1.08); background: var(--gold); }
+
+    .video-meta-bar {
+      background: var(--green-deep);
+      padding: 0.85rem 1.25rem;
+      border-radius: 0 0 4px 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .video-title {
+      font-size: 0.82rem;
+      color: var(--cream);
+      font-weight: 400;
+    }
+
+    .video-duration {
+      font-size: 0.68rem;
+      color: rgba(245,240,232,0.45);
+    }
+
+    /* ── MODULE LIST ── */
+    .module-section { }
+
+    .module-group { margin-bottom: 0.25rem; }
+
+    .module-group-header {
+      padding: 0.85rem 1.5rem;
+      background: #fafaf8;
+      border-bottom: 1px solid rgba(26,46,30,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .module-group-title {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-dark);
+    }
+
+    .module-group-meta { font-size: 0.65rem; color: var(--text-light); }
+
+    .module-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.8rem 1.5rem;
+      border-bottom: 1px solid rgba(26,46,30,0.04);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .module-item:hover { background: #fafaf8; }
+    .module-item:last-child { border-bottom: none; }
+    .module-item.active { background: rgba(201,168,76,0.05); border-left: 2px solid var(--gold); }
+
+    .module-status {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    .status-done { background: rgba(74,138,74,0.15); color: #4a8a4a; }
+    .status-current { background: var(--gold); color: var(--green-deep); }
+    .status-locked { background: rgba(26,46,30,0.08); color: var(--text-light); }
+
+    .module-item-info { flex: 1; }
+    .module-item-name { font-size: 0.78rem; color: var(--text-dark); }
+    .module-item-meta { font-size: 0.62rem; color: var(--text-light); margin-top: 0.1rem; }
+    .module-item-duration { font-size: 0.65rem; color: var(--text-light); }
+
+    /* ── MATERIALS ── */
+    .material-row {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.85rem 1.5rem;
+      border-bottom: 1px solid rgba(26,46,30,0.04);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .material-row:hover { background: #fafaf8; }
+    .material-row:last-child { border-bottom: none; }
+
+    .material-icon {
+      width: 32px; height: 32px;
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .mat-pdf { background: rgba(192,57,43,0.1); color: #c0392b; }
+    .mat-audio { background: rgba(74,122,82,0.1); color: var(--green-light); }
+    .mat-video { background: rgba(41,128,185,0.1); color: #2980b9; }
+    .mat-link { background: rgba(201,168,76,0.1); color: var(--gold); }
+
+    .material-info { flex: 1; }
+    .material-name { font-size: 0.78rem; color: var(--text-dark); }
+    .material-meta { font-size: 0.62rem; color: var(--text-light); margin-top: 0.1rem; }
+
+    .download-btn {
+      font-size: 0.62rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      border: 1px solid rgba(26,46,30,0.12);
+      background: white;
+      color: var(--text-mid);
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+    }
+
+    .download-btn:hover { border-color: var(--green-mid); color: var(--green-deep); }
+
+    /* ── SESSIONS ── */
+    .session-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(26,46,30,0.04);
+    }
+
+    .session-row:last-child { border-bottom: none; }
+
+    .session-date {
+      text-align: center;
+      min-width: 44px;
+    }
+
+    .session-day {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .session-month { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); }
+
+    .session-divider { width: 1px; height: 36px; background: rgba(26,46,30,0.08); }
+
+    .session-info { flex: 1; }
+    .session-title { font-size: 0.8rem; color: var(--text-dark); font-weight: 400; }
+    .session-meta { font-size: 0.65rem; color: var(--text-light); margin-top: 0.15rem; }
+
+    .join-btn {
+      background: var(--gold);
+      color: var(--green-deep);
+      padding: 0.35rem 0.85rem;
+      border-radius: 3px;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      white-space: nowrap;
+    }
+
+    .join-btn.upcoming { background: rgba(26,46,30,0.06); color: var(--text-mid); }
+
+    /* ── ACCOUNT ── */
+    .account-avatar-section {
+      padding: 2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      border-bottom: 1px solid rgba(26,46,30,0.06);
+    }
+
+    .big-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--green-mid);
+      border: 2px solid rgba(201,168,76,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--gold-light);
+      flex-shrink: 0;
+    }
+
+    .account-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--green-deep);
+    }
+
+    .account-since { font-size: 0.7rem; color: var(--text-light); margin-top: 0.2rem; }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.5rem;
+      border-bottom: 1px solid rgba(26,46,30,0.04);
+    }
+
+    .setting-row:last-child { border-bottom: none; }
+
+    .setting-label { font-size: 0.78rem; color: var(--text-dark); }
+    .setting-desc { font-size: 0.65rem; color: var(--text-light); margin-top: 0.1rem; }
+
+    .setting-input {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      padding: 0.35rem 0.6rem;
+      border: 1px solid rgba(26,46,30,0.15);
+      border-radius: 3px;
+      color: var(--text-dark);
+      background: white;
+      outline: none;
+      width: 200px;
+    }
+
+    .setting-input:focus { border-color: var(--green-mid); }
+
+    /* ── BILLING ── */
+    .invoice-row {
+      display: flex;
+      align-items: center;
+      padding: 0.85rem 1.5rem;
+      border-bottom: 1px solid rgba(26,46,30,0.04);
+      gap: 1rem;
+    }
+
+    .invoice-row:last-child { border-bottom: none; }
+
+    .invoice-num { font-size: 0.75rem; color: var(--text-light); min-width: 70px; }
+    .invoice-desc { flex: 1; font-size: 0.78rem; color: var(--text-dark); }
+    .invoice-date { font-size: 0.7rem; color: var(--text-light); }
+    .invoice-amount { font-size: 0.82rem; color: var(--text-dark); font-weight: 400; min-width: 70px; text-align: right; }
+
+    .status-pill {
+      display: inline-block;
+      font-size: 0.6rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 10px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    .status-paid { background: rgba(74,138,74,0.12); color: #4a8a4a; }
+    .status-pending { background: rgba(201,168,76,0.12); color: var(--gold); }
+
+    /* ── STAT STRIP ── */
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-mini {
+      background: white;
+      border-radius: 4px;
+      border: 1px solid rgba(26,46,30,0.06);
+      padding: 1.25rem;
+      border-top: 2px solid rgba(201,168,76,0.3);
+    }
+
+    .stat-mini-label { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-light); margin-bottom: 0.5rem; }
+    .stat-mini-value { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--green-deep); line-height: 1; }
+    .stat-mini-sub { font-size: 0.65rem; color: var(--text-light); margin-top: 0.25rem; }
+
+    /* ── MOBILE ── */
+    .mobile-topbar {
+      display: none;
+      background: var(--green-deep);
+      padding: 1rem 1.25rem;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 60;
+    }
+
+    .mobile-logo { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--cream); }
+
+    .hamburger-dash {
+      display: flex; flex-direction: column; gap: 4px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+
+    .hamburger-dash span { display: block; width: 20px; height: 1.5px; background: var(--cream); }
+
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .mobile-topbar { display: flex; }
+      .topbar { display: none; }
+      .grid-2, .grid-3, .grid-3-2 { grid-template-columns: 1fr; }
+      .stat-strip { grid-template-columns: 1fr 1fr 1fr; }
+      .content { padding: 1.25rem; }
+      .welcome-banner { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .video-player-wrap { aspect-ratio: 16/9; }
+    }
+
+    @media (max-width: 500px) {
+      .stat-strip { grid-template-columns: 1fr; }
+      .setting-input { width: 140px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- MOBILE TOPBAR -->
+<div class="mobile-topbar">
+  <span class="mobile-logo">Student Portal</span>
+  <button class="hamburger-dash" onclick="toggleSidebar()">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+
+<div id="sidebarOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:49;" onclick="toggleSidebar()"></div>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="sidebar-logo-main">Hahnemann Center</span>
+      <span class="sidebar-logo-sub">Heilkunst & Homeopathy</span>
+      <span class="sidebar-badge">Student Portal</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-label">Learning</div>
+        <a class="nav-item active" onclick="showSection('home', this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a class="nav-item" onclick="showSection('courses', this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          My Courses
+        </a>
+        <a class="nav-item" onclick="showSection('watch', this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          Watch Lectures
+        </a>
+        <a class="nav-item" onclick="showSection('materials', this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Materials
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-label">Connect</div>
+        <a class="nav-item" onclick="showSection('sessions', this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Sessions & Zoom
+        </a>
+        <a class="nav-item" onclick="showSection('moodle', this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Moodle LMS
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-label">Account</div>
+        <a class="nav-item" onclick="showSection('account', this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Account
+        </a>
+        <a class="nav-item" onclick="showSection('billing', this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Billing
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-pill">
+        <div class="user-avatar">S</div>
+        <div>
+          <div class="user-name">Sarah Mitchell</div>
+          <div class="user-role">Year 1 Student</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <div class="topbar">
+      <div class="topbar-title" id="pageTitle">Student Dashboard</div>
+      <div class="topbar-right">
+        <button class="topbar-btn btn-outline" onclick="showSection('sessions', null)">Upcoming Sessions</button>
+        <button class="topbar-btn btn-gold" onclick="showSection('watch', null)">Continue Learning →</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ── HOME ── -->
+      <div id="section-home" class="section">
+
+        <div class="welcome-banner">
+          <div>
+            <div class="welcome-eyebrow">Welcome back</div>
+            <div class="welcome-title">Good evening, Sarah</div>
+            <div class="welcome-sub">Continue where you left off — Module 3, Lecture 8</div>
+          </div>
+          <button class="welcome-cta" onclick="showSection('watch', null)">Continue Learning →</button>
+        </div>
+
+        <div class="stat-strip">
+          <div class="stat-mini">
+            <div class="stat-mini-label">Lectures Watched</div>
+            <div class="stat-mini-value">18</div>
+            <div class="stat-mini-sub">of 42 total</div>
+          </div>
+          <div class="stat-mini">
+            <div class="stat-mini-label">Hours Studied</div>
+            <div class="stat-mini-value">34</div>
+            <div class="stat-mini-sub">this month</div>
+          </div>
+          <div class="stat-mini">
+            <div class="stat-mini-label">Course Progress</div>
+            <div class="stat-mini-value">43%</div>
+            <div class="stat-mini-sub">Year 1 Foundations</div>
+          </div>
+        </div>
+
+        <div class="grid-3-2">
+
+          <!-- Current Course -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Continue Learning</div>
+              <button class="panel-action" onclick="showSection('courses', null)">All courses →</button>
+            </div>
+
+            <!-- Mini video player -->
+            <div class="video-player-wrap" style="border-radius:0;aspect-ratio:16/7;" onclick="showSection('watch', null)">
+              <div class="video-bg"></div>
+              <button class="play-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#1a2e1e"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </button>
+              <div style="position:absolute;bottom:1rem;left:1.25rem;z-index:1;">
+                <div style="font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:0.25rem;">Now Playing</div>
+                <div style="font-size:0.85rem;color:var(--cream);font-weight:400;">Lecture 8 — The Vital Force</div>
+                <div style="font-size:0.65rem;color:rgba(245,240,232,0.45);">Module 3 · 72 min · 18:34 remaining</div>
+              </div>
+            </div>
+
+            <!-- Module list preview -->
+            <div class="module-item active">
+              <div class="module-status status-current">▶</div>
+              <div class="module-item-info">
+                <div class="module-item-name">Lecture 8 — The Vital Force</div>
+                <div class="module-item-meta">Module 3 · In progress</div>
+              </div>
+              <div class="module-item-duration">72 min</div>
+            </div>
+            <div class="module-item">
+              <div class="module-status status-locked">🔒</div>
+              <div class="module-item-info">
+                <div class="module-item-name">Lecture 9 — Miasms & Disease</div>
+                <div class="module-item-meta">Module 3 · Not started</div>
+              </div>
+              <div class="module-item-duration">65 min</div>
+            </div>
+            <div class="module-item">
+              <div class="module-status status-locked">🔒</div>
+              <div class="module-item-info">
+                <div class="module-item-name">Lecture 10 — Case Taking</div>
+                <div class="module-item-meta">Module 3 · Not started</div>
+              </div>
+              <div class="module-item-duration">88 min</div>
+            </div>
+          </div>
+
+          <!-- Right column -->
+          <div style="display:flex;flex-direction:column;gap:1.5rem;">
+
+            <!-- Upcoming session -->
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Next Session</div>
+                <button class="panel-action" onclick="showSection('sessions', null)">All →</button>
+              </div>
+              <div class="session-row">
+                <div class="session-date">
+                  <div class="session-day">26</div>
+                  <div class="session-month">Feb</div>
+                </div>
+                <div class="session-divider"></div>
+                <div class="session-info">
+                  <div class="session-title">Live Q&A — Module 3</div>
+                  <div class="session-meta">with CoCo Verspoor · 2:00 PM EST · 60 min</div>
+                </div>
+                <button class="join-btn upcoming">In 4 days</button>
+              </div>
+            </div>
+
+            <!-- Progress -->
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Your Progress</div>
+              </div>
+              <div style="padding:1.25rem 1.5rem;">
+                <div style="margin-bottom:1rem;">
+                  <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;">
+                    <span style="font-size:0.72rem;color:var(--text-dark);">Year 1 — Foundations</span>
+                    <span style="font-size:0.7rem;color:var(--gold);">43%</span>
+                  </div>
+                  <div class="progress-bar-wrap">
+                    <div class="progress-bar-fill" style="width:43%"></div>
+                  </div>
+                  <div style="font-size:0.62rem;color:var(--text-light);margin-top:0.3rem;">Module 3 of 12 · 18 of 42 lectures</div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;">
+                    <span style="font-size:0.72rem;color:var(--text-dark);">Module 3 — Vital Force</span>
+                    <span style="font-size:0.7rem;color:var(--gold);">67%</span>
+                  </div>
+                  <div class="progress-bar-wrap">
+                    <div class="progress-bar-fill" style="width:67%"></div>
+                  </div>
+                  <div style="font-size:0.62rem;color:var(--text-light);margin-top:0.3rem;">Lecture 8 of 12 in this module</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent materials -->
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">New Materials</div>
+                <button class="panel-action" onclick="showSection('materials', null)">All →</button>
+              </div>
+              <div class="material-row">
+                <div class="material-icon mat-pdf">PDF</div>
+                <div class="material-info">
+                  <div class="material-name">Module 3 Workbook</div>
+                  <div class="material-meta">Added this week</div>
+                </div>
+                <button class="download-btn">Open</button>
+              </div>
+              <div class="material-row">
+                <div class="material-icon mat-audio">MP3</div>
+                <div class="material-info">
+                  <div class="material-name">Guided Meditation — Healing</div>
+                  <div class="material-meta">Added last week</div>
+                </div>
+                <button class="download-btn">Play</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MY COURSES ── -->
+      <div id="section-courses" class="section" style="display:none;">
+        <div class="grid-3">
+          <div class="course-card" onclick="showSection('watch', null)">
+            <div class="course-card-thumb yr1">
+              <div class="thumb-label">Y1</div>
+              <div class="thumb-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(245,240,232,0.6)" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+            </div>
+            <div class="course-card-body">
+              <div class="course-tag">Hahnemann College · Active</div>
+              <div class="course-card-name">Year 1 — Foundations of Heilkunst</div>
+              <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:43%"></div></div>
+              <div class="progress-label">43% complete · Module 3 of 12</div>
+            </div>
+            <div class="course-card-footer">
+              <button class="continue-btn">Continue →</button>
+              <span class="module-badge">18 / 42 lectures</span>
+            </div>
+          </div>
+
+          <div class="course-card" style="opacity:0.6;pointer-events:none;">
+            <div class="course-card-thumb yr2">
+              <div class="thumb-label">Y2</div>
+              <div class="thumb-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(245,240,232,0.4)" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+            </div>
+            <div class="course-card-body">
+              <div class="course-tag">Hahnemann College · Locked</div>
+              <div class="course-card-name">Year 2 — Clinical Application</div>
+              <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div>
+              <div class="progress-label">Complete Year 1 to unlock</div>
+            </div>
+            <div class="course-card-footer">
+              <button class="continue-btn" style="color:var(--text-light)">Locked 🔒</button>
+              <span class="module-badge">0 / 38 lectures</span>
+            </div>
+          </div>
+
+          <div class="course-card">
+            <div class="course-card-thumb cert">
+              <div class="thumb-label">FREE</div>
+              <div class="thumb-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(245,240,232,0.6)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+              </div>
+            </div>
+            <div class="course-card-body">
+              <div class="course-tag">Free Course · Public</div>
+              <div class="course-card-name">Homeopathy at Home, Work & Play</div>
+              <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:100%"></div></div>
+              <div class="progress-label">Completed ✓</div>
+            </div>
+            <div class="course-card-footer">
+              <button class="continue-btn">Review</button>
+              <span class="module-badge">3 / 3 modules</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── WATCH ── -->
+      <div id="section-watch" class="section" style="display:none;">
+        <div class="grid-3-2">
+          <div>
+            <div class="video-section">
+              <div class="video-player-wrap">
+                <div class="video-bg"></div>
+                <button class="play-btn">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="#1a2e1e"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </button>
+                <div style="position:absolute;bottom:1.25rem;left:1.5rem;z-index:1;">
+                  <div style="font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;">Module 3 · Lecture 8</div>
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--cream);font-weight:300;">The Vital Force</div>
+                </div>
+                <div style="position:absolute;bottom:1.25rem;right:1.5rem;z-index:1;font-size:0.68rem;color:rgba(245,240,232,0.45);">72:00</div>
+              </div>
+              <div class="video-meta-bar">
+                <div>
+                  <div class="video-title">Lecture 8 — The Vital Force in Heilkunst</div>
+                  <div class="video-duration">Year 1 · Module 3 · 72 min · Streamed from Dropbox</div>
+                </div>
+                <button class="download-btn" style="color:var(--gold);border-color:rgba(201,168,76,0.3);">Notes ↓</button>
+              </div>
+            </div>
+
+            <!-- Progress bar -->
+            <div style="background:white;border-radius:4px;border:1px solid rgba(26,46,30,0.06);padding:1rem 1.5rem;margin-bottom:1rem;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;">
+                <span style="font-size:0.7rem;color:var(--text-light);">Progress in this lecture</span>
+                <span style="font-size:0.7rem;color:var(--gold);">18:34 / 72:00</span>
+              </div>
+              <div class="progress-bar-wrap" style="height:5px;border-radius:3px;">
+                <div class="progress-bar-fill" style="width:26%;border-radius:3px;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module sidebar -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Module 3 — Vital Force</div>
+              <span style="font-size:0.65rem;color:var(--text-light);">8 of 12</span>
+            </div>
+            <div class="module-group">
+              <div class="module-group-header">
+                <div class="module-group-title">Completed</div>
+                <div class="module-group-meta">7 lectures</div>
+              </div>
+              <div class="module-item">
+                <div class="module-status status-done">✓</div>
+                <div class="module-item-info">
+                  <div class="module-item-name">Lecture 1 — Introduction</div>
+                </div>
+                <div class="module-item-duration">45 min</div>
+              </div>
+              <div class="module-item">
+                <div class="module-status status-done">✓</div>
+                <div class="module-item-info">
+                  <div class="module-item-name">Lecture 2 — Hahnemann's Method</div>
+                </div>
+                <div class="module-item-duration">52 min</div>
+              </div>
+              <div class="module-item">
+                <div class="module-status status-done">✓</div>
+                <div class="module-item-info">
+                  <div class="module-item-name">Lecture 3 — Organon Overview</div>
+                </div>
+                <div class="module-item-duration">68 min</div>
+              </div>
+            </div>
+            <div class="module-group">
+              <div class="module-group-header">
+                <div class="module-group-title">In Progress</div>
+              </div>
+              <div class="module-item active">
+                <div class="module-status status-current">▶</div>
+                <div class="module-item-info">
+                  <div class="module-item-name">Lecture 8 — The Vital Force</div>
+                  <div class="module-item-meta">18:34 remaining</div>
+                </div>
+                <div class="module-item-duration">72 min</div>
+              </div>
+            </div>
+            <div class="module-group">
+              <div class="module-group-header">
+                <div class="module-group-title">Up Next</div>
+                <div class="module-group-meta">4 lectures</div>
+              </div>
+              <div class="module-item">
+                <div class="module-status status-locked">🔒</div>
+                <div class="module-item-info">
+                  <div class="module-item-name">Lecture 9 — Miasms</div>
+                </div>
+                <div class="module-item-duration">65 min</div>
+              </div>
+              <div class="module-item">
+                <div class="module-status status-locked">🔒</div>
+                <div class="module-item-info">
+                  <div class="module-item-name">Lecture 10 — Case Taking</div>
+                </div>
+                <div class="module-item-duration">88 min</div>
+              </div>
+              <div class="module-item">
+                <div class="module-status status-locked">🔒</div>
+                <div class="module-item-info">
+                  <div class="module-item-name">Lecture 11 — Repertory</div>
+                </div>
+                <div class="module-item-duration">74 min</div>
+              </div>
+              <div class="module-item">
+                <div class="module-status status-locked">🔒</div>
+                <div class="module-item-info">
+                  <div class="module-item-name">Lecture 12 — Assessment</div>
+                </div>
+                <div class="module-item-duration">55 min</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MATERIALS ── -->
+      <div id="section-materials" class="section" style="display:none;">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Course Materials — Year 1</div>
+          </div>
+          <div style="padding:0.75rem 1.5rem;background:#fafaf8;border-bottom:1px solid rgba(26,46,30,0.06);">
+            <span style="font-size:0.7rem;color:var(--text-light);">Filtered by: </span>
+            <span style="font-size:0.7rem;color:var(--gold);cursor:pointer;">Module 3 ✕</span>
+          </div>
+
+          <div style="padding:0.75rem 1.5rem;background:white;border-bottom:1px solid rgba(26,46,30,0.06);">
+            <div style="font-size:0.7rem;font-weight:500;color:var(--text-dark);letter-spacing:0.05em;">Module 3 — The Vital Force</div>
+          </div>
+
+          <div class="material-row">
+            <div class="material-icon mat-pdf">PDF</div>
+            <div class="material-info">
+              <div class="material-name">Module 3 Workbook — The Vital Force</div>
+              <div class="material-meta">52 pages · 4.2 MB · Added Feb 1</div>
+            </div>
+            <button class="download-btn">Open</button>
+          </div>
+          <div class="material-row">
+            <div class="material-icon mat-pdf">PDF</div>
+            <div class="material-info">
+              <div class="material-name">Organon of Medicine §1–§15 (Hahnemann)</div>
+              <div class="material-meta">28 pages · Required reading for Lecture 3</div>
+            </div>
+            <button class="download-btn">Open</button>
+          </div>
+          <div class="material-row">
+            <div class="material-icon mat-audio">MP3</div>
+            <div class="material-info">
+              <div class="material-name">Guided Meditation — Connecting with the Vital Force</div>
+              <div class="material-meta">24 min · 22 MB</div>
+            </div>
+            <button class="download-btn">Play</button>
+          </div>
+          <div class="material-row">
+            <div class="material-icon mat-link">LNK</div>
+            <div class="material-info">
+              <div class="material-name">Module 3 Discussion Forum (Moodle)</div>
+              <div class="material-meta">Opens in Moodle LMS</div>
+            </div>
+            <button class="download-btn">Open ↗</button>
+          </div>
+
+          <div style="padding:0.75rem 1.5rem;background:white;border-top:1px solid rgba(26,46,30,0.06);border-bottom:1px solid rgba(26,46,30,0.06);">
+            <div style="font-size:0.7rem;font-weight:500;color:var(--text-dark);letter-spacing:0.05em;">Module 2 — Law of Similars</div>
+          </div>
+
+          <div class="material-row">
+            <div class="material-icon mat-pdf">PDF</div>
+            <div class="material-info">
+              <div class="material-name">Module 2 Workbook</div>
+              <div class="material-meta">44 pages · Completed</div>
+            </div>
+            <button class="download-btn">Open</button>
+          </div>
+          <div class="material-row">
+            <div class="material-icon mat-audio">MP3</div>
+            <div class="material-info">
+              <div class="material-name">Q&A Session Recording — Feb 10</div>
+              <div class="material-meta">48 min · 48 MB</div>
+            </div>
+            <button class="download-btn">Play</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SESSIONS ── -->
+      <div id="section-sessions" class="section" style="display:none;">
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Upcoming Sessions</div>
+            </div>
+            <div class="session-row">
+              <div class="session-date">
+                <div class="session-day">26</div>
+                <div class="session-month">Feb</div>
+              </div>
+              <div class="session-divider"></div>
+              <div class="session-info">
+                <div class="session-title">Live Q&A — Module 3: Vital Force</div>
+                <div class="session-meta">CoCo Verspoor · 2:00–3:00 PM EST · Zoom</div>
+              </div>
+              <button class="join-btn upcoming">4 days</button>
+            </div>
+            <div class="session-row">
+              <div class="session-date">
+                <div class="session-day">8</div>
+                <div class="session-month">Mar</div>
+              </div>
+              <div class="session-divider"></div>
+              <div class="session-info">
+                <div class="session-title">Group Tutorial — Case Studies</div>
+                <div class="session-meta">Rudi Verspoor · 11:00 AM–12:30 PM EST</div>
+              </div>
+              <button class="join-btn upcoming">14 days</button>
+            </div>
+            <div class="session-row">
+              <div class="session-date">
+                <div class="session-day">15</div>
+                <div class="session-month">Mar</div>
+              </div>
+              <div class="session-divider"></div>
+              <div class="session-info">
+                <div class="session-title">On-Call Practitioner — Dosage Q's</div>
+                <div class="session-meta">CoCo Verspoor · Book a 30 min slot</div>
+              </div>
+              <button class="join-btn upcoming">Book</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Past Sessions</div>
+            </div>
+            <div class="session-row">
+              <div class="session-date">
+                <div class="session-day">10</div>
+                <div class="session-month">Feb</div>
+              </div>
+              <div class="session-divider"></div>
+              <div class="session-info">
+                <div class="session-title">Q&A — Module 2: Law of Similars</div>
+                <div class="session-meta">CoCo Verspoor · Recording available</div>
+              </div>
+              <button class="join-btn">Watch ↗</button>
+            </div>
+            <div class="session-row">
+              <div class="session-date">
+                <div class="session-day">28</div>
+                <div class="session-month">Jan</div>
+              </div>
+              <div class="session-divider"></div>
+              <div class="session-info">
+                <div class="session-title">Orientation — Year 1 Welcome</div>
+                <div class="session-meta">Both practitioners · Recording available</div>
+              </div>
+              <button class="join-btn">Watch ↗</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MOODLE ── -->
+      <div id="section-moodle" class="section" style="display:none;">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Moodle LMS — Assignments & Forums</div>
+            <button class="topbar-btn btn-gold" style="font-size:0.7rem;padding:0.4rem 0.8rem;">Open Moodle ↗</button>
+          </div>
+          <div style="padding:2rem 1.5rem;text-align:center;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--green-deep);margin-bottom:0.5rem;">learn.homeopathy.com</div>
+            <div style="font-size:0.8rem;color:var(--text-light);margin-bottom:1.5rem;">Your Moodle account is linked. Access assignments, quizzes, and discussion forums directly.</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:400px;margin:0 auto;">
+              <div style="background:rgba(248,128,0,0.06);border:1px solid rgba(248,128,0,0.15);border-radius:4px;padding:1rem;text-align:center;">
+                <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:#f88000;">2</div>
+                <div style="font-size:0.65rem;color:var(--text-light);margin-top:0.2rem;">Assignments Due</div>
+              </div>
+              <div style="background:rgba(74,122,82,0.06);border:1px solid rgba(74,122,82,0.15);border-radius:4px;padding:1rem;text-align:center;">
+                <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--green-light);">5</div>
+                <div style="font-size:0.65rem;color:var(--text-light);margin-top:0.2rem;">Forum Posts</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ACCOUNT ── -->
+      <div id="section-account" class="section" style="display:none;">
+        <div class="grid-2">
+          <div class="panel">
+            <div class="account-avatar-section">
+              <div class="big-avatar">S</div>
+              <div>
+                <div class="account-name">Sarah Mitchell</div>
+                <div class="account-since">Student since January 2026 · Year 1</div>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div><div class="setting-label">Full Name</div></div>
+              <input class="setting-input" type="text" value="Sarah Mitchell">
+            </div>
+            <div class="setting-row">
+              <div><div class="setting-label">Email</div></div>
+              <input class="setting-input" type="text" value="sarah@email.com">
+            </div>
+            <div class="setting-row">
+              <div><div class="setting-label">Time Zone</div></div>
+              <input class="setting-input" type="text" value="EST (UTC-5)">
+            </div>
+            <div class="setting-row">
+              <div><div class="setting-label">Password</div></div>
+              <button class="download-btn" style="font-size:0.7rem;padding:0.3rem 0.6rem;">Change →</button>
+            </div>
+            <div style="padding:1rem 1.5rem;border-top:1px solid rgba(26,46,30,0.06);">
+              <button class="topbar-btn btn-gold" style="font-size:0.72rem;">Save Changes</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Notifications</div>
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">New lecture available</div>
+                <div class="setting-desc">Email when new content is added to your course</div>
+              </div>
+              <div class="toggle-switch"></div>
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">Session reminders</div>
+                <div class="setting-desc">24h before live sessions</div>
+              </div>
+              <div class="toggle-switch"></div>
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">Assignment due dates</div>
+              </div>
+              <div class="toggle-switch"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── BILLING ── -->
+      <div id="section-billing" class="section" style="display:none;">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Billing & Invoices</div>
+          </div>
+          <div style="padding:1.25rem 1.5rem;background:#fafaf8;border-bottom:1px solid rgba(26,46,30,0.06);display:flex;gap:2rem;">
+            <div>
+              <div style="font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);margin-bottom:0.3rem;">Current Plan</div>
+              <div style="font-size:0.9rem;color:var(--green-deep);font-weight:400;">Year 1 Foundations — Full Access</div>
+            </div>
+            <div>
+              <div style="font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);margin-bottom:0.3rem;">Next Payment</div>
+              <div style="font-size:0.9rem;color:var(--green-deep);">Mar 1, 2026 — $280 CAD</div>
+            </div>
+          </div>
+          <table style="width:100%;border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th style="font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);font-weight:500;padding:0.75rem 1.5rem;text-align:left;background:#fafaf8;border-bottom:1px solid rgba(26,46,30,0.06);">Invoice</th>
+                <th style="font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);font-weight:500;padding:0.75rem 1.5rem;text-align:left;background:#fafaf8;border-bottom:1px solid rgba(26,46,30,0.06);">Description</th>
+                <th style="font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);font-weight:500;padding:0.75rem 1.5rem;text-align:left;background:#fafaf8;border-bottom:1px solid rgba(26,46,30,0.06);">Date</th>
+                <th style="font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);font-weight:500;padding:0.75rem 1.5rem;text-align:right;background:#fafaf8;border-bottom:1px solid rgba(26,46,30,0.06);">Amount</th>
+                <th style="font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);font-weight:500;padding:0.75rem 1.5rem;text-align:left;background:#fafaf8;border-bottom:1px solid rgba(26,46,30,0.06);">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding:0.85rem 1.5rem;font-size:0.72rem;color:var(--text-light);border-bottom:1px solid rgba(26,46,30,0.04);">#1044</td>
+                <td style="padding:0.85rem 1.5rem;font-size:0.78rem;color:var(--text-dark);border-bottom:1px solid rgba(26,46,30,0.04);">Year 1 Tuition — Feb 2026</td>
+                <td style="padding:0.85rem 1.5rem;font-size:0.72rem;color:var(--text-light);border-bottom:1px solid rgba(26,46,30,0.04);">Feb 1, 2026</td>
+                <td style="padding:0.85rem 1.5rem;font-size:0.78rem;color:var(--text-dark);text-align:right;border-bottom:1px solid rgba(26,46,30,0.04);">$280 CAD</td>
+                <td style="padding:0.85rem 1.5rem;border-bottom:1px solid rgba(26,46,30,0.04);"><span class="status-pill status-paid">Paid</span></td>
+              </tr>
+              <tr>
+                <td style="padding:0.85rem 1.5rem;font-size:0.72rem;color:var(--text-light);border-bottom:1px solid rgba(26,46,30,0.04);">#1038</td>
+                <td style="padding:0.85rem 1.5rem;font-size:0.78rem;color:var(--text-dark);border-bottom:1px solid rgba(26,46,30,0.04);">Year 1 Tuition — Jan 2026</td>
+                <td style="padding:0.85rem 1.5rem;font-size:0.72rem;color:var(--text-light);border-bottom:1px solid rgba(26,46,30,0.04);">Jan 1, 2026</td>
+                <td style="padding:0.85rem 1.5rem;font-size:0.78rem;color:var(--text-dark);text-align:right;border-bottom:1px solid rgba(26,46,30,0.04);">$280 CAD</td>
+                <td style="padding:0.85rem 1.5rem;border-bottom:1px solid rgba(26,46,30,0.04);"><span class="status-pill status-paid">Paid</span></td>
+              </tr>
+              <tr>
+                <td style="padding:0.85rem 1.5rem;font-size:0.72rem;color:var(--text-light);">#1031</td>
+                <td style="padding:0.85rem 1.5rem;font-size:0.78rem;color:var(--text-dark);">Enrollment Deposit</td>
+                <td style="padding:0.85rem 1.5rem;font-size:0.72rem;color:var(--text-light);">Dec 15, 2025</td>
+                <td style="padding:0.85rem 1.5rem;font-size:0.78rem;color:var(--text-dark);text-align:right;">$140 CAD</td>
+                <td style="padding:0.85rem 1.5rem;"><span class="status-pill status-paid">Paid</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </main>
+</div>
+
+<style>
+  .toggle-switch {
+    width: 32px; height: 18px;
+    background: #4a8a4a;
+    border-radius: 9px;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    width: 14px; height: 14px;
+    background: white;
+    border-radius: 50%;
+    top: 2px; right: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+</style>
+
+<script>
+  var sections = ['home','courses','watch','materials','sessions','moodle','account','billing'];
+  var titles = {
+    home: 'Student Dashboard',
+    courses: 'My Courses',
+    watch: 'Watch Lectures',
+    materials: 'Course Materials',
+    sessions: 'Sessions & Zoom',
+    moodle: 'Moodle LMS',
+    account: 'My Account',
+    billing: 'Billing'
+  };
+
+  function showSection(id, navEl) {
+    sections.forEach(function(s) {
+      var el = document.getElementById('section-' + s);
+      if (el) el.style.display = (s === id) ? 'block' : 'none';
+    });
+    document.querySelectorAll('.nav-item').forEach(function(item) { item.classList.remove('active'); });
+    if (navEl) navEl.classList.add('active');
+    var title = document.getElementById('pageTitle');
+    if (title) title.textContent = titles[id] || id;
+    if (window.innerWidth < 900) closeSidebar();
+  }
+
+  function toggleSidebar() {
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('sidebarOverlay');
+    var isOpen = sidebar.classList.contains('open');
+    if (isOpen) {
+      sidebar.classList.remove('open');
+      overlay.style.display = 'none';
+    } else {
+      sidebar.classList.add('open');
+      overlay.style.display = 'block';
+    }
+  }
+
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').style.display = 'none';
+  }
+</script>
+</body>
+</html>

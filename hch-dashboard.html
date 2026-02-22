@@ -1,0 +1,2326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <title>HCH Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-deep: #1a2e1e;
+      --green-mid: #2d4a32;
+      --green-light: #4a7a52;
+      --cream: #f5f0e8;
+      --cream-dark: #ede5d4;
+      --gold: #c9a84c;
+      --gold-light: #e2c97a;
+      --text-dark: #1a2e1e;
+      --text-mid: #4a4a42;
+      --text-light: #8a8a7a;
+      --sidebar-width: 240px;
+      --red: #c0392b;
+      --blue: #2980b9;
+    }
+
+    html, body {
+      font-family: 'Jost', sans-serif;
+      background: #f0ece4;
+      color: var(--text-dark);
+      height: 100%;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    /* ─── LAYOUT ─── */
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--green-deep);
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 50;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      padding: 2rem 1.5rem 1.5rem;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .sidebar-logo-main {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--cream);
+      display: block;
+    }
+
+    .sidebar-logo-sub {
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-top: 0.2rem;
+    }
+
+    .sidebar-badge {
+      display: inline-block;
+      background: rgba(201,168,76,0.15);
+      color: var(--gold-light);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      margin-top: 0.6rem;
+      text-transform: uppercase;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 1.5rem 0;
+    }
+
+    .nav-section {
+      margin-bottom: 2rem;
+    }
+
+    .nav-section-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.3);
+      padding: 0 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 1.5rem;
+      color: rgba(245,240,232,0.55);
+      font-size: 0.82rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-left: 2px solid transparent;
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      color: var(--cream);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .nav-item.active {
+      color: var(--cream);
+      border-left-color: var(--gold);
+      background: rgba(201,168,76,0.08);
+    }
+
+    .nav-item svg { opacity: 0.7; flex-shrink: 0; }
+    .nav-item.active svg { opacity: 1; }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--gold);
+      color: var(--green-deep);
+      font-size: 0.6rem;
+      font-weight: 500;
+      padding: 0.1rem 0.4rem;
+      border-radius: 10px;
+    }
+
+    .sidebar-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--green-mid);
+      border: 1px solid rgba(201,168,76,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      color: var(--gold-light);
+      flex-shrink: 0;
+    }
+
+    .user-name {
+      font-size: 0.78rem;
+      color: var(--cream);
+    }
+
+    .user-role {
+      font-size: 0.62rem;
+      color: rgba(245,240,232,0.4);
+    }
+
+    /* ─── MAIN ─── */
+    .main {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ─── TOPBAR ─── */
+    .topbar {
+      background: white;
+      border-bottom: 1px solid rgba(26,46,30,0.08);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .topbar-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--green-deep);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .topbar-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border-radius: 3px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--green-deep);
+    }
+
+    .btn-gold:hover { background: var(--gold-light); }
+
+    .btn-outline {
+      background: white;
+      color: var(--text-mid);
+      border: 1px solid rgba(26,46,30,0.15);
+    }
+
+    .btn-outline:hover { border-color: var(--green-mid); color: var(--green-deep); }
+
+    /* ─── CONTENT ─── */
+    .content {
+      padding: 2rem;
+      flex: 1;
+    }
+
+    /* ─── STAT CARDS ─── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 4px;
+      padding: 1.5rem;
+      border: 1px solid rgba(26,46,30,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      opacity: 0.4;
+    }
+
+    .stat-card.active-stat::before { opacity: 1; }
+
+    .stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 0.75rem;
+    }
+
+    .stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--green-deep);
+      line-height: 1;
+    }
+
+    .stat-change {
+      font-size: 0.68rem;
+      color: #4a8a4a;
+      margin-top: 0.4rem;
+    }
+
+    .stat-change.down { color: var(--red); }
+
+    /* ─── GRID LAYOUT ─── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .grid-3-2 {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ─── PANELS ─── */
+    .panel {
+      background: white;
+      border-radius: 4px;
+      border: 1px solid rgba(26,46,30,0.06);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid rgba(26,46,30,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .panel-title {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--text-dark);
+    }
+
+    .panel-action {
+      font-size: 0.7rem;
+      color: var(--gold);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: 'Jost', sans-serif;
+      letter-spacing: 0.05em;
+    }
+
+    .panel-action:hover { color: var(--green-deep); }
+
+    /* ─── DROPBOX BROWSER ─── */
+    .dropbox-toolbar {
+      padding: 0.75rem 1.5rem;
+      background: #fafaf8;
+      border-bottom: 1px solid rgba(26,46,30,0.06);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      color: var(--text-light);
+      flex: 1;
+    }
+
+    .breadcrumb span { cursor: pointer; }
+    .breadcrumb span:hover { color: var(--green-deep); }
+    .breadcrumb .current { color: var(--text-dark); font-weight: 500; }
+    .breadcrumb-sep { opacity: 0.3; }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: white;
+      border: 1px solid rgba(26,46,30,0.12);
+      border-radius: 3px;
+      padding: 0.35rem 0.75rem;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      color: var(--text-dark);
+      width: 140px;
+      background: transparent;
+    }
+
+    .file-list { }
+
+    .file-row {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+      border-bottom: 1px solid rgba(26,46,30,0.04);
+      gap: 0.75rem;
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+
+    .file-row:hover { background: #fafaf8; }
+    .file-row:last-child { border-bottom: none; }
+
+    .file-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .file-icon.folder { background: rgba(201,168,76,0.12); color: var(--gold); }
+    .file-icon.video { background: rgba(41,128,185,0.1); color: var(--blue); }
+    .file-icon.pdf { background: rgba(192,57,43,0.1); color: var(--red); }
+    .file-icon.audio { background: rgba(74,122,82,0.1); color: var(--green-light); }
+
+    .file-info { flex: 1; min-width: 0; }
+
+    .file-name {
+      font-size: 0.8rem;
+      color: var(--text-dark);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-meta {
+      font-size: 0.65rem;
+      color: var(--text-light);
+      margin-top: 0.15rem;
+    }
+
+    .file-actions {
+      display: flex;
+      gap: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .file-row:hover .file-actions { opacity: 1; }
+
+    .file-btn {
+      font-size: 0.62rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      border: 1px solid rgba(26,46,30,0.12);
+      background: white;
+      color: var(--text-mid);
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      transition: all 0.15s;
+    }
+
+    .file-btn:hover { border-color: var(--green-mid); color: var(--green-deep); }
+    .file-btn.assign { border-color: rgba(201,168,76,0.3); color: var(--gold); }
+    .file-btn.assign:hover { background: var(--gold); color: var(--green-deep); }
+
+    .permission-badge {
+      font-size: 0.6rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 10px;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    .perm-all { background: rgba(74,122,82,0.12); color: var(--green-light); }
+    .perm-paid { background: rgba(201,168,76,0.12); color: var(--gold); }
+    .perm-private { background: rgba(26,46,30,0.08); color: var(--text-light); }
+
+    /* ─── COURSE BUILDER ─── */
+    .course-list { padding: 0.5rem 0; }
+
+    .course-row {
+      display: flex;
+      align-items: center;
+      padding: 0.9rem 1.5rem;
+      border-bottom: 1px solid rgba(26,46,30,0.04);
+      gap: 1rem;
+      transition: background 0.15s;
+    }
+
+    .course-row:hover { background: #fafaf8; }
+    .course-row:last-child { border-bottom: none; }
+
+    .course-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-active { background: #4a8a4a; }
+    .dot-draft { background: var(--gold); }
+    .dot-archived { background: var(--text-light); }
+
+    .course-info { flex: 1; }
+
+    .course-name {
+      font-size: 0.82rem;
+      color: var(--text-dark);
+      font-weight: 400;
+    }
+
+    .course-meta {
+      font-size: 0.65rem;
+      color: var(--text-light);
+      margin-top: 0.15rem;
+    }
+
+    .course-students {
+      font-size: 0.7rem;
+      color: var(--text-mid);
+      min-width: 60px;
+      text-align: right;
+    }
+
+    .course-actions {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    /* ─── STUDENTS TABLE ─── */
+    .student-table { width: 100%; border-collapse: collapse; }
+
+    .student-table th {
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(26,46,30,0.06);
+      background: #fafaf8;
+    }
+
+    .student-table td {
+      padding: 0.8rem 1.5rem;
+      font-size: 0.78rem;
+      color: var(--text-mid);
+      border-bottom: 1px solid rgba(26,46,30,0.04);
+    }
+
+    .student-table tr:hover td { background: #fafaf8; }
+    .student-table tr:last-child td { border-bottom: none; }
+
+    .student-name { color: var(--text-dark); font-weight: 400; }
+
+    .status-pill {
+      display: inline-block;
+      font-size: 0.6rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 10px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    .status-active { background: rgba(74,138,74,0.12); color: #4a8a4a; }
+    .status-pending { background: rgba(201,168,76,0.12); color: var(--gold); }
+    .status-expired { background: rgba(192,57,43,0.1); color: var(--red); }
+
+    /* ─── MOODLE / INTEGRATIONS ─── */
+    .integration-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .integration-item {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid rgba(26,46,30,0.06);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .integration-item:nth-child(odd) {
+      border-right: 1px solid rgba(26,46,30,0.06);
+    }
+
+    .integration-item:nth-last-child(-n+2) {
+      border-bottom: none;
+    }
+
+    .integration-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .icon-dropbox { background: #0061ff14; color: #0061ff; }
+    .icon-moodle { background: #f8800014; color: #f88000; }
+    .icon-zoom { background: #2d8cff14; color: #2d8cff; }
+    .icon-qb { background: #2ca01c14; color: #2ca01c; }
+
+    .integration-info { flex: 1; }
+
+    .integration-name {
+      font-size: 0.8rem;
+      color: var(--text-dark);
+      font-weight: 400;
+    }
+
+    .integration-status {
+      font-size: 0.65rem;
+      color: var(--text-light);
+      margin-top: 0.1rem;
+    }
+
+    .integration-status.connected { color: #4a8a4a; }
+    .integration-status.disconnected { color: var(--red); }
+
+    .toggle-switch {
+      width: 32px;
+      height: 18px;
+      background: #4a8a4a;
+      border-radius: 9px;
+      position: relative;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .toggle-switch.off { background: rgba(26,46,30,0.15); }
+
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: white;
+      border-radius: 50%;
+      top: 2px;
+      right: 2px;
+      transition: right 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .toggle-switch.off::after { right: auto; left: 2px; }
+
+    /* ─── ACTIVITY FEED ─── */
+    .activity-list { padding: 0.25rem 0; }
+
+    .activity-item {
+      display: flex;
+      gap: 0.85rem;
+      padding: 0.85rem 1.5rem;
+      border-bottom: 1px solid rgba(26,46,30,0.04);
+      align-items: flex-start;
+    }
+
+    .activity-item:last-child { border-bottom: none; }
+
+    .activity-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin-top: 0.35rem;
+      flex-shrink: 0;
+    }
+
+    .activity-text {
+      font-size: 0.75rem;
+      color: var(--text-mid);
+      line-height: 1.5;
+    }
+
+    .activity-text strong { color: var(--text-dark); font-weight: 500; }
+
+    .activity-time {
+      font-size: 0.62rem;
+      color: var(--text-light);
+      margin-top: 0.15rem;
+    }
+
+    /* ─── QUICK SETTINGS ─── */
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.5rem;
+      border-bottom: 1px solid rgba(26,46,30,0.04);
+    }
+
+    .setting-row:last-child { border-bottom: none; }
+
+    .setting-label {
+      font-size: 0.78rem;
+      color: var(--text-dark);
+    }
+
+    .setting-desc {
+      font-size: 0.65rem;
+      color: var(--text-light);
+      margin-top: 0.1rem;
+    }
+
+    .setting-input {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      padding: 0.35rem 0.6rem;
+      border: 1px solid rgba(26,46,30,0.15);
+      border-radius: 3px;
+      color: var(--text-dark);
+      background: white;
+      outline: none;
+      width: 200px;
+    }
+
+    .setting-input:focus { border-color: var(--green-mid); }
+
+    /* ─── TABS ─── */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid rgba(26,46,30,0.08);
+      padding: 0 1.5rem;
+      background: white;
+    }
+
+    .tab {
+      padding: 0.85rem 1rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .tab.active {
+      color: var(--green-deep);
+      border-bottom-color: var(--gold);
+      font-weight: 500;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ─── EMPTY STATE ─── */
+    .empty-state {
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.8rem;
+    }
+
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,25,16,0.7);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: white;
+      border-radius: 4px;
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-head {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(26,46,30,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-head h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--green-deep);
+    }
+
+    .modal-close-btn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: var(--text-light);
+      cursor: pointer;
+      padding: 0.25rem;
+      line-height: 1;
+    }
+
+    .modal-body { padding: 1.5rem; }
+
+    .form-group { margin-bottom: 1.25rem; }
+
+    .form-label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-field {
+      width: 100%;
+      padding: 0.6rem 0.9rem;
+      border: 1px solid rgba(26,46,30,0.15);
+      border-radius: 3px;
+      font-family: 'Jost', sans-serif;
+      font-size: 16px;
+      color: var(--text-dark);
+      outline: none;
+      background: white;
+    }
+
+    .form-field:focus { border-color: var(--green-mid); }
+
+    .form-select {
+      width: 100%;
+      padding: 0.6rem 0.9rem;
+      border: 1px solid rgba(26,46,30,0.15);
+      border-radius: 3px;
+      font-family: 'Jost', sans-serif;
+      font-size: 16px;
+      color: var(--text-dark);
+      outline: none;
+      background: white;
+      appearance: none;
+    }
+
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(26,46,30,0.08);
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    /* ─── MOBILE ─── */
+    .mobile-topbar {
+      display: none;
+      background: var(--green-deep);
+      padding: 1rem 1.25rem;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 60;
+    }
+
+    .mobile-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--cream);
+    }
+
+    .hamburger-dash {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger-dash span {
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: var(--cream);
+    }
+
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .mobile-topbar { display: flex; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .grid-2, .grid-3-2 { grid-template-columns: 1fr; }
+      .integration-grid { grid-template-columns: 1fr; }
+      .integration-item:nth-child(odd) { border-right: none; }
+      .integration-item:nth-last-child(-n+2) { border-bottom: 1px solid rgba(26,46,30,0.06); }
+      .integration-item:last-child { border-bottom: none; }
+      .content { padding: 1.25rem; }
+      .topbar { display: none; }
+    }
+
+    @media (max-width: 500px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+      .stat-card { padding: 1rem; }
+      .stat-value { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- MOBILE TOPBAR -->
+<div class="mobile-topbar">
+  <span class="mobile-logo">HCH Admin</span>
+  <button class="hamburger-dash" onclick="toggleSidebar()">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+
+<!-- SIDEBAR OVERLAY -->
+<div id="sidebarOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:49;" onclick="toggleSidebar()"></div>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="sidebar-logo-main">Hahnemann Center</span>
+      <span class="sidebar-logo-sub">Heilkunst & Homeopathy</span>
+      <span class="sidebar-badge">Admin Portal</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-label">Overview</div>
+        <a class="nav-item active" onclick="showSection('dashboard')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a class="nav-item" onclick="showSection('activity')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Activity
+          <span class="nav-badge">3</span>
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-label">Content</div>
+        <a class="nav-item" onclick="showSection('dropbox')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Dropbox Library
+        </a>
+        <a class="nav-item" onclick="showSection('courses')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Courses
+        </a>
+        <a class="nav-item" onclick="showSection('moodle')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Moodle LMS
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-label">People</div>
+        <a class="nav-item" onclick="showSection('students')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Students
+          <span class="nav-badge">24</span>
+        </a>
+        <a class="nav-item" onclick="showSection('patients')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Patients
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-label">Settings</div>
+        <a class="nav-item" onclick="showSection('settings')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Settings
+        </a>
+        <a class="nav-item" onclick="showSection('integrations')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Integrations
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-label">Analytics</div>
+        <a class="nav-item" onclick="showSection('analytics')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Analytics
+        </a>
+        <a class="nav-item" onclick="showSection('booking')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Booking Calendar
+        </a>
+        <a class="nav-item" onclick="showSection('upload')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+          Upload Content
+        </a>
+        <a class="nav-item" onclick="showSection('team')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Team & Roles
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-pill">
+        <div class="user-avatar">C</div>
+        <div>
+          <div class="user-name">CoCo Verspoor</div>
+          <div class="user-role">Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-title" id="pageTitle">Dashboard</div>
+      <div class="topbar-right">
+        <button class="topbar-btn btn-outline" onclick="openModal('modalInvite')">+ Invite Student</button>
+        <button class="topbar-btn btn-gold" onclick="openModal('modalCourse')">+ New Course</button>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- ─── DASHBOARD ─── -->
+      <div id="section-dashboard" class="section">
+
+        <div class="stats-grid">
+          <div class="stat-card active-stat">
+            <div class="stat-label">Active Students</div>
+            <div class="stat-value">24</div>
+            <div class="stat-change">↑ 3 this month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Courses Published</div>
+            <div class="stat-value">8</div>
+            <div class="stat-change">↑ 1 this month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Dropbox Files</div>
+            <div class="stat-value">847</div>
+            <div class="stat-change">3.2 TB used</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Pending Invoices</div>
+            <div class="stat-value">3</div>
+            <div class="stat-change down">↓ Needs attention</div>
+          </div>
+        </div>
+
+        <div class="grid-3-2">
+
+          <!-- Dropbox Preview -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Dropbox Library</div>
+              <button class="panel-action" onclick="showSection('dropbox')">View all →</button>
+            </div>
+            <div class="dropbox-toolbar">
+              <div class="breadcrumb">
+                <span>HCH</span>
+                <span class="breadcrumb-sep">/</span>
+                <span class="current">Courses</span>
+              </div>
+              <div class="search-box">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8a8a7a" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" placeholder="Search files…">
+              </div>
+            </div>
+            <div class="file-list">
+              <div class="file-row">
+                <div class="file-icon folder">DIR</div>
+                <div class="file-info">
+                  <div class="file-name">Year 1 — Foundations of Heilkunst</div>
+                  <div class="file-meta">42 files · Updated 3 days ago</div>
+                </div>
+                <span class="permission-badge perm-paid">Paid</span>
+                <div class="file-actions">
+                  <button class="file-btn">Edit</button>
+                  <button class="file-btn assign">Assign</button>
+                </div>
+              </div>
+              <div class="file-row">
+                <div class="file-icon folder">DIR</div>
+                <div class="file-info">
+                  <div class="file-name">Year 2 — Clinical Application</div>
+                  <div class="file-meta">38 files · Updated 1 week ago</div>
+                </div>
+                <span class="permission-badge perm-paid">Paid</span>
+                <div class="file-actions">
+                  <button class="file-btn">Edit</button>
+                  <button class="file-btn assign">Assign</button>
+                </div>
+              </div>
+              <div class="file-row">
+                <div class="file-icon video">MP4</div>
+                <div class="file-info">
+                  <div class="file-name">Lecture 12 — Chronic Disease Theory.mp4</div>
+                  <div class="file-meta">2.3 GB · 94 min</div>
+                </div>
+                <span class="permission-badge perm-all">All</span>
+                <div class="file-actions">
+                  <button class="file-btn">Edit</button>
+                  <button class="file-btn assign">Assign</button>
+                </div>
+              </div>
+              <div class="file-row">
+                <div class="file-icon pdf">PDF</div>
+                <div class="file-info">
+                  <div class="file-name">Module 3 Reading — Organon §1–§15.pdf</div>
+                  <div class="file-meta">4.2 MB · 28 pages</div>
+                </div>
+                <span class="permission-badge perm-paid">Paid</span>
+                <div class="file-actions">
+                  <button class="file-btn">Edit</button>
+                  <button class="file-btn assign">Assign</button>
+                </div>
+              </div>
+              <div class="file-row">
+                <div class="file-icon audio">MP3</div>
+                <div class="file-info">
+                  <div class="file-name">Q&A Session — Sequential Treatment.mp3</div>
+                  <div class="file-meta">48 MB · 52 min</div>
+                </div>
+                <span class="permission-badge perm-private">Private</span>
+                <div class="file-actions">
+                  <button class="file-btn">Edit</button>
+                  <button class="file-btn assign">Assign</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity + Quick Links -->
+          <div style="display:flex;flex-direction:column;gap:1.5rem;">
+
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Recent Activity</div>
+              </div>
+              <div class="activity-list">
+                <div class="activity-item">
+                  <div class="activity-dot"></div>
+                  <div>
+                    <div class="activity-text"><strong>Sarah M.</strong> enrolled in Year 1 Foundations</div>
+                    <div class="activity-time">2 hours ago</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-dot"></div>
+                  <div>
+                    <div class="activity-text"><strong>Lecture 12</strong> uploaded to Dropbox</div>
+                    <div class="activity-time">Yesterday</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-dot"></div>
+                  <div>
+                    <div class="activity-text"><strong>James K.</strong> completed Module 2</div>
+                    <div class="activity-time">2 days ago</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-dot"></div>
+                  <div>
+                    <div class="activity-text">Invoice #1042 paid — <strong>$280</strong></div>
+                    <div class="activity-time">3 days ago</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Integrations</div>
+                <button class="panel-action" onclick="showSection('integrations')">Manage →</button>
+              </div>
+              <div class="integration-grid">
+                <div class="integration-item">
+                  <div class="integration-icon icon-dropbox">DB</div>
+                  <div class="integration-info">
+                    <div class="integration-name">Dropbox</div>
+                    <div class="integration-status connected">● Connected</div>
+                  </div>
+                  <div class="toggle-switch"></div>
+                </div>
+                <div class="integration-item">
+                  <div class="integration-icon icon-moodle">M</div>
+                  <div class="integration-info">
+                    <div class="integration-name">Moodle</div>
+                    <div class="integration-status connected">● Connected</div>
+                  </div>
+                  <div class="toggle-switch"></div>
+                </div>
+                <div class="integration-item">
+                  <div class="integration-icon icon-zoom">Z</div>
+                  <div class="integration-info">
+                    <div class="integration-name">Zoom</div>
+                    <div class="integration-status connected">● Connected</div>
+                  </div>
+                  <div class="toggle-switch"></div>
+                </div>
+                <div class="integration-item">
+                  <div class="integration-icon icon-qb">QB</div>
+                  <div class="integration-info">
+                    <div class="integration-name">QuickBooks</div>
+                    <div class="integration-status disconnected">● Setup needed</div>
+                  </div>
+                  <div class="toggle-switch off"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── DROPBOX SECTION ─── -->
+      <div id="section-dropbox" class="section" style="display:none;">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Dropbox Content Library</div>
+            <div style="display:flex;gap:0.5rem;">
+              <button class="topbar-btn btn-outline" style="font-size:0.7rem;padding:0.4rem 0.8rem;">Sync Now</button>
+              <button class="topbar-btn btn-gold" style="font-size:0.7rem;padding:0.4rem 0.8rem;" onclick="openModal('modalPermissions')">Set Permissions</button>
+            </div>
+          </div>
+          <div class="tabs">
+            <div class="tab active" onclick="switchTab(this, 'tab-all')">All Files</div>
+            <div class="tab" onclick="switchTab(this, 'tab-videos')">Videos</div>
+            <div class="tab" onclick="switchTab(this, 'tab-pdfs')">PDFs</div>
+            <div class="tab" onclick="switchTab(this, 'tab-audio')">Audio</div>
+          </div>
+          <div class="dropbox-toolbar">
+            <div class="breadcrumb">
+              <span onclick="void(0)">HCH Dropbox</span>
+              <span class="breadcrumb-sep">/</span>
+              <span onclick="void(0)">Courses</span>
+              <span class="breadcrumb-sep">/</span>
+              <span class="current">Year 1</span>
+            </div>
+            <div class="search-box">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8a8a7a" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" placeholder="Search 847 files…">
+            </div>
+          </div>
+          <div class="file-list">
+            <div class="file-row">
+              <div class="file-icon folder">DIR</div>
+              <div class="file-info">
+                <div class="file-name">Year 1 — Foundations of Heilkunst</div>
+                <div class="file-meta">42 files · 18.4 GB</div>
+              </div>
+              <span class="permission-badge perm-paid">Paid — Year 1</span>
+              <div class="file-actions">
+                <button class="file-btn">Rename</button>
+                <button class="file-btn assign">Permissions</button>
+              </div>
+            </div>
+            <div class="file-row">
+              <div class="file-icon folder">DIR</div>
+              <div class="file-info">
+                <div class="file-name">Year 2 — Clinical Application</div>
+                <div class="file-meta">38 files · 22.1 GB</div>
+              </div>
+              <span class="permission-badge perm-paid">Paid — Year 2</span>
+              <div class="file-actions">
+                <button class="file-btn">Rename</button>
+                <button class="file-btn assign">Permissions</button>
+              </div>
+            </div>
+            <div class="file-row">
+              <div class="file-icon video">MP4</div>
+              <div class="file-info">
+                <div class="file-name">Lecture 01 — Introduction to Heilkunst.mp4</div>
+                <div class="file-meta">1.8 GB · 78 min · Uploaded Jan 12</div>
+              </div>
+              <span class="permission-badge perm-all">Public</span>
+              <div class="file-actions">
+                <button class="file-btn">Preview</button>
+                <button class="file-btn assign">Permissions</button>
+              </div>
+            </div>
+            <div class="file-row">
+              <div class="file-icon video">MP4</div>
+              <div class="file-info">
+                <div class="file-name">Lecture 02 — The Law of Similars.mp4</div>
+                <div class="file-meta">2.1 GB · 88 min · Uploaded Jan 19</div>
+              </div>
+              <span class="permission-badge perm-paid">Paid</span>
+              <div class="file-actions">
+                <button class="file-btn">Preview</button>
+                <button class="file-btn assign">Permissions</button>
+              </div>
+            </div>
+            <div class="file-row">
+              <div class="file-icon pdf">PDF</div>
+              <div class="file-info">
+                <div class="file-name">Module 1 Workbook.pdf</div>
+                <div class="file-meta">3.4 MB · 52 pages</div>
+              </div>
+              <span class="permission-badge perm-paid">Paid</span>
+              <div class="file-actions">
+                <button class="file-btn">Preview</button>
+                <button class="file-btn assign">Permissions</button>
+              </div>
+            </div>
+            <div class="file-row">
+              <div class="file-icon audio">MP3</div>
+              <div class="file-info">
+                <div class="file-name">Guided Meditation — Healing Journey.mp3</div>
+                <div class="file-meta">22 MB · 24 min</div>
+              </div>
+              <span class="permission-badge perm-all">Public</span>
+              <div class="file-actions">
+                <button class="file-btn">Preview</button>
+                <button class="file-btn assign">Permissions</button>
+              </div>
+            </div>
+            <div class="file-row">
+              <div class="file-icon video">MP4</div>
+              <div class="file-info">
+                <div class="file-name">Lecture 12 — Chronic Disease Theory.mp4</div>
+                <div class="file-meta">2.3 GB · 94 min · Uploaded Feb 2</div>
+              </div>
+              <span class="permission-badge perm-paid">Paid</span>
+              <div class="file-actions">
+                <button class="file-btn">Preview</button>
+                <button class="file-btn assign">Permissions</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── COURSES ─── -->
+      <div id="section-courses" class="section" style="display:none;">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Course Management</div>
+            <button class="topbar-btn btn-gold" style="font-size:0.7rem;padding:0.4rem 0.8rem;" onclick="openModal('modalCourse')">+ New Course</button>
+          </div>
+          <div class="course-list">
+            <div class="course-row">
+              <div class="course-dot dot-active"></div>
+              <div class="course-info">
+                <div class="course-name">Year 1 — Foundations of Heilkunst</div>
+                <div class="course-meta">12 modules · 42 lectures · Moodle linked</div>
+              </div>
+              <div class="course-students">18 students</div>
+              <div class="course-actions">
+                <button class="file-btn">Edit</button>
+                <button class="file-btn assign">Moodle</button>
+              </div>
+            </div>
+            <div class="course-row">
+              <div class="course-dot dot-active"></div>
+              <div class="course-info">
+                <div class="course-name">Year 2 — Clinical Application</div>
+                <div class="course-meta">10 modules · 38 lectures · Moodle linked</div>
+              </div>
+              <div class="course-students">6 students</div>
+              <div class="course-actions">
+                <button class="file-btn">Edit</button>
+                <button class="file-btn assign">Moodle</button>
+              </div>
+            </div>
+            <div class="course-row">
+              <div class="course-dot dot-active"></div>
+              <div class="course-info">
+                <div class="course-name">Women & Children's Health Certificate</div>
+                <div class="course-meta">6 modules · School for Romantic Science</div>
+              </div>
+              <div class="course-students">4 students</div>
+              <div class="course-actions">
+                <button class="file-btn">Edit</button>
+                <button class="file-btn assign">Moodle</button>
+              </div>
+            </div>
+            <div class="course-row">
+              <div class="course-dot dot-draft"></div>
+              <div class="course-info">
+                <div class="course-name">Homeopathy at Home — Free Starter Course</div>
+                <div class="course-meta">Draft · 3 modules complete</div>
+              </div>
+              <div class="course-students">—</div>
+              <div class="course-actions">
+                <button class="file-btn">Edit</button>
+                <button class="file-btn">Publish</button>
+              </div>
+            </div>
+            <div class="course-row">
+              <div class="course-dot dot-archived"></div>
+              <div class="course-info">
+                <div class="course-name">iTunes U Archive — Legacy Content</div>
+                <div class="course-meta">Archived · 2019</div>
+              </div>
+              <div class="course-students">—</div>
+              <div class="course-actions">
+                <button class="file-btn">Restore</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── STUDENTS ─── -->
+      <div id="section-students" class="section" style="display:none;">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Student Roster</div>
+            <button class="topbar-btn btn-gold" style="font-size:0.7rem;padding:0.4rem 0.8rem;" onclick="openModal('modalInvite')">+ Invite Student</button>
+          </div>
+          <table class="student-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Status</th>
+                <th>Access</th>
+                <th>Last Active</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="student-name">Sarah Mitchell</td>
+                <td>Year 1 Foundations</td>
+                <td><span class="status-pill status-active">Active</span></td>
+                <td>Full</td>
+                <td>Today</td>
+                <td><button class="file-btn">Manage</button></td>
+              </tr>
+              <tr>
+                <td class="student-name">James Kowalski</td>
+                <td>Year 2 Clinical</td>
+                <td><span class="status-pill status-active">Active</span></td>
+                <td>Full</td>
+                <td>Yesterday</td>
+                <td><button class="file-btn">Manage</button></td>
+              </tr>
+              <tr>
+                <td class="student-name">Amara Osei</td>
+                <td>Year 1 Foundations</td>
+                <td><span class="status-pill status-pending">Pending</span></td>
+                <td>Limited</td>
+                <td>3 days ago</td>
+                <td><button class="file-btn">Manage</button></td>
+              </tr>
+              <tr>
+                <td class="student-name">Lin Chen</td>
+                <td>Women & Children</td>
+                <td><span class="status-pill status-active">Active</span></td>
+                <td>Full</td>
+                <td>2 days ago</td>
+                <td><button class="file-btn">Manage</button></td>
+              </tr>
+              <tr>
+                <td class="student-name">David Tremblay</td>
+                <td>Year 1 Foundations</td>
+                <td><span class="status-pill status-expired">Expired</span></td>
+                <td>None</td>
+                <td>3 weeks ago</td>
+                <td><button class="file-btn">Manage</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── MOODLE ─── -->
+      <div id="section-moodle" class="section" style="display:none;">
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Moodle LMS Connection</div>
+              <span class="permission-badge perm-all" style="font-size:0.65rem;padding:0.2rem 0.6rem;">Connected</span>
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">Moodle Site URL</div>
+                <div class="setting-desc">Your Moodle installation address</div>
+              </div>
+              <input class="setting-input" type="text" value="https://learn.homeopathy.com">
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">API Token</div>
+                <div class="setting-desc">Used to sync courses and enrolments</div>
+              </div>
+              <input class="setting-input" type="password" value="••••••••••••••••">
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">Auto-enrol Students</div>
+                <div class="setting-desc">When a student is added here, enrol in Moodle automatically</div>
+              </div>
+              <div class="toggle-switch"></div>
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">Sync Dropbox Links</div>
+                <div class="setting-desc">Push Dropbox video links to Moodle course resources</div>
+              </div>
+              <div class="toggle-switch"></div>
+            </div>
+            <div style="padding:1rem 1.5rem;border-top:1px solid rgba(26,46,30,0.06);">
+              <button class="topbar-btn btn-gold" style="font-size:0.72rem;">Save & Test Connection</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Moodle Courses Synced</div>
+              <button class="panel-action">Sync now</button>
+            </div>
+            <div class="course-list">
+              <div class="course-row">
+                <div class="course-dot dot-active"></div>
+                <div class="course-info">
+                  <div class="course-name">HLKST101 — Foundations</div>
+                  <div class="course-meta">Last synced 2 hours ago</div>
+                </div>
+                <div class="course-actions">
+                  <button class="file-btn assign">Open</button>
+                </div>
+              </div>
+              <div class="course-row">
+                <div class="course-dot dot-active"></div>
+                <div class="course-info">
+                  <div class="course-name">HLKST201 — Clinical</div>
+                  <div class="course-meta">Last synced 2 hours ago</div>
+                </div>
+                <div class="course-actions">
+                  <button class="file-btn assign">Open</button>
+                </div>
+              </div>
+              <div class="course-row">
+                <div class="course-dot dot-draft"></div>
+                <div class="course-info">
+                  <div class="course-name">CERT101 — Women & Children</div>
+                  <div class="course-meta">Not yet synced</div>
+                </div>
+                <div class="course-actions">
+                  <button class="file-btn">Sync</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── SETTINGS ─── -->
+      <div id="section-settings" class="section" style="display:none;">
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Site Settings</div>
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">Site Name</div>
+              </div>
+              <input class="setting-input" type="text" value="Hahnemann Center">
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">Contact Email</div>
+              </div>
+              <input class="setting-input" type="text" value="clinic@homeopathy.com">
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">Booking Link</div>
+                <div class="setting-desc">Acuity scheduling URL shown on site</div>
+              </div>
+              <input class="setting-input" type="text" value="https://acuityscheduling.com/hch">
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">Student Portal URL</div>
+              </div>
+              <input class="setting-input" type="text" value="https://digital.homeopathy.com">
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">New Patient Form</div>
+              </div>
+              <input class="setting-input" type="text" value="https://forms.homeopathy.com">
+            </div>
+            <div style="padding:1rem 1.5rem;border-top:1px solid rgba(26,46,30,0.06);">
+              <button class="topbar-btn btn-gold" style="font-size:0.72rem;">Save Changes</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Access & Permissions</div>
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">Student Self-Signup</div>
+                <div class="setting-desc">Allow students to create their own accounts</div>
+              </div>
+              <div class="toggle-switch off"></div>
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">Email Notifications</div>
+                <div class="setting-desc">Notify admin on new enrolments</div>
+              </div>
+              <div class="toggle-switch"></div>
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">Video Preview Limit</div>
+                <div class="setting-desc">Free preview length for paid content</div>
+              </div>
+              <select class="setting-input" style="font-size:0.78rem;">
+                <option>15 minutes</option>
+                <option>30 minutes</option>
+                <option>No preview</option>
+              </select>
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-label">Default Currency</div>
+              </div>
+              <select class="setting-input" style="font-size:0.78rem;">
+                <option>CAD — Canadian Dollar</option>
+                <option>USD — US Dollar</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── INTEGRATIONS ─── -->
+      <div id="section-integrations" class="section" style="display:none;">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Connected Services</div>
+          </div>
+          <div class="integration-grid" style="grid-template-columns:1fr 1fr;">
+            <div class="integration-item" style="padding:1.5rem;">
+              <div class="integration-icon icon-dropbox" style="width:44px;height:44px;font-size:0.8rem;">DB</div>
+              <div class="integration-info">
+                <div class="integration-name">Dropbox Business</div>
+                <div class="integration-status connected">● Connected · 3.2 TB used</div>
+                <div class="setting-desc" style="margin-top:0.4rem;">Syncs your 847-file content library. Used as the primary video and PDF store.</div>
+              </div>
+              <div class="toggle-switch"></div>
+            </div>
+            <div class="integration-item" style="padding:1.5rem;">
+              <div class="integration-icon icon-moodle" style="width:44px;height:44px;font-size:0.8rem;">M</div>
+              <div class="integration-info">
+                <div class="integration-name">Moodle LMS</div>
+                <div class="integration-status connected">● Connected · learn.homeopathy.com</div>
+                <div class="setting-desc" style="margin-top:0.4rem;">Distance learning platform. 3 courses synced, 24 active students.</div>
+              </div>
+              <div class="toggle-switch"></div>
+            </div>
+            <div class="integration-item" style="padding:1.5rem;">
+              <div class="integration-icon icon-zoom" style="width:44px;height:44px;font-size:0.8rem;">Z</div>
+              <div class="integration-info">
+                <div class="integration-name">Zoom</div>
+                <div class="integration-status connected">● Connected</div>
+                <div class="setting-desc" style="margin-top:0.4rem;">Used for patient and student consultations. Recordings auto-uploaded to Dropbox.</div>
+              </div>
+              <div class="toggle-switch"></div>
+            </div>
+            <div class="integration-item" style="padding:1.5rem;">
+              <div class="integration-icon icon-qb" style="width:44px;height:44px;font-size:0.8rem;">QB</div>
+              <div class="integration-info">
+                <div class="integration-name">QuickBooks</div>
+                <div class="integration-status disconnected">● Not connected</div>
+                <div class="setting-desc" style="margin-top:0.4rem;">Connect to automate invoicing for consultations and course payments.</div>
+              </div>
+              <div class="toggle-switch off"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── ACTIVITY ─── -->
+      <div id="section-activity" class="section" style="display:none;">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">All Activity</div>
+          </div>
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div>
+                <div class="activity-text"><strong>Sarah M.</strong> enrolled in Year 1 Foundations</div>
+                <div class="activity-time">2 hours ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div>
+                <div class="activity-text"><strong>Lecture 12</strong> uploaded to Dropbox by CoCo</div>
+                <div class="activity-time">Yesterday, 3:42 PM</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div>
+                <div class="activity-text"><strong>James K.</strong> completed Module 2 quiz</div>
+                <div class="activity-time">2 days ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div>
+                <div class="activity-text">Invoice #1042 paid — <strong>$280 CAD</strong> by David T.</div>
+                <div class="activity-time">3 days ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div>
+                <div class="activity-text"><strong>Amara O.</strong> submitted new patient intake form</div>
+                <div class="activity-time">4 days ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div>
+                <div class="activity-text">Moodle sync completed — <strong>3 courses</strong> updated</div>
+                <div class="activity-time">5 days ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── PATIENTS ─── -->
+      <div id="section-patients" class="section" style="display:none;">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Patient Records</div>
+            <button class="topbar-btn btn-outline" style="font-size:0.7rem;padding:0.4rem 0.8rem;">Export</button>
+          </div>
+          <table class="student-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Practitioner</th>
+                <th>Last Visit</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="student-name">Marie Fontaine</td>
+                <td>Follow-up</td>
+                <td>CoCo Verspoor</td>
+                <td>Feb 18, 2026</td>
+                <td><span class="status-pill status-active">Active</span></td>
+                <td><button class="file-btn">View</button></td>
+              </tr>
+              <tr>
+                <td class="student-name">Thomas Reid</td>
+                <td>Initial</td>
+                <td>Rudi Verspoor</td>
+                <td>Feb 14, 2026</td>
+                <td><span class="status-pill status-active">Active</span></td>
+                <td><button class="file-btn">View</button></td>
+              </tr>
+              <tr>
+                <td class="student-name">Priya Nair</td>
+                <td>On-Call</td>
+                <td>CoCo Verspoor</td>
+                <td>Feb 10, 2026</td>
+                <td><span class="status-pill status-pending">Pending</span></td>
+                <td><button class="file-btn">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <!-- ── ANALYTICS ── -->
+      <div id="section-analytics" class="section" style="display:none;">
+        <div class="stats-grid">
+          <div class="stat-card active-stat">
+            <div class="stat-label">Total Watch Time</div>
+            <div class="stat-value">312h</div>
+            <div class="stat-change">↑ 18% this month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Avg Completion Rate</div>
+            <div class="stat-value">68%</div>
+            <div class="stat-change">↑ 4% vs last month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Active This Week</div>
+            <div class="stat-value">19</div>
+            <div class="stat-change">of 24 students</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Revenue (Feb)</div>
+            <div class="stat-value">$6.7k</div>
+            <div class="stat-change">↑ $280 vs Jan</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Course Completion by Student</div></div>
+            <table class="student-table">
+              <thead><tr><th>Student</th><th>Course</th><th>Progress</th><th>Last Active</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="student-name">Sarah Mitchell</td><td>Year 1</td>
+                  <td><div class="progress-bar-wrap" style="width:120px;display:inline-block;margin-right:0.4rem;vertical-align:middle;"><div class="progress-bar-fill" style="width:43%"></div></div>43%</td>
+                  <td>Today</td>
+                </tr>
+                <tr>
+                  <td class="student-name">James Kowalski</td><td>Year 2</td>
+                  <td><div class="progress-bar-wrap" style="width:120px;display:inline-block;margin-right:0.4rem;vertical-align:middle;"><div class="progress-bar-fill" style="width:71%"></div></div>71%</td>
+                  <td>Yesterday</td>
+                </tr>
+                <tr>
+                  <td class="student-name">Amara Osei</td><td>Year 1</td>
+                  <td><div class="progress-bar-wrap" style="width:120px;display:inline-block;margin-right:0.4rem;vertical-align:middle;"><div class="progress-bar-fill" style="width:12%"></div></div>12%</td>
+                  <td>3 days ago</td>
+                </tr>
+                <tr>
+                  <td class="student-name">Lin Chen</td><td>Women &amp; Children</td>
+                  <td><div class="progress-bar-wrap" style="width:120px;display:inline-block;margin-right:0.4rem;vertical-align:middle;"><div class="progress-bar-fill" style="width:88%"></div></div>88%</td>
+                  <td>2 days ago</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Most Watched Lectures</div></div>
+            <div class="course-list">
+              <div class="course-row">
+                <div class="course-dot dot-active"></div>
+                <div class="course-info"><div class="course-name">Lecture 1 — Introduction to Heilkunst</div><div class="course-meta">24 views · 94% completion</div></div>
+                <div class="course-students">24 views</div>
+              </div>
+              <div class="course-row">
+                <div class="course-dot dot-active"></div>
+                <div class="course-info"><div class="course-name">Lecture 3 — Organon Overview</div><div class="course-meta">21 views · 82% completion</div></div>
+                <div class="course-students">21 views</div>
+              </div>
+              <div class="course-row">
+                <div class="course-dot dot-active"></div>
+                <div class="course-info"><div class="course-name">Lecture 8 — The Vital Force</div><div class="course-meta">18 views · 67% completion</div></div>
+                <div class="course-students">18 views</div>
+              </div>
+              <div class="course-row">
+                <div class="course-dot dot-draft"></div>
+                <div class="course-info"><div class="course-name">Lecture 12 — Chronic Disease Theory</div><div class="course-meta">6 views · 45% completion</div></div>
+                <div class="course-students">6 views</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── BOOKING CALENDAR ── -->
+      <div id="section-booking" class="section" style="display:none;">
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Upcoming Appointments (Acuity)</div>
+              <button class="topbar-btn btn-outline" style="font-size:0.7rem;padding:0.4rem 0.8rem;">Open Acuity ↗</button>
+            </div>
+            <div class="course-list">
+              <div class="course-row">
+                <div style="min-width:48px;text-align:center;">
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gold);line-height:1;">24</div>
+                  <div style="font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);">Feb</div>
+                </div>
+                <div class="course-info">
+                  <div class="course-name">Initial Consultation — Marie Fontaine</div>
+                  <div class="course-meta">2:00 PM EST · 90 min · CoCo Verspoor · Zoom</div>
+                </div>
+                <div class="course-actions"><button class="file-btn assign">Join</button></div>
+              </div>
+              <div class="course-row">
+                <div style="min-width:48px;text-align:center;">
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gold);line-height:1;">25</div>
+                  <div style="font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);">Feb</div>
+                </div>
+                <div class="course-info">
+                  <div class="course-name">Follow-up — Thomas Reid</div>
+                  <div class="course-meta">10:00 AM EST · 60 min · Rudi Verspoor</div>
+                </div>
+                <div class="course-actions"><button class="file-btn assign">Join</button></div>
+              </div>
+              <div class="course-row">
+                <div style="min-width:48px;text-align:center;">
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gold);line-height:1;">26</div>
+                  <div style="font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);">Feb</div>
+                </div>
+                <div class="course-info">
+                  <div class="course-name">Live Q&A — Year 1 Students</div>
+                  <div class="course-meta">2:00 PM EST · 60 min · CoCo Verspoor · Zoom</div>
+                </div>
+                <div class="course-actions"><button class="file-btn assign">Join</button></div>
+              </div>
+              <div class="course-row">
+                <div style="min-width:48px;text-align:center;">
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gold);line-height:1;">28</div>
+                  <div style="font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);">Feb</div>
+                </div>
+                <div class="course-info">
+                  <div class="course-name">On-Call — Priya Nair</div>
+                  <div class="course-meta">4:00 PM EST · 30 min · CoCo Verspoor</div>
+                </div>
+                <div class="course-actions"><button class="file-btn">Notes</button></div>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Acuity Settings</div></div>
+            <div class="setting-row">
+              <div><div class="setting-label">Booking URL</div><div class="setting-desc">Shown on website CTAs</div></div>
+              <input class="setting-input" type="text" value="acuityscheduling.com/hch">
+            </div>
+            <div class="setting-row">
+              <div><div class="setting-label">Default Duration</div></div>
+              <select class="setting-input" style="font-size:0.78rem;appearance:none;">
+                <option>90 min — Initial</option>
+                <option>60 min — Follow-up</option>
+                <option>30 min — On-Call</option>
+              </select>
+            </div>
+            <div class="setting-row">
+              <div><div class="setting-label">Auto Zoom Link</div><div class="setting-desc">Generate Zoom link on booking</div></div>
+              <div class="toggle-switch"></div>
+            </div>
+            <div class="setting-row">
+              <div><div class="setting-label">Send Intake Form</div><div class="setting-desc">Email new patient form on booking</div></div>
+              <div class="toggle-switch"></div>
+            </div>
+            <div style="padding:1rem 1.5rem;border-top:1px solid rgba(26,46,30,0.06);">
+              <button class="topbar-btn btn-gold" style="font-size:0.72rem;">Save Settings</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── UPLOAD CONTENT ── -->
+      <div id="section-upload" class="section" style="display:none;">
+        <div class="panel" style="margin-bottom:1.5rem;">
+          <div class="panel-header"><div class="panel-title">Upload & Assign Content</div></div>
+          <div style="padding:2rem 1.5rem;border-bottom:1px solid rgba(26,46,30,0.06);">
+            <div style="border:2px dashed rgba(26,46,30,0.15);border-radius:4px;padding:2.5rem;text-align:center;background:#fafaf8;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(26,46,30,0.15)'">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" style="margin-bottom:1rem;"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+              <div style="font-size:0.85rem;color:var(--text-dark);margin-bottom:0.3rem;">Drop files here or click to upload</div>
+              <div style="font-size:0.7rem;color:var(--text-light);">MP4, MP3, PDF · Max 10GB per file · Uploads directly to Dropbox</div>
+            </div>
+          </div>
+          <div style="padding:1.25rem 1.5rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;">
+            <div class="form-group">
+              <label class="form-label" style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:0.4rem;">Assign to Course</label>
+              <select class="setting-input" style="width:100%;font-size:0.78rem;appearance:none;">
+                <option>Year 1 — Foundations</option>
+                <option>Year 2 — Clinical</option>
+                <option>Women &amp; Children</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:0.4rem;">Module</label>
+              <select class="setting-input" style="width:100%;font-size:0.78rem;appearance:none;">
+                <option>Module 3 — Vital Force</option>
+                <option>Module 4 — Miasms</option>
+                <option>Module 5 — Case Taking</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:0.4rem;">Access Level</label>
+              <select class="setting-input" style="width:100%;font-size:0.78rem;appearance:none;">
+                <option>Paid — Year 1 Students</option>
+                <option>All Students</option>
+                <option>Public</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Recent Uploads</div></div>
+          <div class="file-list">
+            <div class="file-row">
+              <div class="file-icon video">MP4</div>
+              <div class="file-info">
+                <div class="file-name">Lecture 12 — Chronic Disease Theory.mp4</div>
+                <div class="file-meta">Uploaded Feb 2 · 2.3 GB · Assigned to Year 1, Module 4</div>
+              </div>
+              <span class="permission-badge perm-paid">Paid</span>
+              <div class="file-actions" style="opacity:1;"><button class="file-btn">Edit</button></div>
+            </div>
+            <div class="file-row">
+              <div class="file-icon pdf">PDF</div>
+              <div class="file-info">
+                <div class="file-name">Module 3 Workbook.pdf</div>
+                <div class="file-meta">Uploaded Feb 1 · 4.2 MB · Assigned to Year 1, Module 3</div>
+              </div>
+              <span class="permission-badge perm-paid">Paid</span>
+              <div class="file-actions" style="opacity:1;"><button class="file-btn">Edit</button></div>
+            </div>
+            <div class="file-row">
+              <div class="file-icon audio">MP3</div>
+              <div class="file-info">
+                <div class="file-name">Q&A Recording — Module 2 — Feb 10.mp3</div>
+                <div class="file-meta">Uploaded Feb 10 · 48 MB · Auto-synced from Zoom</div>
+              </div>
+              <span class="permission-badge perm-paid">Paid</span>
+              <div class="file-actions" style="opacity:1;"><button class="file-btn">Edit</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TEAM & ROLES ── -->
+      <div id="section-team" class="section" style="display:none;">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Practitioners & Admin</div>
+            <button class="topbar-btn btn-outline" style="font-size:0.7rem;padding:0.4rem 0.8rem;" onclick="openModal('modalInvite')">+ Add Member</button>
+          </div>
+          <table class="student-table">
+            <thead>
+              <tr><th>Name</th><th>Role</th><th>Access</th><th>Last Login</th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:0.6rem;">
+                    <div style="width:28px;height:28px;border-radius:50%;background:var(--green-mid);border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:var(--gold-light);">C</div>
+                    <span class="student-name">CoCo Verspoor</span>
+                  </div>
+                </td>
+                <td><span class="status-pill" style="background:rgba(201,168,76,0.1);color:var(--gold);">Super Admin</span></td>
+                <td>Full — all sections</td>
+                <td>Today</td>
+                <td><button class="file-btn">Edit</button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:0.6rem;">
+                    <div style="width:28px;height:28px;border-radius:50%;background:var(--green-mid);border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:var(--gold-light);">R</div>
+                    <span class="student-name">Rudi Verspoor</span>
+                  </div>
+                </td>
+                <td><span class="status-pill" style="background:rgba(74,122,82,0.1);color:var(--green-light);">Practitioner</span></td>
+                <td>Patients, Booking, Courses</td>
+                <td>2 days ago</td>
+                <td><button class="file-btn">Edit</button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:0.6rem;">
+                    <div style="width:28px;height:28px;border-radius:50%;background:var(--green-mid);border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:var(--gold-light);">A</div>
+                    <span class="student-name">Admin Assistant</span>
+                  </div>
+                </td>
+                <td><span class="status-pill" style="background:rgba(41,128,185,0.1);color:#2980b9;">Admin</span></td>
+                <td>Students, Billing, Dropbox</td>
+                <td>1 week ago</td>
+                <td><button class="file-btn">Edit</button></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="padding:1.25rem 1.5rem;border-top:1px solid rgba(26,46,30,0.06);">
+            <div style="font-size:0.72rem;font-weight:500;color:var(--text-dark);margin-bottom:1rem;">Role Permissions</div>
+            <table class="student-table" style="font-size:0.72rem;">
+              <thead>
+                <tr><th>Section</th><th>Super Admin</th><th>Practitioner</th><th>Admin</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Dashboard</td><td>✓</td><td>✓</td><td>✓</td></tr>
+                <tr><td>Dropbox Library</td><td>✓</td><td>View only</td><td>✓</td></tr>
+                <tr><td>Courses</td><td>✓</td><td>View only</td><td>✓</td></tr>
+                <tr><td>Students</td><td>✓</td><td>View only</td><td>✓</td></tr>
+                <tr><td>Patients</td><td>✓</td><td>Own patients</td><td>—</td></tr>
+                <tr><td>Booking</td><td>✓</td><td>Own calendar</td><td>View only</td></tr>
+                <tr><td>Analytics</td><td>✓</td><td>—</td><td>View only</td></tr>
+                <tr><td>Settings</td><td>✓</td><td>—</td><td>—</td></tr>
+                <tr><td>Team & Roles</td><td>✓</td><td>—</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </main>
+</div>
+
+<!-- ─── MODALS ─── -->
+
+<!-- New Course Modal -->
+<div class="modal-overlay" id="modalCourse" onclick="if(event.target===this)closeModal('modalCourse')">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Create New Course</h3>
+      <button class="modal-close-btn" onclick="closeModal('modalCourse')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Course Name</label>
+        <input class="form-field" type="text" placeholder="e.g. Year 3 — Advanced Clinical">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Program</label>
+        <select class="form-select">
+          <option>Hahnemann College</option>
+          <option>School for Romantic Science</option>
+          <option>Free / Public</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Dropbox Folder</label>
+        <input class="form-field" type="text" placeholder="/HCH Dropbox/Courses/Year 3">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Moodle Course ID</label>
+        <input class="form-field" type="text" placeholder="HLKST301">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Access Level</label>
+        <select class="form-select">
+          <option>Paid Enrolment Only</option>
+          <option>All Registered Students</option>
+          <option>Public</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="topbar-btn btn-outline" onclick="closeModal('modalCourse')">Cancel</button>
+      <button class="topbar-btn btn-gold">Create Course</button>
+    </div>
+  </div>
+</div>
+
+<!-- Invite Student Modal -->
+<div class="modal-overlay" id="modalInvite" onclick="if(event.target===this)closeModal('modalInvite')">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Invite Student</h3>
+      <button class="modal-close-btn" onclick="closeModal('modalInvite')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input class="form-field" type="text" placeholder="Student name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-field" type="email" placeholder="student@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Assign to Course</label>
+        <select class="form-select">
+          <option>Year 1 — Foundations of Heilkunst</option>
+          <option>Year 2 — Clinical Application</option>
+          <option>Women & Children's Health Certificate</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Access Level</label>
+        <select class="form-select">
+          <option>Full Access</option>
+          <option>Limited — Module 1 only</option>
+          <option>Trial / Preview</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="topbar-btn btn-outline" onclick="closeModal('modalInvite')">Cancel</button>
+      <button class="topbar-btn btn-gold">Send Invitation</button>
+    </div>
+  </div>
+</div>
+
+<!-- Permissions Modal -->
+<div class="modal-overlay" id="modalPermissions" onclick="if(event.target===this)closeModal('modalPermissions')">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Set File Permissions</h3>
+      <button class="modal-close-btn" onclick="closeModal('modalPermissions')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">File / Folder</label>
+        <input class="form-field" type="text" value="Year 1 — Foundations of Heilkunst" readonly>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Access Level</label>
+        <select class="form-select">
+          <option>Paid Enrolment — Year 1 Students</option>
+          <option>All Registered Students</option>
+          <option>Public / Free</option>
+          <option>Admin Only</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Preview Allowed</label>
+        <select class="form-select">
+          <option>15 minutes free preview</option>
+          <option>No preview</option>
+          <option>Full access preview</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="topbar-btn btn-outline" onclick="closeModal('modalPermissions')">Cancel</button>
+      <button class="topbar-btn btn-gold">Save Permissions</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  var sections = ['dashboard','dropbox','courses','students','moodle','settings','integrations','activity','patients','analytics','booking','upload','team'];
+  var sectionTitles = {
+    dashboard: 'Dashboard',
+    dropbox: 'Dropbox Library',
+    courses: 'Course Management',
+    students: 'Students',
+    moodle: 'Moodle LMS',
+    settings: 'Settings',
+    integrations: 'Integrations',
+    activity: 'Activity',
+    patients: 'Patients',
+    analytics: 'Analytics',
+    booking: 'Booking Calendar',
+    upload: 'Upload Content',
+    team: 'Team & Roles'
+  };
+
+  function showSection(id) {
+    sections.forEach(function(s) {
+      var el = document.getElementById('section-' + s);
+      if (el) el.style.display = (s === id) ? 'block' : 'none';
+    });
+    document.querySelectorAll('.nav-item').forEach(function(item) {
+      item.classList.remove('active');
+    });
+    event.currentTarget.classList.add('active');
+    var title = document.getElementById('pageTitle');
+    if (title) title.textContent = sectionTitles[id] || id;
+    if (window.innerWidth < 900) closeSidebar();
+  }
+
+  function openModal(id) {
+    var el = document.getElementById(id);
+    if (el) el.style.display = 'flex';
+  }
+
+  function closeModal(id) {
+    var el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  }
+
+  function switchTab(tabEl, contentId) {
+    var tabs = tabEl.parentElement.querySelectorAll('.tab');
+    tabs.forEach(function(t) { t.classList.remove('active'); });
+    tabEl.classList.add('active');
+  }
+
+  function toggleSidebar() {
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('sidebarOverlay');
+    var isOpen = sidebar.classList.contains('open');
+    if (isOpen) {
+      sidebar.classList.remove('open');
+      overlay.style.display = 'none';
+    } else {
+      sidebar.classList.add('open');
+      overlay.style.display = 'block';
+    }
+  }
+
+  function closeSidebar() {
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('sidebarOverlay');
+    sidebar.classList.remove('open');
+    overlay.style.display = 'none';
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      ['modalCourse','modalInvite','modalPermissions'].forEach(function(id) {
+        closeModal(id);
+      });
+    }
+  });
+</script>
+</body>
+</html>
