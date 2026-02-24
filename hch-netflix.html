@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HCH — The College of Heilkunst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #1a2e1e;
+    --forest-mid: #243828;
+    --forest-light: #2e4535;
+    --cream: #f5f0e8;
+    --cream-dark: #e8e0cc;
+    --gold: #c9a84c;
+    --gold-light: #e0c078;
+    --gold-dim: rgba(201,168,76,0.2);
+    --text-muted: rgba(245,240,232,0.5);
+    --card-bg: rgba(36,56,40,0.8);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--forest);
+    color: var(--cream);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: linear-gradient(to bottom, rgba(26,46,30,0.98) 0%, transparent 100%);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-logo .mark {
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .nav-logo .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--cream);
+  }
+
+  .nav-logo .name span {
+    color: var(--gold);
+  }
+
+  nav ul {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  nav ul a {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover, nav ul a.active { color: var(--cream); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .search-icon {
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .search-icon:hover { color: var(--cream); }
+
+  .avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--forest-light);
+    border: 1.5px solid var(--gold-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+    cursor: pointer;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    height: 62vh;
+    min-height: 480px;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 48px 48px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, rgba(26,46,30,0.95) 40%, rgba(26,46,30,0.3) 100%),
+      linear-gradient(to top, rgba(26,46,30,1) 0%, rgba(26,46,30,0.3) 50%, transparent 100%);
+    z-index: 1;
+  }
+
+  /* Decorative botanical SVG bg */
+  .hero-botanical {
+    position: absolute;
+    right: -60px;
+    top: -20px;
+    width: 70%;
+    height: 100%;
+    opacity: 0.12;
+    z-index: 0;
+  }
+
+  /* Simulated course image */
+  .hero-image {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 60%;
+    height: 100%;
+    background: 
+      radial-gradient(ellipse at 60% 40%, rgba(201,168,76,0.08) 0%, transparent 60%),
+      linear-gradient(135deg, var(--forest-mid) 0%, #0d1a10 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+  }
+
+  /* Mandala / sacred geometry for hero art */
+  .hero-mandala {
+    width: 400px;
+    height: 400px;
+    opacity: 0.25;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 560px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .hero-badge::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    color: var(--cream);
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .hero-meta .dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--gold-dim);
+  }
+
+  .hero-meta .match {
+    color: var(--gold);
+  }
+
+  .hero-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.7);
+    margin-bottom: 32px;
+    max-width: 440px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .btn-primary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--forest);
+    border: none;
+    padding: 14px 28px;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(245,240,232,0.1);
+    color: var(--cream);
+    border: 1px solid rgba(245,240,232,0.2);
+    padding: 13px 24px;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    backdrop-filter: blur(4px);
+  }
+
+  .btn-secondary:hover { background: rgba(245,240,232,0.16); }
+
+  /* CONTINUE WATCHING */
+  .section {
+    padding: 0 48px 48px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: 0.03em;
+  }
+
+  .section-link {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .section-link:hover { opacity: 1; }
+
+  /* CONTINUE ROW */
+  .continue-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .continue-card {
+    position: relative;
+    border-radius: 2px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s;
+    background: var(--card-bg);
+    border: 1px solid rgba(201,168,76,0.08);
+  }
+
+  .continue-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    border-color: rgba(201,168,76,0.25);
+    z-index: 10;
+  }
+
+  .continue-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: rgba(245,240,232,0.4);
+    position: relative;
+  }
+
+  .continue-thumb .thumb-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.15;
+    font-size: 48px;
+  }
+
+  .play-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26,46,30,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .continue-card:hover .play-overlay { opacity: 1; }
+
+  .play-btn {
+    width: 44px;
+    height: 44px;
+    border: 2px solid var(--cream);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .progress-bar {
+    height: 2px;
+    background: rgba(245,240,232,0.15);
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+  }
+
+  .continue-info {
+    padding: 14px 16px;
+  }
+
+  .continue-info .course-tag {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .continue-info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+
+  .continue-info p {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* COURSE ROWS */
+  .course-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+
+  .course-card {
+    position: relative;
+    border-radius: 2px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s;
+    background: var(--card-bg);
+    border: 1px solid rgba(201,168,76,0.06);
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .course-card:nth-child(1) { animation-delay: 0.05s; }
+  .course-card:nth-child(2) { animation-delay: 0.1s; }
+  .course-card:nth-child(3) { animation-delay: 0.15s; }
+  .course-card:nth-child(4) { animation-delay: 0.2s; }
+  .course-card:nth-child(5) { animation-delay: 0.25s; }
+
+  .course-card:hover {
+    transform: scale(1.05) translateY(-4px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+    border-color: rgba(201,168,76,0.3);
+    z-index: 10;
+  }
+
+  .course-thumb {
+    width: 100%;
+    aspect-ratio: 3/4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .course-thumb .label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 40px 14px 14px;
+    background: linear-gradient(to top, rgba(26,46,30,0.95) 0%, transparent 100%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.3;
+  }
+
+  .course-thumb .label .sub {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .course-thumb-hover {
+    position: absolute;
+    inset: 0;
+    background: rgba(26,46,30,0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    backdrop-filter: blur(2px);
+  }
+
+  .course-card:hover .course-thumb-hover { opacity: 1; }
+
+  .course-thumb-hover .cth-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    text-align: center;
+    padding: 0 16px;
+    color: var(--cream);
+  }
+
+  .course-thumb-hover .cth-play {
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .course-thumb-hover .cth-meta {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* Unique BGs for course cards */
+  .bg-1 { background: linear-gradient(160deg, #1c3a22 0%, #0f2014 100%); }
+  .bg-2 { background: linear-gradient(160deg, #2a2010 0%, #1a1508 100%); }
+  .bg-3 { background: linear-gradient(160deg, #0e2828 0%, #091a1a 100%); }
+  .bg-4 { background: linear-gradient(160deg, #2a1a2a 0%, #1a0f1a 100%); }
+  .bg-5 { background: linear-gradient(160deg, #1a2a1a 0%, #0f1a0f 100%); }
+
+  .glow-gold { position: absolute; top: 20%; left: 50%; transform: translateX(-50%); width: 80px; height: 80px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.3) 0%, transparent 70%); }
+
+  /* SVG herb illustration layer */
+  .herb-svg {
+    position: absolute;
+    opacity: 0.2;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+  }
+
+  /* AUDIO ROW */
+  .audio-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .audio-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    background: rgba(36,56,40,0.4);
+    border: 1px solid rgba(201,168,76,0.06);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .audio-item:hover {
+    background: rgba(36,56,40,0.8);
+    border-color: rgba(201,168,76,0.2);
+  }
+
+  .audio-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: rgba(201,168,76,0.3);
+    width: 36px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .audio-item:hover .audio-num { display: none; }
+
+  .audio-play-icon {
+    display: none;
+    width: 36px;
+    text-align: center;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .audio-item:hover .audio-play-icon { display: block; }
+
+  .audio-info { flex: 1; }
+
+  .audio-info .title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: var(--cream);
+  }
+
+  .audio-info .sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .audio-dur {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .audio-wave {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .audio-item:hover .audio-wave { opacity: 1; }
+
+  .audio-wave span {
+    display: block;
+    width: 2px;
+    background: var(--gold);
+    border-radius: 2px;
+    animation: wave 0.8s ease-in-out infinite alternate;
+  }
+
+  .audio-wave span:nth-child(1) { height: 8px; animation-delay: 0s; }
+  .audio-wave span:nth-child(2) { height: 16px; animation-delay: 0.1s; }
+  .audio-wave span:nth-child(3) { height: 12px; animation-delay: 0.2s; }
+  .audio-wave span:nth-child(4) { height: 20px; animation-delay: 0.05s; }
+  .audio-wave span:nth-child(5) { height: 10px; animation-delay: 0.15s; }
+
+  @keyframes wave {
+    from { transform: scaleY(0.4); }
+    to { transform: scaleY(1); }
+  }
+
+  /* BOTTOM NOW PLAYING BAR */
+  .now-playing {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(15,26,17,0.97);
+    border-top: 1px solid rgba(201,168,76,0.15);
+    backdrop-filter: blur(20px);
+    padding: 16px 48px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    z-index: 100;
+  }
+
+  .np-thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: 2px;
+    background: var(--forest-light);
+    border: 1px solid var(--gold-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .np-info { flex: 1; min-width: 0; }
+
+  .np-info .np-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: var(--cream);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .np-info .np-course {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 2px;
+  }
+
+  .np-controls {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex: 2;
+    justify-content: center;
+  }
+
+  .np-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+    font-size: 14px;
+  }
+
+  .np-btn:hover { color: var(--cream); }
+
+  .np-btn.play {
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid rgba(201,168,76,0.5);
+    border-radius: 50%;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .np-btn.play:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  .np-progress {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .np-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .np-bar {
+    flex: 1;
+    height: 2px;
+    background: rgba(245,240,232,0.1);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .np-bar-fill {
+    width: 38%;
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    position: relative;
+  }
+
+  .np-bar-fill::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  /* SPACER for fixed bar */
+  .bottom-spacer { height: 90px; }
+
+  /* Decorative gold line divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
+    margin: 0 48px 48px;
+  }
+
+  /* FILTER BAR */
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: rgba(36,56,40,0.6);
+    border: 1px solid rgba(201,168,76,0.15);
+    color: var(--text-muted);
+    padding: 7px 16px;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover {
+    color: var(--cream);
+    border-color: rgba(201,168,76,0.35);
+    background: rgba(36,56,40,0.9);
+  }
+
+  .filter-btn.active {
+    background: rgba(201,168,76,0.12);
+    border-color: rgba(201,168,76,0.5);
+    color: var(--gold);
+  }
+
+  .filter-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(201,168,76,0.15);
+    margin: 0 4px;
+    flex-shrink: 0;
+  }
+
+  .filter-type {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .type-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(36,56,40,0.4);
+    border: 1px solid rgba(201,168,76,0.1);
+    color: var(--text-muted);
+    padding: 6px 14px;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
+  .type-btn:hover { color: var(--cream); border-color: rgba(201,168,76,0.3); }
+  .type-btn.active { color: var(--gold); border-color: rgba(201,168,76,0.4); background: rgba(201,168,76,0.08); }
+
+  .filter-empty {
+    padding: 48px;
+    text-align: center;
+    color: var(--text-muted);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    display: none;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="mark">H</div>
+    <div class="name">Hahnemann Center <span>· The College</span></div>
+  </div>
+  <ul>
+    <li><a href="#" class="active">Home</a></li>
+    <li><a href="#">My Courses</a></li>
+    <li><a href="#">Library</a></li>
+    <li><a href="#">Sessions</a></li>
+    <li><a href="#">Resources</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="search-icon">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </div>
+    <div class="avatar">JS</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-image">
+    <!-- Sacred geometry mandala as hero art stand-in -->
+    <svg class="hero-mandala" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="200" cy="200" r="190" stroke="#c9a84c" stroke-width="0.5" opacity="0.5"/>
+      <circle cx="200" cy="200" r="150" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+      <circle cx="200" cy="200" r="100" stroke="#c9a84c" stroke-width="0.5" opacity="0.6"/>
+      <circle cx="200" cy="200" r="60" stroke="#c9a84c" stroke-width="0.5" opacity="0.7"/>
+      <circle cx="200" cy="200" r="20" stroke="#c9a84c" stroke-width="1" opacity="0.8"/>
+      <!-- 12 petals -->
+      <g stroke="#c9a84c" stroke-width="0.4" opacity="0.5">
+        <ellipse cx="200" cy="125" rx="18" ry="75" transform="rotate(0 200 200)"/>
+        <ellipse cx="200" cy="125" rx="18" ry="75" transform="rotate(30 200 200)"/>
+        <ellipse cx="200" cy="125" rx="18" ry="75" transform="rotate(60 200 200)"/>
+        <ellipse cx="200" cy="125" rx="18" ry="75" transform="rotate(90 200 200)"/>
+        <ellipse cx="200" cy="125" rx="18" ry="75" transform="rotate(120 200 200)"/>
+        <ellipse cx="200" cy="125" rx="18" ry="75" transform="rotate(150 200 200)"/>
+        <ellipse cx="200" cy="125" rx="18" ry="75" transform="rotate(180 200 200)"/>
+        <ellipse cx="200" cy="125" rx="18" ry="75" transform="rotate(210 200 200)"/>
+        <ellipse cx="200" cy="125" rx="18" ry="75" transform="rotate(240 200 200)"/>
+        <ellipse cx="200" cy="125" rx="18" ry="75" transform="rotate(270 200 200)"/>
+        <ellipse cx="200" cy="125" rx="18" ry="75" transform="rotate(300 200 200)"/>
+        <ellipse cx="200" cy="125" rx="18" ry="75" transform="rotate(330 200 200)"/>
+      </g>
+      <!-- Star of David inner -->
+      <polygon points="200,110 230,160 170,160" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.6"/>
+      <polygon points="200,290 230,240 170,240" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.6"/>
+      <!-- Radial lines -->
+      <g stroke="#c9a84c" stroke-width="0.3" opacity="0.3">
+        <line x1="200" y1="10" x2="200" y2="390"/>
+        <line x1="10" y1="200" x2="390" y2="200"/>
+        <line x1="60" y1="60" x2="340" y2="340"/>
+        <line x1="340" y1="60" x2="60" y2="340"/>
+        <line x1="130" y1="17" x2="270" y2="383"/>
+        <line x1="17" y1="130" x2="383" y2="270"/>
+        <line x1="270" y1="17" x2="130" y2="383"/>
+        <line x1="383" y1="130" x2="17" y2="270"/>
+      </g>
+    </svg>
+  </div>
+  <div class="hero-bg"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">Featured Course</div>
+    <h1 class="hero-title">The Dynamic<br><em>Materia Medica</em></h1>
+    <div class="hero-meta">
+      <span class="match">97% Match</span>
+      <div class="dot"></div>
+      <span>Year II</span>
+      <div class="dot"></div>
+      <span>32 Lectures</span>
+      <div class="dot"></div>
+      <span>Audio + Video</span>
+    </div>
+    <p class="hero-desc">An in-depth exploration of the remedies most central to Heilkunst practice — their essence, keynotes, and place within the dynamic system of cure. Includes clinical case studies and live consultation recordings.</p>
+    <div class="hero-actions">
+      <button class="btn-primary">
+        <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg>
+        Continue Lecture 7
+      </button>
+      <button class="btn-secondary">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+        Course Details
+      </button>
+    </div>
+  </div>
+</div>
+<!-- FILTER BAR -->
+<section class="section" style="padding-bottom: 24px; padding-top: 32px;">
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All Content</button>
+    <button class="filter-btn" data-filter="year1">Year I</button>
+    <button class="filter-btn" data-filter="year2">Year II</button>
+    <button class="filter-btn" data-filter="year3">Year III</button>
+    <button class="filter-btn" data-filter="certificate">Certificate</button>
+    <button class="filter-btn" data-filter="conference">Conferences</button>
+    <button class="filter-btn" data-filter="webcast">Webcasts</button>
+    <button class="filter-btn" data-filter="audio">Audio Only</button>
+    <div class="filter-divider"></div>
+    <div class="filter-type">
+      <button class="type-btn active" data-type="all">
+        <svg width="11" height="11" fill="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        All Types
+      </button>
+      <button class="type-btn" data-type="video">
+        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Video
+      </button>
+      <button class="type-btn" data-type="audio">
+        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/></svg>
+        Audio
+      </button>
+      <button class="type-btn" data-type="docs">
+        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Docs
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTINUE LEARNING -->
+<section class="section" data-section="continue">
+  <div class="section-header">
+    <h2 class="section-title">Continue Learning</h2>
+    <a href="#" class="section-link">View All</a>
+  </div>
+  <div class="continue-row">
+    <div class="continue-card" data-cat="year1" data-type="audio">
+      <div class="continue-thumb bg-1">
+        <div class="thumb-icon">🎧</div>
+        <div class="play-overlay"><div class="play-btn"><svg width="12" height="12" fill="white" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:68%"></div></div>
+      <div class="continue-info">
+        <div class="course-tag">Year I — Dynamic Law</div>
+        <h3>Audio: The Organon & Foundation of Heilkunst</h3>
+        <p>68% complete · 24 min remaining</p>
+      </div>
+    </div>
+    <div class="continue-card" data-cat="year2" data-type="video">
+      <div class="continue-thumb bg-2">
+        <div class="thumb-icon">🎬</div>
+        <div class="play-overlay"><div class="play-btn"><svg width="12" height="12" fill="white" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:22%"></div></div>
+      <div class="continue-info">
+        <div class="course-tag">Year II — DynBC Resources</div>
+        <h3>Physiology of Mind & Consciousness</h3>
+        <p>22% complete · 41 min remaining</p>
+      </div>
+    </div>
+    <div class="continue-card" data-cat="conference" data-type="video">
+      <div class="continue-thumb bg-3">
+        <div class="thumb-icon">🌊</div>
+        <div class="play-overlay"><div class="play-btn"><svg width="12" height="12" fill="white" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:91%"></div></div>
+      <div class="continue-info">
+        <div class="course-tag">Conference — Bahamas 2019</div>
+        <h3>Romantic Healthcare — Day 1</h3>
+        <p>91% complete · 5 min remaining</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ENROLLED COURSES — DEGREE PROGRAM -->
+<section class="section" data-section="courses">
+  <div class="section-header">
+    <h2 class="section-title">Degree Program — Your Enrolled Courses</h2>
+    <a href="#" class="section-link">Browse All</a>
+  </div>
+  <div class="course-row">
+
+    <div class="course-card" data-cat="year1" data-type="video audio docs">
+      <div class="course-thumb bg-1">
+        <div class="glow-gold"></div>
+        <svg class="herb-svg" viewBox="0 0 200 300" fill="none"><path d="M100 280 Q100 200 80 150 Q60 100 80 60" stroke="#c9a84c" stroke-width="1" fill="none"/><ellipse cx="80" cy="130" rx="30" ry="20" stroke="#c9a84c" stroke-width="0.8" fill="none" transform="rotate(-20 80 130)"/><ellipse cx="110" cy="100" rx="25" ry="16" stroke="#c9a84c" stroke-width="0.8" fill="none" transform="rotate(15 110 100)"/><ellipse cx="75" cy="80" rx="20" ry="14" stroke="#c9a84c" stroke-width="0.8" fill="none" transform="rotate(-30 75 80)"/></svg>
+        <div class="label"><span class="sub">Year I</span>Dynamic Law & Organon</div>
+        <div class="course-thumb-hover">
+          <div class="cth-play"><svg width="12" height="12" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+          <div class="cth-title">Resume: Audio Files</div>
+          <div class="cth-meta">Audio · Study Guides · Docs</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-card" data-cat="year1" data-type="video audio">
+      <div class="course-thumb bg-5">
+        <div class="glow-gold"></div>
+        <svg class="herb-svg" viewBox="0 0 200 300" fill="none"><circle cx="100" cy="150" r="60" stroke="#c9a84c" stroke-width="0.6" fill="none"/><circle cx="100" cy="150" r="40" stroke="#c9a84c" stroke-width="0.6" fill="none"/><circle cx="100" cy="150" r="20" stroke="#c9a84c" stroke-width="0.6" fill="none"/><line x1="100" y1="80" x2="100" y2="220" stroke="#c9a84c" stroke-width="0.4"/><line x1="40" y1="120" x2="160" y2="180" stroke="#c9a84c" stroke-width="0.4"/><line x1="160" y1="120" x2="40" y2="180" stroke="#c9a84c" stroke-width="0.4"/></svg>
+        <div class="label"><span class="sub">Year I</span>Dynamic Physiology — Foundations</div>
+        <div class="course-thumb-hover">
+          <div class="cth-play"><svg width="12" height="12" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+          <div class="cth-title">Dr. Richard Saumarez</div>
+          <div class="cth-meta">Video + Audio content</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-card" data-cat="year2" data-type="video audio docs">
+      <div class="course-thumb bg-2">
+        <div class="glow-gold"></div>
+        <svg class="herb-svg" viewBox="0 0 200 300" fill="none"><path d="M100 280 L100 100" stroke="#c9a84c" stroke-width="0.8" fill="none"/><path d="M100 200 Q130 180 150 150 Q130 160 100 155" stroke="#c9a84c" stroke-width="0.8" fill="none"/><path d="M100 170 Q70 150 50 120 Q70 130 100 128" stroke="#c9a84c" stroke-width="0.8" fill="none"/><path d="M100 140 Q130 120 140 90 Q120 105 100 102" stroke="#c9a84c" stroke-width="0.8" fill="none"/><ellipse cx="100" cy="80" rx="15" ry="25" stroke="#c9a84c" stroke-width="0.8" fill="none"/></svg>
+        <div class="label"><span class="sub">Year II</span>DynBC — Heilkunst Case Studies</div>
+        <div class="course-thumb-hover">
+          <div class="cth-play"><svg width="12" height="12" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+          <div class="cth-title">Continue: Resources 10/11</div>
+          <div class="cth-meta">4 year cohorts · Assignments</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-card" data-cat="year2" data-type="video">
+      <div class="course-thumb bg-3">
+        <div class="glow-gold"></div>
+        <svg class="herb-svg" viewBox="0 0 200 300" fill="none"><polygon points="100,40 125,90 180,90 135,125 150,175 100,145 50,175 65,125 20,90 75,90" stroke="#c9a84c" stroke-width="0.8" fill="none"/><circle cx="100" cy="110" r="18" stroke="#c9a84c" stroke-width="0.6" fill="none"/><line x1="100" y1="145" x2="100" y2="280" stroke="#c9a84c" stroke-width="0.8"/></svg>
+        <div class="label"><span class="sub">Year II</span>Physiology of Mind & Consciousness</div>
+        <div class="course-thumb-hover">
+          <div class="cth-play"><svg width="12" height="12" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+          <div class="cth-title">3-part series + Esoteric Dimensions</div>
+          <div class="cth-meta">2GB+ · Video lectures</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-card" data-cat="year3" data-type="video docs">
+      <div class="course-thumb bg-4">
+        <div class="glow-gold"></div>
+        <svg class="herb-svg" viewBox="0 0 200 300" fill="none"><path d="M100 50 Q120 80 115 120 Q110 160 100 180 Q90 160 85 120 Q80 80 100 50Z" stroke="#c9a84c" stroke-width="0.8" fill="none"/><path d="M60 100 Q80 110 100 100 Q120 90 140 100" stroke="#c9a84c" stroke-width="0.6" fill="none"/><path d="M50 140 Q75 145 100 140 Q125 135 150 140" stroke="#c9a84c" stroke-width="0.6" fill="none"/><line x1="100" y1="180" x2="100" y2="280" stroke="#c9a84c" stroke-width="0.8"/></svg>
+        <div class="label"><span class="sub">Year III</span>Advanced Therapeutics & Clinical</div>
+        <div class="course-thumb-hover">
+          <div class="cth-play"><svg width="12" height="12" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+          <div class="cth-title">Advanced Topics Workshop</div>
+          <div class="cth-meta">Content + Docs · 2GB+</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WEBCAST SERIES -->
+<section class="section" data-section="webcast">
+  <div class="section-header">
+    <h2 class="section-title">Dynamic Regimen Webcast Series</h2>
+    <a href="#" class="section-link">Full Series (10 Episodes)</a>
+  </div>
+  <div class="audio-row" data-cat="webcast">
+
+    <div class="audio-item" data-cat="webcast" data-type="video">
+      <div class="audio-num">1</div>
+      <div class="audio-play-icon"><svg width="14" height="14" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      <div class="audio-info">
+        <div class="title">Episode 1 — Introduction to the Dynamic Regimen</div>
+        <div class="sub">Dynamic Regimen Webcast Series · Heilkunst Practice</div>
+      </div>
+      <div class="audio-wave"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="audio-dur">48:22</div>
+    </div>
+
+    <div class="audio-item" data-cat="webcast" data-type="video">
+      <div class="audio-num">2</div>
+      <div class="audio-play-icon"><svg width="14" height="14" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      <div class="audio-info">
+        <div class="title">Episode 2 — Nutrition & Dynamic Nutrition Principles</div>
+        <div class="sub">Dynamic Regimen Webcast Series · Heilkunst Practice</div>
+      </div>
+      <div class="audio-wave"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="audio-dur">51:14</div>
+    </div>
+
+    <div class="audio-item" data-cat="webcast" data-type="video">
+      <div class="audio-num">3</div>
+      <div class="audio-play-icon"><svg width="14" height="14" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      <div class="audio-info">
+        <div class="title">Episode 3 — Exercise, Movement & Vital Force</div>
+        <div class="sub">Dynamic Regimen Webcast Series · Heilkunst Practice</div>
+      </div>
+      <div class="audio-wave"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="audio-dur">44:50</div>
+    </div>
+
+    <div class="audio-item" data-cat="webcast" data-type="video" style="background:rgba(201,168,76,0.06); border-color:rgba(201,168,76,0.2);">
+      <div class="audio-num" style="color:var(--gold);opacity:1">▶</div>
+      <div class="audio-play-icon"><svg width="14" height="14" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      <div class="audio-info">
+        <div class="title" style="color:var(--gold-light)">Episode 4 — Sleep, Rest & Rhythmic Renewal <em style="font-family:Cormorant Garamond;font-style:italic;color:var(--gold);font-size:12px;margin-left:8px">Now Playing</em></div>
+        <div class="sub">Dynamic Regimen Webcast Series · Heilkunst Practice</div>
+      </div>
+      <div class="audio-wave" style="opacity:1"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="audio-dur">39:08</div>
+    </div>
+
+    <div class="audio-item" data-cat="webcast" data-type="video">
+      <div class="audio-num">5</div>
+      <div class="audio-play-icon"><svg width="14" height="14" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      <div class="audio-info">
+        <div class="title">Episode 5 — Emotional Hygiene & the Psyche</div>
+        <div class="sub">Dynamic Regimen Webcast Series · Heilkunst Practice</div>
+      </div>
+      <div class="audio-wave"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="audio-dur">56:32</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATE PROGRAMS -->
+<section class="section" data-section="certificate">
+  <div class="section-header">
+    <h2 class="section-title">Certificate Programs</h2>
+    <a href="#" class="section-link">All Certificates</a>
+  </div>
+  <div class="course-row">
+
+    <div class="course-card" data-cat="certificate" data-type="audio video docs">
+      <div class="course-thumb bg-3">
+        <div class="glow-gold"></div>
+        <svg class="herb-svg" viewBox="0 0 200 300" fill="none"><path d="M100 60 Q120 90 120 130 Q120 180 100 220 Q80 180 80 130 Q80 90 100 60Z" stroke="#c9a84c" stroke-width="0.8" fill="none"/><line x1="100" y1="220" x2="100" y2="280" stroke="#c9a84c" stroke-width="0.8"/><path d="M70 150 Q85 140 100 145 Q115 140 130 150" stroke="#c9a84c" stroke-width="0.5" fill="none"/></svg>
+        <div class="label"><span class="sub">Certificate</span>Animal Care — Heilkunst for Animals</div>
+        <div class="course-thumb-hover">
+          <div class="cth-play"><svg width="12" height="12" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+          <div class="cth-title">Audio + Content + Teleconferences</div>
+          <div class="cth-meta">3-part program</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-card" data-cat="certificate" data-type="video docs">
+      <div class="course-thumb bg-1">
+        <div class="glow-gold"></div>
+        <svg class="herb-svg" viewBox="0 0 200 300" fill="none"><circle cx="100" cy="120" r="50" stroke="#c9a84c" stroke-width="0.6" fill="none"/><path d="M60 120 Q100 80 140 120 Q100 160 60 120Z" stroke="#c9a84c" stroke-width="0.6" fill="none"/><line x1="100" y1="170" x2="100" y2="280" stroke="#c9a84c" stroke-width="0.8"/></svg>
+        <div class="label"><span class="sub">Certificate</span>Biological Laws Program</div>
+        <div class="course-thumb-hover">
+          <div class="cth-play"><svg width="12" height="12" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+          <div class="cth-title">Part I & Part II</div>
+          <div class="cth-meta">Complete 2-part series</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-card" data-cat="certificate" data-type="video docs">
+      <div class="course-thumb bg-4">
+        <div class="glow-gold"></div>
+        <svg class="herb-svg" viewBox="0 0 200 300" fill="none"><rect x="60" y="60" width="80" height="100" rx="4" stroke="#c9a84c" stroke-width="0.6" fill="none"/><line x1="80" y1="90" x2="120" y2="90" stroke="#c9a84c" stroke-width="0.5"/><line x1="80" y1="110" x2="120" y2="110" stroke="#c9a84c" stroke-width="0.5"/><line x1="80" y1="130" x2="105" y2="130" stroke="#c9a84c" stroke-width="0.5"/><line x1="100" y1="160" x2="100" y2="280" stroke="#c9a84c" stroke-width="0.8"/></svg>
+        <div class="label"><span class="sub">Certificate</span>Anthroposophic Remedies</div>
+        <div class="course-thumb-hover">
+          <div class="cth-play"><svg width="12" height="12" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+          <div class="cth-title">Part II & Part III</div>
+          <div class="cth-meta">Advanced remedies study</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-card" data-cat="certificate" data-type="video docs">
+      <div class="course-thumb bg-2">
+        <div class="glow-gold"></div>
+        <svg class="herb-svg" viewBox="0 0 200 300" fill="none"><path d="M60 200 Q100 100 140 200" stroke="#c9a84c" stroke-width="0.8" fill="none"/><path d="M70 170 Q100 120 130 170" stroke="#c9a84c" stroke-width="0.6" fill="none"/><circle cx="100" cy="90" r="20" stroke="#c9a84c" stroke-width="0.6" fill="none"/><line x1="100" y1="200" x2="100" y2="280" stroke="#c9a84c" stroke-width="0.8"/></svg>
+        <div class="label"><span class="sub">Certificate</span>Autism & Developmental Care</div>
+        <div class="course-thumb-hover">
+          <div class="cth-play"><svg width="12" height="12" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+          <div class="cth-title">Content · Movies · Notes</div>
+          <div class="cth-meta">Full weekend program</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="course-card" data-cat="certificate" data-type="video">
+      <div class="course-thumb bg-5">
+        <div class="glow-gold"></div>
+        <svg class="herb-svg" viewBox="0 0 200 300" fill="none"><polygon points="100,50 140,100 190,110 155,150 165,200 100,175 35,200 45,150 10,110 60,100" stroke="#c9a84c" stroke-width="0.7" fill="none"/><circle cx="100" cy="130" r="22" stroke="#c9a84c" stroke-width="0.5" fill="none"/><line x1="100" y1="175" x2="100" y2="280" stroke="#c9a84c" stroke-width="0.8"/></svg>
+        <div class="label"><span class="sub">Certificate</span>Dynamic Education — Units 1–10</div>
+        <div class="course-thumb-hover">
+          <div class="cth-play"><svg width="12" height="12" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+          <div class="cth-title">10-unit complete program</div>
+          <div class="cth-meta">All units share single access</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONFERENCES & SCHOOLS -->
+<section class="section" data-section="conference">
+  <div class="section-header">
+    <h2 class="section-title">Conferences & Seasonal Schools</h2>
+    <a href="#" class="section-link">All Events</a>
+  </div>
+  <div class="continue-row">
+
+    <div class="continue-card" data-cat="conference" data-type="video">
+      <div class="continue-thumb bg-2">
+        <div class="thumb-icon">🌴</div>
+        <div class="play-overlay"><div class="play-btn"><svg width="12" height="12" fill="white" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
+      </div>
+      <div class="continue-info" style="padding-top:12px">
+        <div class="course-tag">Conference · August 2019</div>
+        <h3>Romantic Healthcare — Bahamas Day 1</h3>
+        <p>1GB+ · Full day recording</p>
+      </div>
+    </div>
+
+    <div class="continue-card" data-cat="conference" data-type="video">
+      <div class="continue-thumb bg-4">
+        <div class="thumb-icon">🌊</div>
+        <div class="play-overlay"><div class="play-btn"><svg width="12" height="12" fill="white" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
+      </div>
+      <div class="continue-info" style="padding-top:12px">
+        <div class="course-tag">Conference · August 2019</div>
+        <h3>Romantic Healthcare — Bahamas Day 2</h3>
+        <p>1GB+ · Full day recording</p>
+      </div>
+    </div>
+
+    <div class="continue-card" data-cat="conference" data-type="video">
+      <div class="continue-thumb bg-1">
+        <div class="thumb-icon">🍂</div>
+        <div class="play-overlay"><div class="play-btn"><svg width="12" height="12" fill="white" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
+      </div>
+      <div class="continue-info" style="padding-top:12px">
+        <div class="course-tag">Autumn School · 2025</div>
+        <h3>Autumn School 2025 — Full Program</h3>
+        <p>New · Just released</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- AUDIO ARCHIVE -->
+<section class="section" data-section="audio">
+  <div class="section-header">
+    <h2 class="section-title">Audio Lectures — Dynamic Law Series</h2>
+    <a href="#" class="section-link">Full Archive</a>
+  </div>
+  <div class="audio-row">
+
+    <div class="audio-item" data-cat="audio year1" data-type="audio">
+      <div class="audio-num">1</div>
+      <div class="audio-play-icon"><svg width="14" height="14" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      <div class="audio-info">
+        <div class="title">Dynamic Law — Foundation Lectures</div>
+        <div class="sub">Year I · Dr. Rudi Verspoor · Audio Files</div>
+      </div>
+      <div class="audio-wave"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="audio-dur">1h 12m</div>
+    </div>
+
+    <div class="audio-item" data-cat="audio year1" data-type="audio">
+      <div class="audio-num">2</div>
+      <div class="audio-play-icon"><svg width="14" height="14" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      <div class="audio-info">
+        <div class="title">Dynamic Law — QuickTime Slide Lectures</div>
+        <div class="sub">Year I · Dr. Rudi Verspoor · Slideshow Audio</div>
+      </div>
+      <div class="audio-wave"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="audio-dur">58:44</div>
+    </div>
+
+    <div class="audio-item" data-cat="audio year2" data-type="audio">
+      <div class="audio-num">3</div>
+      <div class="audio-play-icon"><svg width="14" height="14" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      <div class="audio-info">
+        <div class="title">Archived Teleconferences — General Series</div>
+        <div class="sub">Year II · DynBC · Teleconference recordings</div>
+      </div>
+      <div class="audio-wave"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="audio-dur">Multiple</div>
+    </div>
+
+    <div class="audio-item" data-cat="audio certificate" data-type="audio">
+      <div class="audio-num">4</div>
+      <div class="audio-play-icon"><svg width="14" height="14" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      <div class="audio-info">
+        <div class="title">Animal Care Certificate — Teleconferences</div>
+        <div class="sub">Certificate Program · Live Q&A recordings</div>
+      </div>
+      <div class="audio-wave"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="audio-dur">Multiple</div>
+    </div>
+
+    <div class="audio-item" data-cat="audio year1" data-type="audio">
+      <div class="audio-num">5</div>
+      <div class="audio-play-icon"><svg width="14" height="14" fill="#c9a84c" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      <div class="audio-info">
+        <div class="title">AOH — Art of Heilkunst Teleconferences 10/11</div>
+        <div class="sub">Year I · AOH Program · Teleconference series</div>
+      </div>
+      <div class="audio-wave"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="audio-dur">Multiple</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="bottom-spacer"></div>
+
+<!-- NOW PLAYING BAR -->
+<div class="now-playing">
+  <div class="np-thumb">🎧</div>
+  <div class="np-info">
+    <div class="np-title">Episode 4 — Sleep, Rest & Rhythmic Renewal</div>
+    <div class="np-course">Dynamic Regimen Webcast Series · Heilkunst Practice</div>
+  </div>
+  <div class="np-controls">
+    <button class="np-btn" title="Previous"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 20L9 12l10-8v16zM5 4v16H3V4h2z"/></svg></button>
+    <button class="np-btn" title="Rewind 15s"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.61"/></svg></button>
+    <button class="np-btn play"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></button>
+    <button class="np-btn" title="Forward 15s"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.49-3.61"/></svg></button>
+    <button class="np-btn" title="Next"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M5 4l10 8-10 8V4zM19 20V4h2v16h-2z"/></svg></button>
+  </div>
+  <div class="np-progress">
+    <span class="np-time">17:02</span>
+    <div class="np-bar"><div class="np-bar-fill"></div></div>
+    <span class="np-time">39:08</span>
+  </div>
+</div>
+
+
+<script>
+  // Filter logic
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const typeBtns = document.querySelectorAll('.type-btn');
+
+  let activeFilter = 'all';
+  let activeType = 'all';
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      applyFilters();
+    });
+  });
+
+  typeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      typeBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeType = btn.dataset.type;
+      applyFilters();
+    });
+  });
+
+  function applyFilters() {
+    const cards = document.querySelectorAll('.course-card, .continue-card, .audio-item');
+    cards.forEach(card => {
+      const cat = card.dataset.cat || '';
+      const type = card.dataset.type || '';
+      const catMatch = activeFilter === 'all' || cat.includes(activeFilter);
+      const typeMatch = activeType === 'all' || type.includes(activeType);
+      card.style.display = (catMatch && typeMatch) ? '' : 'none';
+    });
+
+    // Hide empty section headers
+    document.querySelectorAll('.section').forEach(section => {
+      const visible = [...section.querySelectorAll('.course-card, .continue-card, .audio-item')]
+        .some(el => el.style.display !== 'none');
+      const header = section.querySelector('.section-header');
+      const divider = section.nextElementSibling;
+      if (header) section.style.display = visible ? '' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>
