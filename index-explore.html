@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Hahnemann Center for Heilkunst & Homeopathy — Split-CTA Variant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .variant-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: var(--gold); color: var(--on-accent); text-align: center; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem; font-weight: 600; }
+  .variant-banner a { color: var(--on-accent); text-decoration: underline; }
+  nav { top: 28px; }
+
+  /* Split hero: orientation left, intent cards right (content pattern from reference) */
+  .hero-split { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; background: var(--surface); position: relative; overflow: hidden; padding-top: 80px; }
+  .hero-split-left { padding: 4rem 3rem 4rem 5rem; position: relative; z-index: 2; }
+  .hero-split-right { padding: 4rem 5rem 4rem 3rem; position: relative; z-index: 2; }
+  .hero-rings { position: absolute; top: 50%; right: -6%; transform: translateY(-50%); width: 48%; max-width: 620px; opacity: 0.08; pointer-events: none; z-index: 0; }
+  .hero-eyebrow { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+  .hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+  .hero-h1 { font-family: 'Spectral', serif; font-size: clamp(2.8rem, 5vw, 4.4rem); font-weight: 500; line-height: 1.08; color: var(--ink); margin-bottom: 1.75rem; }
+  .hero-h1 em { font-style: italic; color: var(--gold-light); }
+  .hero-desc { font-size: 1.05rem; font-weight: 300; line-height: 1.75; color: var(--text-mid); max-width: 44ch; margin-bottom: 2.5rem; }
+  .hero-cta-row { margin-bottom: 1.5rem; }
+  .free-pill { display: inline-flex; align-items: center; gap: 0.7rem; padding: 0.7rem 1.1rem 0.7rem 0.7rem; text-decoration: none; border-radius: 999px; background: rgba(var(--gold-rgb), 0.1); border: 1px solid rgba(var(--gold-rgb), 0.3); transition: background 0.2s, border-color 0.2s; }
+  .free-pill:hover { background: rgba(var(--gold-rgb), 0.18); border-color: var(--gold); }
+  .free-pill .ftag { flex-shrink: 0; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--on-accent); background: var(--gold); padding: 0.25rem 0.6rem; border-radius: 999px; }
+  .free-pill .ftext { font-size: 0.82rem; color: var(--text-mid); }
+  .free-pill .ftext strong { color: var(--gold); font-weight: 500; }
+
+  /* right-side intent cards */
+  .intent-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-light); margin-bottom: 1.25rem; }
+  .intent-card { display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: var(--surface); border: 1.5px solid rgba(31, 95, 168, 0.35); border-radius: 8px; padding: 1.6rem 1.85rem; margin-bottom: 1rem; text-decoration: none; box-shadow: 0 4px 20px rgba(21, 41, 77, 0.07); transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; }
+  .intent-card:hover { transform: translateY(-2px); border-color: var(--gold); box-shadow: 0 8px 28px rgba(21, 41, 77, 0.14); }
+  .intent-card h3 { font-family: 'Spectral', serif; font-size: 1.6rem; font-weight: 400; color: var(--ink); }
+  .intent-card p { font-size: 0.85rem; color: var(--text-mid); margin-top: 0.3rem; }
+  .intent-card .arr { font-size: 1.3rem; color: var(--gold); flex-shrink: 0; transition: transform 0.2s; }
+  .intent-card:hover .arr { transform: translateX(4px); }
+  .hero-mini-stats { display: flex; gap: 2rem; margin-top: 2.5rem; padding-top: 1.75rem; border-top: 1px solid rgba(var(--deep-rgb), 0.1); }
+  .hero-mini-stats .n { font-family: 'Spectral', serif; font-size: 1.6rem; color: var(--gold-light); line-height: 1; }
+  .hero-mini-stats .l { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); margin-top: 0.35rem; }
+
+  @media (max-width: 900px) {
+    .hero-split { grid-template-columns: 1fr; }
+    .hero-split-left { padding: 3rem 2rem 1rem; }
+    .hero-split-right { padding: 1rem 2rem 4rem; }
+    .hero-rings { display: none; }
+  }
+</style>
+<style id="hch-gate-guard">html.hch-locked body>*:not(#hch-gate){visibility:hidden!important}html.hch-locked{background:#15294d}</style>
+<script>if(sessionStorage.getItem('hch-unlocked')!=='1'){document.documentElement.className+=' hch-locked';}</script>
+</head>
+<body>
+
+<div class="variant-banner">Homepage B · Split-CTA layout — <a href="index.html">see stacked layout (A)</a></div>
+
+<nav>
+  <a href="index-explore.html" class="nav-logo" style="text-decoration:none;">
+    <img src="assets/logo-mark.jpg" alt="Hahnemann Center" class="nav-logo-mark">
+    <span class="nav-logo-text"><span class="nav-logo-main">Hahnemann Center</span><span class="nav-logo-sub">Heilkunst &amp; Homeopathy</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="heilkunst.html">Learn</a></li>
+    <li><a href="conditions.html">Get Treatment</a></li>
+    <li><a href="study.html">Study</a></li>
+    <li><a href="resources.html">Free Resources</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="membership.html" class="nav-cta">Become a Member</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="heilkunst.html">Learn</a><a href="conditions.html">Get Treatment</a><a href="study.html">Study</a><a href="resources.html">Free Resources</a><a href="about.html">About</a><a href="membership.html" class="mobile-cta">Become a Member</a>
+</div>
+
+<!-- ===== SPLIT HERO ===== -->
+<section class="hero-split">
+  <!-- brand figure, faint, behind the intent cards -->
+  <img src="assets/logo-mark-transparent.png" alt="" class="hero-rings" aria-hidden="true">
+
+  <div class="hero-split-left">
+    <div class="hero-eyebrow">Est. 1997 · Ottawa, Canada</div>
+    <h1 class="hero-h1">There is a complete system behind the word <em>homeopathy</em></h1>
+    <p class="hero-desc">Heilkunst is the full system of medicine Dr. Hahnemann founded. Homeopathy is only one part of it. See how it actually works, then choose the path that fits you.</p>
+    <div class="hero-cta-row">
+      <a href="heilkunst.html" class="btn-primary btn-primary-lg">See how Heilkunst works <span class="btn-arrow">→</span></a>
+    </div>
+    <a href="resources.html" class="free-pill">
+      <span class="ftag">Free</span>
+      <span class="ftext">Try the first-aid course, <strong>Homeopathy at Home, Work and Play&nbsp;→</strong></span>
+    </a>
+  </div>
+
+  <div class="hero-split-right">
+    <div class="intent-label">Already know what you need?</div>
+    <a href="conditions.html" class="intent-card">
+      <div>
+        <h3>Find treatment for a condition</h3>
+        <p>For patients · autism, chronic illness, and more</p>
+      </div>
+      <span class="arr">→</span>
+    </a>
+    <a href="study.html" class="intent-card">
+      <div>
+        <h3>Study Heilkunst</h3>
+        <p>For students and practitioners</p>
+      </div>
+      <span class="arr">→</span>
+    </a>
+    <div class="hero-mini-stats">
+      <div><div class="n">28+</div><div class="l">Years</div></div>
+      <div><div class="n">6K</div><div class="l">Visits / year</div></div>
+      <div><div class="n">100+</div><div class="l">Graduates</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PHILOSOPHY STRIP ===== -->
+<div class="philosophy">
+  <div class="philosophy-quote">"Similia similibus curentur — Like cures like. The guiding principle of a comprehensive system of natural medicine."</div>
+  <div class="philosophy-attr">Hahnemann's Organon · Founded 1810</div>
+</div>
+
+<!-- ===== FREE COURSE BAND ===== -->
+<section style="background:var(--green-deep);padding:4rem 2rem;text-align:center;">
+  <div style="font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);">No commitment · Free</div>
+  <h2 style="font-family:'Spectral',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;color:var(--cream);margin:0.6rem auto 1rem;max-width:22ch;">Start with the free first-aid course</h2>
+  <p style="color:rgba(var(--on-deep-rgb),0.7);max-width:55ch;margin:0 auto 2rem;line-height:1.7;">The easiest way to see whether this resonates — and the on-ramp most of our patients and students started with.</p>
+  <a href="resources.html" class="btn-primary btn-primary-lg">Get the free course <span class="btn-arrow">→</span></a>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand-name">Hahnemann Center for Heilkunst</div><div class="footer-brand-sub">&amp; Homeopathy</div><div class="footer-desc">A federally-registered charitable trust established in 1997. Ottawa, Ontario, Canada.</div></div>
+    <div><div class="footer-col-title">Learn</div><ul class="footer-links"><li><a href="heilkunst.html">How Heilkunst works</a></li><li><a href="about.html">About the HCH</a></li><li><a href="blog.html">Articles &amp; blog</a></li><li><a href="resources.html">Free resources</a></li></ul></div>
+    <div><div class="footer-col-title">Get Treatment</div><ul class="footer-links"><li><a href="conditions.html">Conditions we treat</a></li><li><a href="animals.html">Animal Heilkunst</a></li><li><a href="new-patients.html">New patients</a></li></ul></div>
+    <div><div class="footer-col-title">Study &amp; Contact</div><ul class="footer-links"><li><a href="study.html">Study Heilkunst</a></li><li><a href="events.html">News &amp; events</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copyright">© 1997–2026 Hahnemann Center for Heilkunst &amp; Homeopathy. All rights reserved.</div>
+    <div class="footer-copyright">Split-CTA layout · <a href="index.html" style="color:var(--footer-title);">stacked layout</a></div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

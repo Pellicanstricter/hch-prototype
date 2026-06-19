@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Conditions We Treat — Hahnemann Center for Heilkunst & Homeopathy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .page-wrap { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 5rem; }
+  .page-hero { background: var(--green-deep); padding: 9rem 2rem 4rem; }
+  .page-hero-inner { max-width: 1100px; margin: 0 auto; }
+  .breadcrumb { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(var(--on-deep-rgb), 0.5); margin-bottom: 1.25rem; }
+  .breadcrumb a { color: rgba(var(--on-deep-rgb), 0.7); text-decoration: none; }
+  .page-eyebrow { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .page-title { font-family: 'Spectral', serif; font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 500; line-height: 1.1; color: var(--cream); max-width: 18ch; }
+  .page-lead { font-size: 1.1rem; font-weight: 300; line-height: 1.7; color: rgba(var(--on-deep-rgb), 0.7); max-width: 62ch; margin-top: 1.5rem; }
+  .cond-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin: 2.5rem 0; }
+  .cond-chip { background: var(--cream-dark); border: 1px solid rgba(var(--deep-rgb), 0.08); border-radius: 4px; padding: 1rem 1.25rem; font-size: 0.95rem; color: var(--ink); }
+  .feature-cond { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; background: var(--cream-dark); border-radius: 8px; padding: 2.5rem; margin: 3rem 0; align-items: center; }
+  .feature-cond h2 { font-family: 'Spectral', serif; font-size: 2rem; font-weight: 400; color: var(--ink); margin-bottom: 0.75rem; }
+  .feature-cond p { color: var(--text-mid); line-height: 1.7; margin-bottom: 1rem; }
+  .feature-art { background: var(--green-mid); border-radius: 6px; min-height: 220px; display: flex; align-items: center; justify-content: center; }
+  .feature-art img { width: 55%; border-radius: 50%; background: #fff; }
+  .section-h { font-family: 'Spectral', serif; font-size: 2rem; font-weight: 400; color: var(--ink); margin: 3rem 0 1.5rem; }
+  .pract-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .pract-card { background: var(--surface); border: 1px solid rgba(var(--deep-rgb), 0.1); border-radius: 6px; padding: 2rem; }
+  .pract-card h3 { font-family: 'Spectral', serif; font-size: 1.6rem; font-weight: 400; color: var(--ink); }
+  .pract-card .cred { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin: 0.3rem 0 1rem; }
+  .pract-card p { color: var(--text-mid); line-height: 1.65; font-size: 0.92rem; }
+  .next-cta { background: var(--green-deep); border-radius: 8px; padding: 2.5rem; margin-top: 3rem; display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; justify-content: space-between; }
+  .next-cta h2 { font-family: 'Spectral', serif; font-weight: 400; color: var(--cream); margin: 0 0 0.3rem; }
+  .next-cta p { color: rgba(var(--on-deep-rgb), 0.7); margin: 0; max-width: 48ch; }
+  @media (max-width: 800px) { .feature-cond, .pract-grid { grid-template-columns: 1fr; } }
+</style>
+<style id="hch-gate-guard">html.hch-locked body>*:not(#hch-gate){visibility:hidden!important}html.hch-locked{background:#15294d}</style>
+<script>if(sessionStorage.getItem('hch-unlocked')!=='1'){document.documentElement.className+=' hch-locked';}</script>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo" style="text-decoration:none;">
+    <img src="assets/logo-mark.jpg" alt="Hahnemann Center" class="nav-logo-mark">
+    <span class="nav-logo-text"><span class="nav-logo-main">Hahnemann Center</span><span class="nav-logo-sub">Heilkunst &amp; Homeopathy</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="heilkunst.html">Learn</a></li>
+    <li><a href="conditions.html" class="active">Get Treatment</a></li>
+    <li><a href="study.html">Study</a></li>
+    <li><a href="resources.html">Free Resources</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="membership.html" class="nav-cta">Become a Member</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="heilkunst.html">Learn</a><a href="conditions.html">Get Treatment</a><a href="study.html">Study</a><a href="resources.html">Free Resources</a><a href="about.html">About</a><a href="membership.html" class="mobile-cta">Become a Member</a>
+</div>
+
+<header class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Get Treatment</div>
+    <div class="page-eyebrow">The Hahnemann Clinic</div>
+    <h1 class="page-title">Treatment for chronic and complex conditions</h1>
+    <p class="page-lead">We are the international center for the practice of medical Heilkunst — a comprehensive, integrated treatment using safe, non-toxic remedies prescribed according to natural-law principles. Patients come from all over the world; treatment is available in person and by distance.</p>
+  </div>
+</header>
+
+<main class="page-wrap">
+  <h2 class="section-h" style="margin-top:1rem;">Conditions we work with</h2>
+  <p style="color:var(--text-mid);max-width:64ch;line-height:1.7;">We are a general practice and do not specialize in any one area, though we have a particular interest in childhood disorders — especially autism and other learning and behavioral problems — as well as the treatment of animals.</p>
+  <div class="cond-grid">
+    <div class="cond-chip">Asthma</div>
+    <div class="cond-chip">Allergies</div>
+    <div class="cond-chip">Autism &amp; ADHD/ADD/PDD</div>
+    <div class="cond-chip">Skin problems</div>
+    <div class="cond-chip">Diabetes</div>
+    <div class="cond-chip">Chronic Fatigue (CFS)</div>
+    <div class="cond-chip">Fibromyalgia</div>
+    <div class="cond-chip">Back pain</div>
+    <div class="cond-chip">Thyroid disorders</div>
+    <div class="cond-chip">Autoimmune disorders</div>
+    <div class="cond-chip">Digestive problems</div>
+    <div class="cond-chip">Depression &amp; OCD</div>
+  </div>
+
+  <div class="feature-cond">
+    <div>
+      <div class="page-eyebrow" style="color:var(--gold);">Special interest</div>
+      <h2>Heilkunst &amp; autism</h2>
+      <p>We treat autism as a disease <em>condition</em>, not a fixed diagnosis. By working on the inherited weaknesses, traumas, and shocks underneath it — in sequence — many families, in our experience, report meaningful change over time.</p>
+      <a href="condition-autism.html" class="btn-primary">Read the autism approach <span>→</span></a>
+    </div>
+    <div class="feature-art"><img src="assets/logo-mark-transparent.png" alt="" style="filter:brightness(0) invert(1);opacity:0.5;"></div>
+  </div>
+
+  <div class="feature-cond" style="background:var(--surface);border:1px solid rgba(var(--deep-rgb),0.1);">
+    <div>
+      <div class="page-eyebrow" style="color:var(--gold);">Also at the Clinic</div>
+      <h2>Heilkunst for animals</h2>
+      <p>The same principles apply to pets and working animals. We treat acute and chronic conditions, and the behavioral difficulties that often trace back to specific traumas — with a particular interest in horses and companion animals.</p>
+      <a href="animals.html" class="btn-primary">Animal Heilkunst <span>→</span></a>
+    </div>
+    <div class="feature-art" style="background:var(--cream-dark);"><img src="assets/logo-mark-transparent.png" alt="" style="opacity:0.6;"></div>
+  </div>
+
+  <h2 class="section-h">Our practitioners <a href="practitioners.html" style="font-size:0.8rem;font-family:'Mulish',sans-serif;color:var(--gold);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;vertical-align:middle;margin-left:0.75rem;">See full bios →</a></h2>
+  <div class="pract-grid">
+    <div class="pract-card">
+      <h3>CoCo Verspoor</h3>
+      <div class="cred">DHHP, DMH · Doctor of Medical Heilkunst</div>
+      <p>CoCo combines Heilkunst homeopathy, sequential timeline treatment, holistic nutrition, and movement therapy. She focuses on allergies and traumas for women and children, and is a faculty member of the Hahnemann College.</p>
+    </div>
+    <div class="pract-card">
+      <h3>Rudi Verspoor</h3>
+      <div class="cred">DMH · CoRe Bioresonance · SCENAR Therapist</div>
+      <p>Rudi has two decades of clinical experience treating complex and chronic illness, has authored several books, and helped found NUPATH and the International Heilkunst Association.</p>
+    </div>
+  </div>
+
+  <div class="next-cta">
+    <div>
+      <h2>Ready to begin?</h2>
+      <p>Treatment is an ongoing relationship, so patients join as members. It's a considered step — and a deliberate part of how we keep care continuous and high-quality.</p>
+    </div>
+    <a href="membership.html" class="btn-primary btn-primary-lg">Become a member <span class="btn-arrow">→</span></a>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Hahnemann Center for Heilkunst</div>
+      <div class="footer-brand-sub">&amp; Homeopathy</div>
+      <div class="footer-desc">A federally-registered charitable trust established in 1997 for the preservation, generation, and dissemination of knowledge about Heilkunst medicine. Ottawa, Ontario, Canada.</div>
+    </div>
+    <div><div class="footer-col-title">Learn</div><ul class="footer-links"><li><a href="heilkunst.html">How Heilkunst works</a></li><li><a href="about.html">About the HCH</a></li><li><a href="blog.html">Articles &amp; blog</a></li><li><a href="resources.html">Free resources</a></li></ul></div>
+    <div><div class="footer-col-title">Get Treatment</div><ul class="footer-links"><li><a href="conditions.html">Conditions we treat</a></li><li><a href="condition-autism.html">Heilkunst &amp; autism</a></li><li><a href="animals.html">Animal Heilkunst</a></li><li><a href="new-patients.html">New patients</a></li></ul></div>
+    <div><div class="footer-col-title">Study &amp; Contact</div><ul class="footer-links"><li><a href="study.html">Study Heilkunst</a></li><li><a href="mailto:info@homeopathy.com">info@homeopathy.com</a></li><li><a href="tel:6132782425">613-278-2425</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copyright">© 1997–2026 Hahnemann Center for Heilkunst &amp; Homeopathy. All rights reserved.</div>
+    <div class="footer-copyright">Design: Nate's Studio · Built with Claude Code</div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

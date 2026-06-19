@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>How Heilkunst Works — Hahnemann Center for Heilkunst & Homeopathy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  /* page-specific layout helpers shared across content pages */
+  .page-wrap { max-width: 1100px; margin: 0 auto; padding: 9rem 2rem 5rem; }
+  .page-hero { background: var(--green-deep); padding: 9rem 2rem 4rem; }
+  .page-hero-inner { max-width: 1100px; margin: 0 auto; }
+  .breadcrumb { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(var(--on-deep-rgb), 0.5); margin-bottom: 1.25rem; }
+  .breadcrumb a { color: rgba(var(--on-deep-rgb), 0.7); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--gold); }
+  .page-eyebrow { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+  .page-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+  .page-title { font-family: 'Spectral', serif; font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 500; line-height: 1.1; color: var(--cream); max-width: 16ch; }
+  .page-lead { font-size: 1.1rem; font-weight: 300; line-height: 1.7; color: rgba(var(--on-deep-rgb), 0.7); max-width: 60ch; margin-top: 1.5rem; }
+  .prose h2 { font-family: 'Spectral', serif; font-size: 2rem; font-weight: 400; color: var(--ink); margin: 3rem 0 1rem; }
+  .prose h3 { font-family: 'Spectral', serif; font-size: 1.4rem; font-weight: 500; color: var(--ink); margin: 2rem 0 0.6rem; }
+  .prose p { font-size: 1rem; line-height: 1.8; color: var(--text-mid); margin-bottom: 1.2rem; max-width: 68ch; }
+  .prose .pull { font-family: 'Spectral', serif; font-style: italic; font-size: 1.6rem; line-height: 1.45; color: var(--ink); border-left: 2px solid var(--gold); padding-left: 1.5rem; margin: 2.5rem 0; max-width: 60ch; }
+  .three-areas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin: 2.5rem 0; }
+  .area-card { background: var(--cream-dark); border-top: 2px solid var(--gold); border-radius: 4px; padding: 1.75rem; }
+  .area-num { font-family: 'Spectral', serif; font-size: 2rem; color: var(--gold); line-height: 1; }
+  .area-card h3 { margin: 0.5rem 0 0.5rem; }
+  .area-card p { font-size: 0.9rem; line-height: 1.6; max-width: none; margin: 0; }
+  .steps { counter-reset: step; margin: 2rem 0; }
+  .step { display: flex; gap: 1.25rem; padding: 1.25rem 0; border-bottom: 1px solid rgba(var(--deep-rgb), 0.08); }
+  .step::before { counter-increment: step; content: counter(step); flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; background: var(--gold); color: var(--on-accent); display: flex; align-items: center; justify-content: center; font-weight: 500; }
+  .step h3 { margin: 0 0 0.3rem; font-size: 1.1rem; }
+  .step p { margin: 0; font-size: 0.92rem; }
+  .next-cta { background: var(--cream-dark); border-radius: 6px; padding: 2.5rem; margin-top: 4rem; display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; justify-content: space-between; }
+  .next-cta h2 { margin: 0 0 0.3rem; }
+  .next-cta p { margin: 0; }
+  @media (max-width: 800px) { .three-areas { grid-template-columns: 1fr; } }
+</style>
+<style id="hch-gate-guard">html.hch-locked body>*:not(#hch-gate){visibility:hidden!important}html.hch-locked{background:#15294d}</style>
+<script>if(sessionStorage.getItem('hch-unlocked')!=='1'){document.documentElement.className+=' hch-locked';}</script>
+</head>
+<body>
+
+<!-- ===== SHARED NAV (intent-first IA) ===== -->
+<nav>
+  <a href="index.html" class="nav-logo" style="text-decoration:none;">
+    <img src="assets/logo-mark.jpg" alt="Hahnemann Center" class="nav-logo-mark">
+    <span class="nav-logo-text">
+      <span class="nav-logo-main">Hahnemann Center</span>
+      <span class="nav-logo-sub">Heilkunst &amp; Homeopathy</span>
+    </span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="heilkunst.html" class="active">Learn</a></li>
+    <li><a href="conditions.html">Get Treatment</a></li>
+    <li><a href="study.html">Study</a></li>
+    <li><a href="resources.html">Free Resources</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="membership.html" class="nav-cta">Become a Member</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ===== SHARED MOBILE MENU ===== -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="heilkunst.html">Learn</a>
+  <a href="conditions.html">Get Treatment</a>
+  <a href="study.html">Study</a>
+  <a href="resources.html">Free Resources</a>
+  <a href="about.html">About</a>
+  <a href="membership.html" class="mobile-cta">Become a Member</a>
+</div>
+
+<!-- ===== PAGE HERO ===== -->
+<header class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Learn</div>
+    <div class="page-eyebrow">Start Here</div>
+    <h1 class="page-title">How Heilkunst actually works</h1>
+    <p class="page-lead">Most people arrive knowing only the word "homeopathy." Heilkunst is the complete system of medicine Dr. Samuel Hahnemann founded — homeopathy is one part of a much larger whole. Here is the short version, before you decide whether you are here as a patient, a student, or simply curious.</p>
+  </div>
+</header>
+
+<!-- ===== BODY ===== -->
+<main class="page-wrap prose">
+  <p><strong>Heil</strong> = whole, sound, remedial. <strong>Kunst</strong> = art. Heilkunst is "the art of making people whole" — at every level: body, mind, soul, and spirit. It addresses health through three connected areas rather than treating a single symptom in isolation.</p>
+
+  <h2>The three areas of health</h2>
+  <div class="three-areas">
+    <div class="area-card">
+      <div class="area-num">1</div>
+      <h3>Regimen</h3>
+      <p>The realm of lifestyle — diet, exercise, nutrition, supplements, sleep, hydration, relaxation. Here imbalances come from too little or too much of something the body needs to function.</p>
+    </div>
+    <div class="area-card">
+      <div class="area-num">2</div>
+      <h3>Medicine</h3>
+      <p>The realm of disease proper — a deeper impairment of the life force, corrected by a curative remedy. This includes shocks and traumas (physical and emotional) and inherited diseases, the chronic miasms.</p>
+    </div>
+    <div class="area-card">
+      <div class="area-num">3</div>
+      <h3>Therapeutic Education</h3>
+      <p>One of the greatest contributors to ill health is false beliefs about ourselves and the world. Correcting them is part of becoming genuinely well.</p>
+    </div>
+  </div>
+
+  <p class="pull">"Health is freedom from all limitations — physical, mental, emotional, spiritual."</p>
+
+  <h2>What treatment looks like</h2>
+  <p>Treatment is sequential: traumas and shocks are identified on a personal timeline and then resolved in reverse order — from the present back to birth, conception, and inherited predispositions. Each remedy is matched to a particular event. The aim is to remove underlying causes, not to suppress symptoms.</p>
+
+  <div class="steps">
+    <div class="step">
+      <h3>Initial (intake) consultation</h3>
+      <p>We review dietary and exercise habits, water and supplement intake, and any current drugs or herbs.</p>
+    </div>
+    <div class="step">
+      <h3>Main consultation</h3>
+      <p>You describe your complaints; the practitioner reviews your timeline and inherited predispositions and prescribes the first remedies — what we call sequential or homotonic prescribing.</p>
+    </div>
+    <div class="step">
+      <h3>Follow-up consultations</h3>
+      <p>Monthly, or as needed, to assess progress and continue working through the timeline.</p>
+    </div>
+  </div>
+
+  <h2>Homeopathy is one part of a larger system</h2>
+  <p>Homeopathy — "like cures like" — is a genuine and powerful method, but on its own it is only a fragment of what Hahnemann actually developed. The Hahnemann Center teaches his complete medical system, including sequential therapy, the chronic miasms, dynamic regimen, and therapeutic education — a breadth of training we believe is found nowhere else.</p>
+
+  <!-- next-step CTA: route to the two intent paths + free on-ramp -->
+  <div class="next-cta">
+    <div>
+      <h2 style="margin-top:0;">Where do you go from here?</h2>
+      <p style="color:var(--text-mid);">Find treatment for a condition, learn to practice Heilkunst, or start with the free course.</p>
+    </div>
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+      <a href="conditions.html" class="btn-primary">Find treatment</a>
+      <a href="study.html" class="btn-ghost" style="color:var(--ink);border-color:rgba(var(--deep-rgb),0.25);">Study Heilkunst</a>
+    </div>
+  </div>
+</main>
+
+<!-- ===== SHARED FOOTER ===== -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Hahnemann Center for Heilkunst</div>
+      <div class="footer-brand-sub">&amp; Homeopathy</div>
+      <div class="footer-desc">A federally-registered charitable trust established in 1997 for the preservation, generation, and dissemination of knowledge about Heilkunst medicine. Ottawa, Ontario, Canada.</div>
+    </div>
+    <div>
+      <div class="footer-col-title">Learn</div>
+      <ul class="footer-links">
+        <li><a href="heilkunst.html">How Heilkunst works</a></li>
+        <li><a href="about.html">About the HCH</a></li><li><a href="blog.html">Articles &amp; blog</a></li>
+        <li><a href="resources.html">Free resources</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Get Treatment</div>
+      <ul class="footer-links">
+        <li><a href="conditions.html">Conditions we treat</a></li>
+        <li><a href="animals.html">Animal Heilkunst</a></li><li><a href="new-patients.html">New patients</a></li>
+        <li><a href="new-patients.html">Book a consultation</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Study &amp; Contact</div>
+      <ul class="footer-links">
+        <li><a href="study.html">Study Heilkunst</a></li>
+        <li><a href="resources.html">Free first-aid course</a></li>
+        <li><a href="mailto:info@homeopathy.com">info@homeopathy.com</a></li>
+        <li><a href="tel:6132782425">613-278-2425</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copyright">© 1997–2026 Hahnemann Center for Heilkunst &amp; Homeopathy. All rights reserved.</div>
+    <div class="footer-copyright">Design: Nate's Studio · Built with Claude Code</div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

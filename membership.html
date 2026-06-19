@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Become a Member — Hahnemann Center for Heilkunst & Homeopathy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .page-wrap { max-width: 980px; margin: 0 auto; padding: 4rem 2rem 5rem; }
+  .page-hero { background: var(--green-deep); padding: 9rem 2rem 4rem; }
+  .page-hero-inner { max-width: 980px; margin: 0 auto; }
+  .breadcrumb { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(var(--on-deep-rgb), 0.5); margin-bottom: 1.25rem; }
+  .breadcrumb a { color: rgba(var(--on-deep-rgb), 0.7); text-decoration: none; }
+  .page-eyebrow { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .page-title { font-family: 'Spectral', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 500; line-height: 1.12; color: var(--cream); max-width: 18ch; }
+  .page-lead { font-size: 1.1rem; font-weight: 300; line-height: 1.7; color: rgba(var(--on-deep-rgb), 0.72); max-width: 60ch; margin-top: 1.25rem; }
+  .intro { color: var(--text-mid); line-height: 1.85; font-size: 1.05rem; max-width: 66ch; margin: 1rem 0 1rem; }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin: 2rem 0; }
+  .why-card { background: var(--cream-dark); border-radius: 8px; padding: 1.75rem; border-top: 2px solid var(--gold); }
+  .why-card h3 { font-family: 'Spectral', serif; font-size: 1.35rem; font-weight: 500; color: var(--ink); margin-bottom: 0.5rem; }
+  .why-card p { color: var(--text-mid); line-height: 1.65; font-size: 0.93rem; }
+  .section-h { font-family: 'Spectral', serif; font-size: 2rem; font-weight: 400; color: var(--ink); margin: 3rem 0 1.5rem; }
+  .incl { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem 2rem; margin: 1rem 0 2rem; }
+  .incl li { list-style: none; padding-left: 1.5rem; position: relative; color: var(--text-mid); line-height: 1.6; padding-bottom: 0.5rem; }
+  .incl li::before { content: '✓'; position: absolute; left: 0; color: var(--gold); font-weight: 600; }
+  .steps { counter-reset: step; margin: 1rem 0 2rem; }
+  .step { display: flex; gap: 1.25rem; padding: 1.3rem 0; border-bottom: 1px solid rgba(var(--deep-rgb), 0.08); }
+  .step::before { counter-increment: step; content: counter(step); flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: var(--gold); color: var(--on-accent); display: flex; align-items: center; justify-content: center; font-weight: 500; }
+  .step h3 { margin: 0 0 0.3rem; font-size: 1.1rem; color: var(--ink); font-family: 'Spectral', serif; font-weight: 500; }
+  .step p { margin: 0; font-size: 0.95rem; color: var(--text-mid); line-height: 1.7; }
+  /* MyHealthPlan 5-element structure */
+  .plan-intro { color: var(--text-mid); line-height: 1.85; max-width: 66ch; margin-bottom: 1.5rem; }
+  .plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0 2rem; }
+  .plan-el { background: var(--surface); border: 1px solid rgba(var(--deep-rgb), 0.1); border-radius: 8px; padding: 1.6rem; position: relative; }
+  .plan-el .num { font-family: 'Spectral', serif; font-size: 1.6rem; font-weight: 500; color: var(--gold); line-height: 1; margin-bottom: 0.6rem; }
+  .plan-el h3 { font-family: 'Spectral', serif; font-size: 1.25rem; font-weight: 500; color: var(--ink); margin-bottom: 0.4rem; }
+  .plan-el p { font-size: 0.88rem; color: var(--text-mid); line-height: 1.6; }
+  .plan-services { display: flex; flex-wrap: wrap; gap: 0.55rem; margin: 1rem 0 0.5rem; }
+  .plan-services span { font-size: 0.82rem; color: var(--ink); background: var(--cream-dark); border-radius: 999px; padding: 0.4rem 0.9rem; }
+  .gate-note { background: var(--cream-dark); border-left: 3px solid var(--gold); border-radius: 4px; padding: 1.5rem 1.75rem; margin: 2rem 0; color: var(--text-mid); line-height: 1.7; }
+  .gate-note strong { color: var(--ink); }
+  .next-cta { background: var(--green-deep); border-radius: 8px; padding: 2.5rem; margin-top: 3rem; display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; justify-content: space-between; }
+  .next-cta h2 { font-family: 'Spectral', serif; font-weight: 400; color: var(--cream); margin: 0 0 0.3rem; }
+  .next-cta p { color: rgba(var(--on-deep-rgb), 0.7); margin: 0; max-width: 46ch; }
+  @media (max-width: 700px) { .why-grid, .incl { grid-template-columns: 1fr; } }
+</style>
+<style id="hch-gate-guard">html.hch-locked body>*:not(#hch-gate){visibility:hidden!important}html.hch-locked{background:#15294d}</style>
+<script>if(sessionStorage.getItem('hch-unlocked')!=='1'){document.documentElement.className+=' hch-locked';}</script>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo" style="text-decoration:none;">
+    <img src="assets/logo-mark.jpg" alt="Hahnemann Center" class="nav-logo-mark">
+    <span class="nav-logo-text"><span class="nav-logo-main">Hahnemann Center</span><span class="nav-logo-sub">Heilkunst &amp; Homeopathy</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="heilkunst.html">Learn</a></li>
+    <li><a href="conditions.html">Get Treatment</a></li>
+    <li><a href="study.html">Study</a></li>
+    <li><a href="resources.html">Free Resources</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="membership.html" class="nav-cta">Become a Member</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="heilkunst.html">Learn</a><a href="conditions.html">Get Treatment</a><a href="study.html">Study</a><a href="resources.html">Free Resources</a><a href="about.html">About</a><a href="membership.html" class="mobile-cta">Become a Member</a>
+</div>
+
+<header class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Membership</div>
+    <div class="page-eyebrow">The Hahnemann Clinic</div>
+    <h1 class="page-title">Become a member of the Clinic</h1>
+    <p class="page-lead">Heilkunst treatment is a relationship, not a single appointment. Patients join the Clinic as members — which is how we keep care continuous, careful, and genuinely effective.</p>
+  </div>
+</header>
+
+<main class="page-wrap">
+  <p class="intro">Sequential Heilkunst treatment unfolds over months and often years, working back through a lifetime of shocks and traumas in order. That kind of care only works as an ongoing partnership. Membership formalizes that partnership, so that you and your practitioner are both committed to the journey ahead.</p>
+
+  <h2 class="section-h">Why membership</h2>
+  <div class="why-grid">
+    <div class="why-card">
+      <h3>Continuity of care</h3>
+      <p>Treatment is sequential. Your practitioner holds your full timeline and works through it with you, visit after visit — not a one-off consultation.</p>
+    </div>
+    <div class="why-card">
+      <h3>A considered commitment</h3>
+      <p>The membership step ensures both you and your practitioner are invested before treatment begins — a natural continuation of the intake process.</p>
+    </div>
+    <div class="why-card">
+      <h3>Ongoing support</h3>
+      <p>Members reach the On-Call Practitioner between consultations for dosage and remedy questions, and for healing-reaction support.</p>
+    </div>
+    <div class="why-card">
+      <h3>A community of healing</h3>
+      <p>Membership connects you to the wider patient community and the resources of the Center, supporting your health over the long term.</p>
+    </div>
+  </div>
+
+  <h2 class="section-h">Your Health Plan — putting it all together</h2>
+  <p class="plan-intro">Membership gives you a personal Health Plan: a set of elements that work together to address the underlying causes of ill health, turned into a systematic, rational, and integrated plan specific to you.</p>
+  <div class="plan-grid">
+    <div class="plan-el">
+      <div class="num">1</div>
+      <h3>Dietary protocols</h3>
+      <p>A diet matched to your unique biochemistry, life-work style, and typology (blood, glandular, metabolic) — specific advice on the foods that are optimal for you.</p>
+    </div>
+    <div class="plan-el">
+      <div class="num">2</div>
+      <h3>Trauma removal</h3>
+      <p>A specific sequential treatment, built from your timeline, to remove the blockages left by the shocks and traumas in your life.</p>
+    </div>
+    <div class="plan-el">
+      <div class="num">3</div>
+      <h3>Inherited issues</h3>
+      <p>Inherited chronic disease conditions (miasms) identified within a scientific framework and treated systematically.</p>
+    </div>
+    <div class="plan-el">
+      <div class="num">4</div>
+      <h3>Metabolic balancing</h3>
+      <p>Imbalances in your physiological control functions — identified with simple at-home procedures — corrected with a clear protocol.</p>
+    </div>
+    <div class="plan-el">
+      <div class="num">5</div>
+      <h3>Mineral balancing</h3>
+      <p>Guided by an independent lab analysis, we establish your key mineral balance, which then drives the correction of other nutrient imbalances.</p>
+    </div>
+  </div>
+
+  <h2 class="section-h">Services available to members</h2>
+  <div class="plan-services">
+    <span>Heilkunst Homeopathy</span>
+    <span>Sequential Timeline Treatment</span>
+    <span>Dynamic Nutrition &amp; Regimen</span>
+    <span>Bio-resonance Assessment</span>
+    <span>Dynamized Oral ImmunoTherapy (DOIT)</span>
+    <span>Movement Therapy</span>
+    <span>Counselling</span>
+  </div>
+  <p style="font-size:0.9rem;color:var(--text-mid);margin-top:0.75rem;">New to these? Start with <a href="heilkunst.html" style="color:var(--gold);">how Heilkunst works</a>, or read about <a href="core-assessment.html" style="color:var(--gold);">CoRe bio-resonance assessment</a>.</p>
+
+  <h2 class="section-h">What membership includes</h2>
+  <ul class="incl">
+    <li>Initial intake and main consultation with a practitioner</li>
+    <li>Your personal traumatic timeline, built and maintained with you</li>
+    <li>Regularly scheduled follow-up consultations</li>
+    <li>On-Call Practitioner access, Monday–Friday business hours</li>
+    <li><em>The Journey to Health</em> guide after your first appointment</li>
+    <li>Group rates for couples and families treated together</li>
+    <li>Access to member resources and the patient community</li>
+    <li>Treatment in person (Ottawa &amp; Montreal) or by phone, Skype &amp; email worldwide</li>
+  </ul>
+
+  <h2 class="section-h">How to join</h2>
+  <div class="steps">
+    <div class="step"><div><h3>Read the New Patient Information Package</h3><p>The NPIP explains how Heilkunst treatment and membership work. Downloadable or available by mail.</p></div></div>
+    <div class="step"><div><h3>Apply &amp; complete intake</h3><p>Submit your intake forms online. Taking this step thoughtfully helps us give you the best possible start.</p></div></div>
+    <div class="step"><div><h3>Become a member &amp; book</h3><p>Once your application is reviewed, you join as a member and book your initial consultation.</p></div></div>
+    <div class="step"><div><h3>Begin your timeline</h3><p>Your first consultations build your timeline and begin sequential treatment, with follow-ups scheduled as you go.</p></div></div>
+  </div>
+
+  <div class="gate-note">
+    <strong>Not sure yet?</strong> You don't have to commit to understand. Start free with the <a href="resources.html" style="color:var(--gold);">first-aid course</a>, or read <a href="heilkunst.html" style="color:var(--gold);">how Heilkunst works</a> first. Membership is there when you're ready.
+  </div>
+
+  <div class="next-cta">
+    <div>
+      <h2>Ready to join?</h2>
+      <p>Start with the New Patient Information Package — the first step to becoming a member.</p>
+    </div>
+    <a href="new-patients.html" class="btn-primary btn-primary-lg">Request the package <span class="btn-arrow">→</span></a>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand-name">Hahnemann Center for Heilkunst</div><div class="footer-brand-sub">&amp; Homeopathy</div><div class="footer-desc">A federally-registered charitable trust established in 1997. Ottawa, Ontario, Canada.</div></div>
+    <div><div class="footer-col-title">Learn</div><ul class="footer-links"><li><a href="heilkunst.html">How Heilkunst works</a></li><li><a href="about.html">About the HCH</a></li><li><a href="blog.html">Articles &amp; blog</a></li><li><a href="resources.html">Free resources</a></li></ul></div>
+    <div><div class="footer-col-title">Get Treatment</div><ul class="footer-links"><li><a href="conditions.html">Conditions we treat</a></li><li><a href="membership.html">Become a member</a></li><li><a href="animals.html">Animal Heilkunst</a></li><li><a href="new-patients.html">New patients</a></li></ul></div>
+    <div><div class="footer-col-title">Study &amp; Contact</div><ul class="footer-links"><li><a href="study.html">Study Heilkunst</a></li><li><a href="events.html">News &amp; events</a></li><li><a href="contact.html">Contact</a></li><li><a href="tel:6132782425">613-278-2425</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copyright">© 1997–2026 Hahnemann Center for Heilkunst &amp; Homeopathy. All rights reserved.</div>
+    <div class="footer-copyright">Design: Nate's Studio · Built with Claude Code</div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

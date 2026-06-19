@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Case Study: Sam's Case — Hahnemann Center for Heilkunst & Homeopathy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .page-wrap { max-width: 760px; margin: 0 auto; padding: 4rem 2rem 5rem; }
+  .page-hero { background: var(--green-deep); padding: 9rem 2rem 4rem; }
+  .page-hero-inner { max-width: 760px; margin: 0 auto; }
+  .breadcrumb { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(var(--on-deep-rgb), 0.5); margin-bottom: 1.25rem; }
+  .breadcrumb a { color: rgba(var(--on-deep-rgb), 0.7); text-decoration: none; }
+  .page-eyebrow { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .page-title { font-family: 'Spectral', serif; font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 500; line-height: 1.12; color: var(--cream); }
+  .page-lead { font-size: 1.05rem; font-weight: 300; line-height: 1.7; color: rgba(var(--on-deep-rgb), 0.72); margin-top: 1.25rem; }
+  .byline { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(var(--on-deep-rgb), 0.5); margin-top: 1rem; }
+  .prose h2 { font-family: 'Spectral', serif; font-size: 1.7rem; font-weight: 400; color: var(--ink); margin: 2.5rem 0 1rem; }
+  .prose p { font-size: 1.02rem; line-height: 1.85; color: var(--text-mid); margin-bottom: 1.2rem; }
+  .prose ul { margin: 0 0 1.5rem 1.2rem; color: var(--text-mid); line-height: 1.8; }
+  .casebox { background: var(--cream-dark); border-radius: 6px; padding: 1.5rem 1.75rem; margin: 1.5rem 0; }
+  .casebox h3 { font-family: 'Spectral', serif; font-size: 1.2rem; color: var(--ink); margin-bottom: 0.6rem; }
+  .casebox p { margin: 0; font-size: 0.95rem; }
+  .outcome { background: var(--surface); border: 1px solid rgba(var(--deep-rgb),0.12); border-left: 3px solid var(--gold); border-radius: 6px; padding: 1.5rem 1.75rem; margin: 1.5rem 0; }
+  .outcome h3 { font-family: 'Spectral', serif; color: var(--ink); margin-bottom: 0.6rem; }
+  .outcome ul { margin: 0 0 0 1.2rem; }
+  .pull { font-family: 'Spectral', serif; font-style: italic; font-size: 1.5rem; line-height: 1.45; color: var(--ink); border-left: 2px solid var(--gold); padding-left: 1.5rem; margin: 2.5rem 0; }
+  .next-cta { background: var(--green-deep); border-radius: 8px; padding: 2.5rem; margin-top: 3rem; text-align: center; }
+  .next-cta h2 { font-family: 'Spectral', serif; font-weight: 400; color: var(--cream); margin: 0 0 0.5rem; }
+  .next-cta p { color: rgba(var(--on-deep-rgb), 0.7); margin: 0 auto 1.5rem; max-width: 46ch; }
+</style>
+<style id="hch-gate-guard">html.hch-locked body>*:not(#hch-gate){visibility:hidden!important}html.hch-locked{background:#15294d}</style>
+<script>if(sessionStorage.getItem('hch-unlocked')!=='1'){document.documentElement.className+=' hch-locked';}</script>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo" style="text-decoration:none;">
+    <img src="assets/logo-mark.jpg" alt="Hahnemann Center" class="nav-logo-mark">
+    <span class="nav-logo-text"><span class="nav-logo-main">Hahnemann Center</span><span class="nav-logo-sub">Heilkunst &amp; Homeopathy</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="heilkunst.html">Learn</a></li>
+    <li><a href="conditions.html">Get Treatment</a></li>
+    <li><a href="study.html">Study</a></li>
+    <li><a href="resources.html" class="active">Free Resources</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="membership.html" class="nav-cta">Become a Member</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="heilkunst.html">Learn</a><a href="conditions.html">Get Treatment</a><a href="study.html">Study</a><a href="resources.html">Free Resources</a><a href="about.html">About</a><a href="membership.html" class="mobile-cta">Become a Member</a>
+</div>
+
+<header class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; <a href="resources.html">Resources</a> &nbsp;/&nbsp; Case Study</div>
+    <div class="page-eyebrow">Case Study</div>
+    <h1 class="page-title">Sam's case</h1>
+    <p class="page-lead">One family's documented experience of two-year sequential Heilkunst treatment — from severe asthma, chronic reflux, and recurrent infections to symptom-free.</p>
+    <div class="byline">By Patty Smith-Verspoor · Individual results vary</div>
+  </div>
+</header>
+
+<main class="page-wrap prose">
+  <p>"Sam" (born February 1993) was referred by a chiropractor. His chief complaints were recurrent viral infections, chronic gastroesophageal reflux, and severe asthma with stridor.</p>
+
+  <h2>The timeline of causes</h2>
+  <div class="casebox">
+    <h3>Before birth</h3>
+    <p>Mother had mononucleosis and was prescribed Augmentin; military-related stress; ICU nursing.</p>
+  </div>
+  <div class="casebox">
+    <h3>Labour &amp; delivery</h3>
+    <p>Difficult labour, transverse head, epidural, C-section, hematoma, circumcision, and a first Hep B vaccination.</p>
+  </div>
+  <div class="casebox">
+    <h3>Infancy</h3>
+    <p>HIB vaccination at 7 weeks; DPTP at 2 months; MMR at 18 months — followed by the onset of asthma symptoms, then years of hospital visits and medications (Pediapred, Ventolin, Benadryl, Zantac, and more).</p>
+  </div>
+
+  <h2>The sequential approach</h2>
+  <p>Each layer was treated in reverse order, with remedies matched to specific traumas:</p>
+  <ul>
+    <li>Most recent trauma: Arnica, Staphysagria, Opium, Nux vomica</li>
+    <li>Medications around 23 months: Cortisone, Penicillinum, Nux vomica</li>
+    <li>Vaccine layers: MMR, DPTP, Meningiotoxinum (Hib), Hepatitis B — with supporting emotional remedies</li>
+    <li>Miasmic remedies: Psorinum, Tuberculinum, Medorrhinum, Carcinosin, Syphilinum</li>
+    <li>Birth and pre-birth trauma remedies, with emotional support throughout</li>
+  </ul>
+
+  <div class="outcome">
+    <h3>After about two years</h3>
+    <ul>
+      <li>No medications</li>
+      <li>No food or environmental allergies</li>
+      <li>Eating meat, eggs, and new foods freely</li>
+      <li>Normal weight, energy, and sleep</li>
+      <li>Social, friendly, charming</li>
+      <li>No asthma, no reflux, no stridor</li>
+    </ul>
+  </div>
+
+  <p class="pull">"To look at him you would never know his history." — Sam's mother</p>
+
+  <div class="next-cta">
+    <h2>Could sequential treatment help your family?</h2>
+    <p>Every case is different, but the method is the same. Start by understanding how it works, or begin the new-patient process.</p>
+    <a href="membership.html" class="btn-primary btn-primary-lg">Become a member <span class="btn-arrow">→</span></a>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand-name">Hahnemann Center for Heilkunst</div><div class="footer-brand-sub">&amp; Homeopathy</div><div class="footer-desc">A federally-registered charitable trust established in 1997. Ottawa, Ontario, Canada.</div></div>
+    <div><div class="footer-col-title">Learn</div><ul class="footer-links"><li><a href="heilkunst.html">How Heilkunst works</a></li><li><a href="sequential-therapy.html">Sequential therapy</a></li><li><a href="case-study.html">Sam's case</a></li></ul></div>
+    <div><div class="footer-col-title">Get Treatment</div><ul class="footer-links"><li><a href="conditions.html">Conditions we treat</a></li><li><a href="condition-autism.html">Heilkunst &amp; autism</a></li><li><a href="animals.html">Animal Heilkunst</a></li><li><a href="new-patients.html">New patients</a></li></ul></div>
+    <div><div class="footer-col-title">Study &amp; Contact</div><ul class="footer-links"><li><a href="study.html">Study Heilkunst</a></li><li><a href="testimonials.html">Testimonials</a></li><li><a href="events.html">News &amp; events</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copyright">© 1997–2026 Hahnemann Center for Heilkunst &amp; Homeopathy. All rights reserved.</div>
+    <div class="footer-copyright">Design: Nate's Studio · Built with Claude Code</div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

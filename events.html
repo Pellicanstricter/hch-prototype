@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>News & Events — Hahnemann Center for Heilkunst & Homeopathy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .page-wrap { max-width: 920px; margin: 0 auto; padding: 4rem 2rem 5rem; }
+  .page-hero { background: var(--green-deep); padding: 9rem 2rem 4rem; }
+  .page-hero-inner { max-width: 920px; margin: 0 auto; }
+  .breadcrumb { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(var(--on-deep-rgb), 0.5); margin-bottom: 1.25rem; }
+  .breadcrumb a { color: rgba(var(--on-deep-rgb), 0.7); text-decoration: none; }
+  .page-eyebrow { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .page-title { font-family: 'Spectral', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 500; line-height: 1.12; color: var(--cream); }
+  .page-lead { font-size: 1.1rem; font-weight: 300; line-height: 1.7; color: rgba(var(--on-deep-rgb), 0.72); max-width: 60ch; margin-top: 1.25rem; }
+  .section-h { font-family: 'Spectral', serif; font-size: 1.9rem; font-weight: 500; color: var(--ink); margin: 2.5rem 0 1.5rem; }
+  /* schools */
+  .schools { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 1rem; }
+  .school { background: var(--cream-dark); border-radius: 8px; padding: 1.75rem; border-top: 2px solid var(--gold); }
+  .school .season { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+  .school h3 { font-family: 'Spectral', serif; font-size: 1.4rem; font-weight: 500; color: var(--ink); margin: 0.5rem 0 0.4rem; }
+  .school .when { font-size: 0.85rem; color: var(--text-light); margin-bottom: 0.6rem; }
+  .school p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.6; }
+  /* events list */
+  .event { display: flex; gap: 1.5rem; padding: 1.4rem 0; border-bottom: 1px solid rgba(var(--deep-rgb), 0.1); }
+  .event .date { flex-shrink: 0; width: 90px; font-family: 'Spectral', serif; }
+  .event .date .d { font-size: 1.6rem; color: var(--gold); line-height: 1; }
+  .event .date .y { font-size: 0.8rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.1em; }
+  .event h3 { font-family: 'Spectral', serif; font-size: 1.25rem; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+  .event p { font-size: 0.92rem; color: var(--text-mid); line-height: 1.6; }
+  .event .tag { display: inline-block; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--on-accent); background: var(--gold); padding: 0.15rem 0.5rem; border-radius: 999px; margin-bottom: 0.4rem; }
+  .event.past { opacity: 0.72; }
+  .event.past .date .d { color: var(--text-light); }
+  .news-band { background: var(--green-deep); border-radius: 10px; padding: 2.5rem; margin-top: 3rem; text-align: center; }
+  .news-band h2 { font-family: 'Spectral', serif; font-weight: 500; color: var(--cream); margin-bottom: 0.4rem; }
+  .news-band p { color: rgba(var(--on-deep-rgb), 0.7); margin: 0 auto 1.5rem; max-width: 46ch; line-height: 1.6; }
+  .news-form { display: flex; gap: 0.6rem; max-width: 420px; margin: 0 auto; }
+  .news-form input { flex: 1; padding: 0.85rem 1.1rem; border-radius: 4px; border: 1px solid rgba(var(--on-deep-rgb), 0.2); background: rgba(var(--on-deep-rgb), 0.06); color: var(--cream); font-family: 'Mulish', sans-serif; font-size: 0.95rem; }
+  .news-form input::placeholder { color: rgba(var(--on-deep-rgb), 0.45); }
+  @media (max-width: 800px) { .schools { grid-template-columns: 1fr; } .news-form { flex-direction: column; } }
+</style>
+<style id="hch-gate-guard">html.hch-locked body>*:not(#hch-gate){visibility:hidden!important}html.hch-locked{background:#15294d}</style>
+<script>if(sessionStorage.getItem('hch-unlocked')!=='1'){document.documentElement.className+=' hch-locked';}</script>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo" style="text-decoration:none;">
+    <img src="assets/logo-mark.jpg" alt="Hahnemann Center" class="nav-logo-mark">
+    <span class="nav-logo-text"><span class="nav-logo-main">Hahnemann Center</span><span class="nav-logo-sub">Heilkunst &amp; Homeopathy</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="heilkunst.html">Learn</a></li>
+    <li><a href="conditions.html">Get Treatment</a></li>
+    <li><a href="study.html" class="active">Study</a></li>
+    <li><a href="resources.html">Free Resources</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="membership.html" class="nav-cta">Become a Member</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="heilkunst.html">Learn</a><a href="conditions.html">Get Treatment</a><a href="study.html">Study</a><a href="resources.html">Free Resources</a><a href="about.html">About</a><a href="membership.html" class="mobile-cta">Become a Member</a>
+</div>
+
+<header class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; News &amp; Events</div>
+    <div class="page-eyebrow">Community</div>
+    <h1 class="page-title">News &amp; events</h1>
+    <p class="page-lead">Our seasonal schools, conferences, and webcasts bring the community together throughout the year — in person and online. Students, practitioners, and the curious are all welcome.</p>
+  </div>
+</header>
+
+<main class="page-wrap">
+  <h2 class="section-h" style="margin-top:1rem;">Seasonal schools</h2>
+  <div class="schools">
+    <div class="school">
+      <div class="season">Summer</div>
+      <h3>Summer School</h3>
+      <div class="when">Annually · Ottawa</div>
+      <p>Our flagship in-person gathering — teaching, clinical discussion, and community, held each summer at the Center.</p>
+    </div>
+    <div class="school">
+      <div class="season">Winter</div>
+      <h3>Winter School</h3>
+      <div class="when">February · Southern location</div>
+      <p>A warm-weather session for students and practitioners to go deeper, away from the cold.</p>
+    </div>
+    <div class="school">
+      <div class="season">Autumn</div>
+      <h3>Autumn School</h3>
+      <div class="when">Near Victoria, BC</div>
+      <p>Our West Coast gathering, bringing teaching and community to students in the Pacific region.</p>
+    </div>
+  </div>
+
+  <h2 class="section-h">Coming up</h2>
+  <div class="event">
+    <div class="date"><div class="d">TBA</div><div class="y">2026</div></div>
+    <div>
+      <span class="tag">New book</span>
+      <h3>Chronic Disease in Dr. Hahnemann's Medical System</h3>
+      <p>A new book by the HCH Deans on the treatment of chronic disease through Heilkunst. Date to be announced.</p>
+    </div>
+  </div>
+  <div class="event">
+    <div class="date"><div class="d">Reg.</div><div class="y">Open</div></div>
+    <div>
+      <span class="tag">Enrollment</span>
+      <h3>Year-round College registration</h3>
+      <p>The College accepts students throughout the year, with a personal tutor assigned to each. Begin whenever you're ready.</p>
+    </div>
+  </div>
+
+  <h2 class="section-h">From the archive</h2>
+  <div class="event past">
+    <div class="date"><div class="d">Apr</div><div class="y">2018</div></div>
+    <div>
+      <h3>20th Anniversary Conference</h3>
+      <p>The Hahnemann Centre for Heilkunst marked twenty years with a three-day conference of teaching and celebration.</p>
+    </div>
+  </div>
+  <div class="event past">
+    <div class="date"><div class="d">Aug</div><div class="y">2015</div></div>
+    <div>
+      <h3>Summer School 2015</h3>
+      <p>A week of in-person teaching and clinical discussion at the Center in Ottawa.</p>
+    </div>
+  </div>
+  <div class="event past">
+    <div class="date"><div class="d">Jan</div><div class="y">2014</div></div>
+    <div>
+      <h3>Public webcast: Heilkunst &amp; autism</h3>
+      <p>A free public webcast introducing the Heilkunst approach to autism and behavioral disorders.</p>
+    </div>
+  </div>
+
+  <div class="news-band">
+    <h2>Hear about the next event first</h2>
+    <p>Join our list for schools, webcasts, and new courses. No spam — unsubscribe anytime.</p>
+    <form class="news-form" onsubmit="alert('Prototype: this would subscribe you to event announcements.');return false;">
+      <input type="email" placeholder="your@email.com" aria-label="Email address">
+      <button class="btn-primary" type="submit">Subscribe</button>
+    </form>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand-name">Hahnemann Center for Heilkunst</div><div class="footer-brand-sub">&amp; Homeopathy</div><div class="footer-desc">A federally-registered charitable trust established in 1997. Ottawa, Ontario, Canada.</div></div>
+    <div><div class="footer-col-title">Learn</div><ul class="footer-links"><li><a href="heilkunst.html">How Heilkunst works</a></li><li><a href="blog.html">Articles &amp; blog</a></li><li><a href="resources.html">Free resources</a></li></ul></div>
+    <div><div class="footer-col-title">Get Treatment</div><ul class="footer-links"><li><a href="conditions.html">Conditions we treat</a></li><li><a href="animals.html">Animal Heilkunst</a></li><li><a href="new-patients.html">New patients</a></li></ul></div>
+    <div><div class="footer-col-title">Study &amp; Contact</div><ul class="footer-links"><li><a href="study.html">Study Heilkunst</a></li><li><a href="events.html">News &amp; events</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copyright">© 1997–2026 Hahnemann Center for Heilkunst &amp; Homeopathy. All rights reserved.</div>
+    <div class="footer-copyright">Design: Nate's Studio · Built with Claude Code</div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

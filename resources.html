@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Free Resources & Self-Service Learning — Hahnemann Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .page-wrap { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 5rem; }
+  .page-hero { background: var(--green-deep); padding: 9rem 2rem 4rem; }
+  .page-hero-inner { max-width: 1100px; margin: 0 auto; }
+  .breadcrumb { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(var(--on-deep-rgb), 0.5); margin-bottom: 1.25rem; }
+  .breadcrumb a { color: rgba(var(--on-deep-rgb), 0.7); text-decoration: none; }
+  .page-eyebrow { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .page-title { font-family: 'Spectral', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 500; line-height: 1.12; color: var(--cream); max-width: 18ch; }
+  .page-lead { font-size: 1.1rem; font-weight: 300; line-height: 1.7; color: rgba(var(--on-deep-rgb), 0.72); max-width: 60ch; margin-top: 1.25rem; }
+  /* featured free course */
+  .course-feature { display: grid; grid-template-columns: 1.3fr 1fr; gap: 0; border-radius: 10px; overflow: hidden; margin: 2.5rem 0 3rem; border: 1px solid rgba(var(--deep-rgb), 0.1); }
+  .course-copy { background: var(--cream-dark); padding: 2.75rem; }
+  .course-copy .tag { display: inline-block; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--on-accent); background: var(--gold); padding: 0.3rem 0.7rem; border-radius: 999px; font-weight: 600; }
+  .course-copy h2 { font-family: 'Spectral', serif; font-size: 2.1rem; font-weight: 400; color: var(--ink); margin: 1rem 0 0.75rem; }
+  .course-copy p { color: var(--text-mid); line-height: 1.7; margin-bottom: 1.25rem; }
+  .course-copy ul { list-style: none; margin: 0 0 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .course-copy li { font-size: 0.92rem; color: var(--text-mid); padding-left: 1.4rem; position: relative; }
+  .course-copy li::before { content: '✓'; position: absolute; left: 0; color: var(--gold); font-weight: 600; }
+  .course-art { background: var(--green-mid); display: flex; align-items: center; justify-content: center; padding: 2rem; }
+  .course-art img { width: 60%; border-radius: 50%; background: #fff; }
+  .section-h { font-family: 'Spectral', serif; font-size: 1.9rem; font-weight: 400; color: var(--ink); margin: 2.5rem 0 1.5rem; }
+  .res-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .res-card { background: var(--surface); border: 1px solid rgba(var(--deep-rgb), 0.1); border-radius: 6px; padding: 1.75rem; text-decoration: none; display: block; transition: transform 0.2s, border-color 0.2s; }
+  .res-card:hover { transform: translateY(-3px); border-color: var(--gold); }
+  .res-card .tag { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+  .res-card h3 { font-family: 'Spectral', serif; font-size: 1.25rem; font-weight: 500; color: var(--ink); margin: 0.5rem 0; }
+  .res-card p { font-size: 0.88rem; line-height: 1.55; color: var(--text-mid); margin: 0; }
+  .res-card .arrow { color: var(--gold); margin-top: 0.85rem; display: inline-block; font-size: 0.8rem; }
+  .res-card .meta { font-size: 0.78rem; color: var(--text-light); margin-top: 0.4rem; }
+  .res-card.ext h3::after { content: ' ↗'; color: var(--gold); font-size: 0.85rem; }
+  .section-sub { color: var(--text-mid); max-width: 60ch; line-height: 1.7; margin: -0.5rem 0 1.5rem; }
+  /* book list = compact rows */
+  .book-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+  .book-row { display: flex; gap: 1rem; align-items: flex-start; background: var(--cream-dark); border-radius: 6px; padding: 1.1rem 1.25rem; }
+  .book-row .bk { width: 38px; height: 52px; border-radius: 3px; background: var(--green-mid); flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--gold); font-family: 'Spectral', serif; font-size: 1.1rem; }
+  .book-row h4 { font-family: 'Spectral', serif; font-size: 1.05rem; font-weight: 500; color: var(--ink); line-height: 1.25; }
+  .book-row p { font-size: 0.8rem; color: var(--text-mid); margin-top: 0.25rem; }
+  .book-row .badge { display: inline-block; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--on-accent); background: var(--gold); padding: 0.12rem 0.45rem; border-radius: 999px; margin-top: 0.4rem; }
+  @media (max-width: 900px) { .course-feature { grid-template-columns: 1fr; } .res-grid { grid-template-columns: 1fr; } .book-list { grid-template-columns: 1fr; } }
+</style>
+<style id="hch-gate-guard">html.hch-locked body>*:not(#hch-gate){visibility:hidden!important}html.hch-locked{background:#15294d}</style>
+<script>if(sessionStorage.getItem('hch-unlocked')!=='1'){document.documentElement.className+=' hch-locked';}</script>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo" style="text-decoration:none;">
+    <img src="assets/logo-mark.jpg" alt="Hahnemann Center" class="nav-logo-mark">
+    <span class="nav-logo-text"><span class="nav-logo-main">Hahnemann Center</span><span class="nav-logo-sub">Heilkunst &amp; Homeopathy</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="heilkunst.html">Learn</a></li>
+    <li><a href="conditions.html">Get Treatment</a></li>
+    <li><a href="study.html">Study</a></li>
+    <li><a href="resources.html" class="active">Free Resources</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="membership.html" class="nav-cta">Become a Member</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="heilkunst.html">Learn</a><a href="conditions.html">Get Treatment</a><a href="study.html">Study</a><a href="resources.html">Free Resources</a><a href="about.html">About</a><a href="membership.html" class="mobile-cta">Become a Member</a>
+</div>
+
+<header class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Free Resources</div>
+    <div class="page-eyebrow">Self-Service Learning</div>
+    <h1 class="page-title">Learn it yourself — free, at your own pace</h1>
+    <p class="page-lead">Education is how Heilkunst spreads. Everything here is built to answer your questions before you ever book or apply. Start with the free course; go as deep as you like.</p>
+  </div>
+</header>
+
+<main class="page-wrap">
+  <!-- FEATURED FREE COURSE -->
+  <div class="course-feature">
+    <div class="course-copy">
+      <span class="tag">Free Course</span>
+      <h2>Homeopathy at Home, Work &amp; Play</h2>
+      <p>A free, downloadable course for first-aid and basic emergencies — the "stung by a wasp" on-ramp. No commitment, no account required.</p>
+      <ul>
+        <li>What to reach for when someone is stung, bruised, or burned</li>
+        <li>Building a simple home first-aid kit</li>
+        <li>The basic principles behind "like cures like"</li>
+        <li>Pairs with the Truff-aid first-aid reference guide</li>
+      </ul>
+      <a href="lesson.html" class="btn-primary btn-primary-lg">Start the free course <span class="btn-arrow">→</span></a>
+    </div>
+    <div class="course-art"><img src="assets/logo-mark.jpg" alt=""></div>
+  </div>
+
+  <!-- LIBRARY -->
+  <h2 class="section-h">Browse the library</h2>
+  <div class="res-grid">
+    <a href="lesson.html" class="res-card">
+      <span class="tag">Lesson</span>
+      <h3>First aid: bites &amp; stings</h3>
+      <p>A sample lesson from the free course — the remedies to know and when to use them.</p>
+      <span class="arrow">Open lesson →</span>
+    </a>
+    <a href="heilkunst.html" class="res-card">
+      <span class="tag">Explainer</span>
+      <h3>How Heilkunst works</h3>
+      <p>The complete system in plain language — three areas of health and sequential treatment.</p>
+      <span class="arrow">Read →</span>
+    </a>
+    <a href="condition-autism.html" class="res-card">
+      <span class="tag">Case &amp; condition</span>
+      <h3>Heilkunst &amp; autism</h3>
+      <p>How sequential treatment approaches autism — and a two-year recovery case.</p>
+      <span class="arrow">Read →</span>
+    </a>
+    <a href="sequential-therapy.html" class="res-card">
+      <span class="tag">How it works</span>
+      <h3>Sequential therapy</h3>
+      <p>The method at the heart of how we treat chronic illness — resolving traumas in reverse order.</p>
+      <span class="arrow">Read →</span>
+    </a>
+    <a href="timeline-guide.html" class="res-card">
+      <span class="tag">Guide</span>
+      <h3>Building your traumatic timeline</h3>
+      <p>The chronological tool at the heart of sequential treatment — how to build yours.</p>
+      <span class="arrow">Read the guide →</span>
+    </a>
+    <a href="case-study.html" class="res-card">
+      <span class="tag">Case study</span>
+      <h3>Sam's case</h3>
+      <p>A documented two-year sequential treatment — one family's experience, from severe asthma to symptom-free.</p>
+      <span class="arrow">Read the case →</span>
+    </a>
+    <a href="study.html" class="res-card">
+      <span class="tag">Go deeper</span>
+      <h3>Certificate courses</h3>
+      <p>Ready for more? See the certificate and diploma programs at the College.</p>
+      <span class="arrow">See programs →</span>
+    </a>
+  </div>
+
+  <!-- BOOKS -->
+  <h2 class="section-h">Books</h2>
+  <p class="section-sub">Written by the HCH deans, drawn from more than two decades of research and clinical practice. Several are available free or in translation.</p>
+  <div class="book-list">
+    <div class="book-row">
+      <div class="bk">H</div>
+      <div>
+        <h4>Homeopathy at Home</h4>
+        <p>Everything You Need to Get Started with Confidence — Rudi Verspoor</p>
+      </div>
+    </div>
+    <div class="book-row">
+      <div class="bk">A</div>
+      <div>
+        <h4>AUTISM, The Journey Back</h4>
+        <p>Rudi Verspoor's book on the Heilkunst approach to autism. Hebrew edition translated by Sharon Anaise Haimovich, M.D.</p>
+        <span class="badge">Hebrew edition free</span>
+      </div>
+    </div>
+    <div class="book-row">
+      <div class="bk">R</div>
+      <div>
+        <h4>Homeopathy Renewed</h4>
+        <p>A Sequential Approach to the Treatment of Chronic Illness — Verspoor &amp; Patty Smith</p>
+      </div>
+    </div>
+    <div class="book-row">
+      <div class="bk">L</div>
+      <div>
+        <h4>The Dynamic Legacy</h4>
+        <p>Hahnemann from Homeopathy to Heilkunst — Verspoor &amp; Steven R. Decker</p>
+      </div>
+    </div>
+    <div class="book-row">
+      <div class="bk">T</div>
+      <div>
+        <h4>A Time for Healing</h4>
+        <p>Rudi Verspoor</p>
+      </div>
+    </div>
+    <div class="book-row">
+      <div class="bk">M</div>
+      <div>
+        <h4>Homéopathie à la Maison</h4>
+        <p>French Kindle edition, translated by Christèle Rousse</p>
+        <span class="badge">Français · Kindle</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CERTIFICATE COURSES -->
+  <h2 class="section-h">Certificate courses</h2>
+  <p class="section-sub">Short, structured programs for parents, professionals, and the curious — a step beyond the free course, without the full diploma commitment.</p>
+  <div class="res-grid">
+    <a href="study.html" class="res-card">
+      <span class="tag">Certificate</span>
+      <h3>Home &amp; Basic First-Aid Use</h3>
+      <p>For parents, day-care workers, and camp counselors who want confidence with everyday situations.</p>
+      <span class="arrow">Learn more →</span>
+    </a>
+    <a href="study.html" class="res-card">
+      <span class="tag">Certificate</span>
+      <h3>Dynamic Health Counselor</h3>
+      <p>For those integrating dynamic counseling into their practice or profession.</p>
+      <div class="meta">$475/mo × 18 · or $8,500 once</div>
+      <span class="arrow">See details →</span>
+    </a>
+    <a href="study.html" class="res-card">
+      <span class="tag">Certificate</span>
+      <h3>Dynamic Blood Analysis</h3>
+      <p>Mod 42 &amp; Dynamic Blood Certificate Course — a specialized analytical skill.</p>
+      <span class="arrow">See details →</span>
+    </a>
+  </div>
+
+  <!-- MEDIA & DIGITAL -->
+  <h2 class="section-h">Media &amp; digital</h2>
+  <p class="section-sub">Apps, audio, video, and publications — much of it hosted on iTunes U and Moodle, plus the Center's own journal.</p>
+  <div class="res-grid">
+    <a href="https://truff.homeopathy.com/" class="res-card ext" target="_blank" rel="noopener">
+      <span class="tag">App · Free</span>
+      <h3>Truff-aid</h3>
+      <p>Homeopathic first-aid remedy reference, based on Heilkunst healing principles.</p>
+      <span class="arrow">Open Truff-aid →</span>
+    </a>
+    <a href="#" class="res-card ext">
+      <span class="tag">iTunes</span>
+      <h3>Heilkunst &amp; Home Dental Health</h3>
+      <p>A practical audio/video guide to dental health through Heilkunst, available via iTunes.</p>
+      <span class="arrow">View on iTunes →</span>
+    </a>
+    <a href="#" class="res-card ext">
+      <span class="tag">iTunes U</span>
+      <h3>Hahnemann College Digital Content</h3>
+      <p>The College's lectures and study materials, hosted on iTunes University.</p>
+      <span class="arrow">Browse content →</span>
+    </a>
+    <a href="#" class="res-card">
+      <span class="tag">Publication</span>
+      <h3>The Heilkunst Journal</h3>
+      <p>Periodic writing, poetry, and artwork from students, practitioners, and patients.</p>
+      <span class="arrow">Read recent issues →</span>
+    </a>
+    <a href="#" class="res-card">
+      <span class="tag">Video · Free</span>
+      <h3>Heilkunst &amp; Autism — public webcast</h3>
+      <p>An introduction to how sequential Heilkunst treatment approaches autism and behavioral disorders.</p>
+      <span class="arrow">Watch the webcast →</span>
+    </a>
+    <a href="case-study.html" class="res-card">
+      <span class="tag">Reading</span>
+      <h3>Case studies &amp; articles</h3>
+      <p>Full treatment cases and articles — including head pain, trauma, and animal Heilkunst.</p>
+      <span class="arrow">Browse →</span>
+    </a>
+  </div>
+
+  <!-- VIDEO LIBRARY (real titles) -->
+  <h2 class="section-h">Watch &amp; listen</h2>
+  <p class="section-sub">A growing library of talks and short explainers — recorded webcasts, introductions, and practical guides.</p>
+  <div class="res-grid">
+    <a href="#" class="res-card">
+      <span class="tag">Video · Intro</span>
+      <h3>What is Heilkunst? A 10-minute introduction</h3>
+      <p>The complete system in plain language — the three areas of health and where homeopathy fits.</p>
+      <span class="arrow">Watch →</span>
+    </a>
+    <a href="#" class="res-card">
+      <span class="tag">Video · Talk</span>
+      <h3>Sequential therapy explained</h3>
+      <p>How a traumatic timeline becomes a step-by-step treatment plan, worked in reverse.</p>
+      <span class="arrow">Watch →</span>
+    </a>
+    <a href="#" class="res-card">
+      <span class="tag">Video · Talk</span>
+      <h3>Autism: putting the pieces together</h3>
+      <p>Rudi Verspoor on understanding autism as a disease condition with removable causes.</p>
+      <span class="arrow">Watch →</span>
+    </a>
+    <a href="#" class="res-card">
+      <span class="tag">Video · Guide</span>
+      <h3>Building your home remedy kit</h3>
+      <p>A practical walk-through of the first-aid remedies every home should have.</p>
+      <span class="arrow">Watch →</span>
+    </a>
+    <a href="#" class="res-card">
+      <span class="tag">Video · Guide</span>
+      <h3>Heilkunst &amp; home dental health</h3>
+      <p>A practical guide to supporting dental health the Heilkunst way.</p>
+      <span class="arrow">Watch →</span>
+    </a>
+    <a href="#" class="res-card">
+      <span class="tag">Video · Webinar</span>
+      <h3>The chronic miasms — an overview</h3>
+      <p>Inherited disease patterns and how Heilkunst identifies and treats them.</p>
+      <span class="arrow">Watch →</span>
+    </a>
+  </div>
+
+  <!-- ARTICLES / BLOG -->
+  <h2 class="section-h">Articles &amp; blog</h2>
+  <p class="section-sub">Longer-form writing from our practitioners — on miasms, autism, seasonal health, and the principles behind treatment.</p>
+  <div class="res-grid">
+    <a href="blog.html" class="res-card">
+      <span class="tag">Blog</span>
+      <h3>Read the blog</h3>
+      <p>Browse all articles by topic — Heilkunst overview, miasms, autism, seasonal health, and more.</p>
+      <span class="arrow">Open the blog →</span>
+    </a>
+    <a href="article.html" class="res-card">
+      <span class="tag">Article · Miasms</span>
+      <h3>A look at the chronic miasm: Sycosis</h3>
+      <p>The inherited patterns beneath chronic conditions, and why naming them matters.</p>
+      <span class="arrow">Read →</span>
+    </a>
+    <a href="events.html" class="res-card">
+      <span class="tag">Community</span>
+      <h3>News &amp; events</h3>
+      <p>Our Summer, Winter, and Autumn schools, conferences, and public webcasts.</p>
+      <span class="arrow">See what's on →</span>
+    </a>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <div style="background:var(--green-deep);border-radius:10px;padding:2.5rem;margin-top:3rem;text-align:center;">
+    <h2 style="font-family:'Spectral',serif;font-weight:500;color:var(--cream);margin-bottom:0.4rem;">Get new resources in your inbox</h2>
+    <p style="color:rgba(var(--on-deep-rgb),0.7);margin:0 auto 1.5rem;max-width:46ch;line-height:1.6;">Occasional articles, free courses, and event announcements. No spam — unsubscribe anytime.</p>
+    <form style="display:flex;gap:0.6rem;max-width:420px;margin:0 auto;flex-wrap:wrap;" onsubmit="alert('Prototype: this would subscribe you to the newsletter.');return false;">
+      <input type="email" placeholder="your@email.com" aria-label="Email address" style="flex:1;min-width:200px;padding:0.85rem 1.1rem;border-radius:4px;border:1px solid rgba(var(--on-deep-rgb),0.2);background:rgba(var(--on-deep-rgb),0.06);color:var(--cream);font-family:'Mulish',sans-serif;font-size:0.95rem;">
+      <button class="btn-primary" type="submit">Subscribe</button>
+    </form>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand-name">Hahnemann Center for Heilkunst</div><div class="footer-brand-sub">&amp; Homeopathy</div><div class="footer-desc">A federally-registered charitable trust established in 1997. Ottawa, Ontario, Canada.</div></div>
+    <div><div class="footer-col-title">Learn</div><ul class="footer-links"><li><a href="heilkunst.html">How Heilkunst works</a></li><li><a href="about.html">About the HCH</a></li><li><a href="blog.html">Articles &amp; blog</a></li><li><a href="resources.html">Free resources</a></li></ul></div>
+    <div><div class="footer-col-title">Get Treatment</div><ul class="footer-links"><li><a href="conditions.html">Conditions we treat</a></li><li><a href="animals.html">Animal Heilkunst</a></li><li><a href="new-patients.html">New patients</a></li></ul></div>
+    <div><div class="footer-col-title">Study &amp; Contact</div><ul class="footer-links"><li><a href="study.html">Study Heilkunst</a></li><li><a href="mailto:info@homeopathy.com">info@homeopathy.com</a></li><li><a href="tel:6132782425">613-278-2425</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copyright">© 1997–2026 Hahnemann Center for Heilkunst &amp; Homeopathy. All rights reserved.</div>
+    <div class="footer-copyright">Design: Nate's Studio · Built with Claude Code</div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

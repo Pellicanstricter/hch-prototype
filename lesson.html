@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>First Aid: Bites & Stings — Free Course — Hahnemann Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .lesson-layout { max-width: 1100px; margin: 0 auto; padding: 8rem 2rem 5rem; display: grid; grid-template-columns: 260px 1fr; gap: 3rem; align-items: start; }
+  /* sidebar = course outline / progress */
+  .lesson-side { position: sticky; top: 7rem; }
+  .lesson-side .course-name { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .lesson-side .progress-bar { height: 4px; background: rgba(var(--deep-rgb), 0.1); border-radius: 999px; overflow: hidden; margin-bottom: 1.5rem; }
+  .lesson-side .progress-bar span { display: block; height: 100%; width: 33%; background: var(--gold); }
+  .lesson-toc { list-style: none; display: flex; flex-direction: column; gap: 0.2rem; }
+  .lesson-toc a { display: flex; gap: 0.6rem; align-items: center; padding: 0.55rem 0.75rem; border-radius: 5px; text-decoration: none; font-size: 0.88rem; color: var(--text-mid); transition: background 0.15s; }
+  .lesson-toc a:hover { background: var(--cream-dark); }
+  .lesson-toc a.done { color: var(--ink); }
+  .lesson-toc a.current { background: var(--cream-dark); color: var(--ink); font-weight: 500; }
+  .lesson-toc .dot { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid rgba(var(--deep-rgb), 0.25); flex-shrink: 0; font-size: 0.6rem; display: flex; align-items: center; justify-content: center; }
+  .lesson-toc a.done .dot { background: var(--gold); border-color: var(--gold); color: var(--on-accent); }
+  .lesson-toc a.current .dot { border-color: var(--gold); }
+  /* lesson body */
+  .breadcrumb { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-light); margin-bottom: 1rem; }
+  .breadcrumb a { color: var(--text-mid); text-decoration: none; }
+  .lesson-eyebrow { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+  .lesson-title { font-family: 'Spectral', serif; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 300; color: var(--ink); line-height: 1.15; margin: 0.6rem 0 1.5rem; }
+  .lesson-body h2 { font-family: 'Spectral', serif; font-size: 1.6rem; font-weight: 400; color: var(--ink); margin: 2.25rem 0 0.85rem; }
+  .lesson-body p { font-size: 1.02rem; line-height: 1.85; color: var(--text-mid); margin-bottom: 1.2rem; }
+  .remedy { background: var(--cream-dark); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1rem 0; }
+  .remedy h3 { font-family: 'Spectral', serif; font-size: 1.2rem; color: var(--ink); margin-bottom: 0.25rem; }
+  .remedy p { margin: 0; font-size: 0.92rem; }
+  .lesson-nav { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(var(--deep-rgb), 0.1); }
+  .upsell { background: var(--green-deep); border-radius: 8px; padding: 2rem; margin-top: 2.5rem; }
+  .upsell h3 { font-family: 'Spectral', serif; font-weight: 400; color: var(--cream); margin-bottom: 0.4rem; }
+  .upsell p { color: rgba(var(--on-deep-rgb), 0.7); margin-bottom: 1.25rem; font-size: 0.95rem; line-height: 1.65; }
+  @media (max-width: 800px) { .lesson-layout { grid-template-columns: 1fr; } .lesson-side { position: static; } }
+</style>
+<style id="hch-gate-guard">html.hch-locked body>*:not(#hch-gate){visibility:hidden!important}html.hch-locked{background:#15294d}</style>
+<script>if(sessionStorage.getItem('hch-unlocked')!=='1'){document.documentElement.className+=' hch-locked';}</script>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo" style="text-decoration:none;">
+    <img src="assets/logo-mark.jpg" alt="Hahnemann Center" class="nav-logo-mark">
+    <span class="nav-logo-text"><span class="nav-logo-main">Hahnemann Center</span><span class="nav-logo-sub">Heilkunst &amp; Homeopathy</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="heilkunst.html">Learn</a></li>
+    <li><a href="conditions.html">Get Treatment</a></li>
+    <li><a href="study.html">Study</a></li>
+    <li><a href="resources.html" class="active">Free Resources</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="membership.html" class="nav-cta">Become a Member</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="heilkunst.html">Learn</a><a href="conditions.html">Get Treatment</a><a href="study.html">Study</a><a href="resources.html">Free Resources</a><a href="about.html">About</a><a href="membership.html" class="mobile-cta">Become a Member</a>
+</div>
+
+<div class="lesson-layout">
+  <!-- SIDEBAR: course outline + progress (self-service learning) -->
+  <aside class="lesson-side">
+    <div class="course-name">Homeopathy at Home, Work &amp; Play</div>
+    <div class="progress-bar"><span></span></div>
+    <ul class="lesson-toc">
+      <li><a href="#" class="done"><span class="dot">✓</span> What is first aid in Heilkunst?</a></li>
+      <li><a href="#" class="done"><span class="dot">✓</span> Building your home kit</a></li>
+      <li><a href="lesson.html" class="current"><span class="dot"></span> Bites &amp; stings</a></li>
+      <li><a href="#"><span class="dot"></span> Bumps, bruises &amp; falls</a></li>
+      <li><a href="#"><span class="dot"></span> Burns &amp; sunburn</a></li>
+      <li><a href="#"><span class="dot"></span> Colds, coughs &amp; fevers</a></li>
+      <li><a href="#"><span class="dot"></span> Upset stomach &amp; travel</a></li>
+      <li><a href="#"><span class="dot"></span> Shock, fright &amp; emotional first aid</a></li>
+      <li><a href="#"><span class="dot"></span> When to seek a practitioner</a></li>
+    </ul>
+  </aside>
+
+  <!-- LESSON CONTENT -->
+  <article class="lesson-body">
+    <div class="breadcrumb"><a href="resources.html">Free Resources</a> &nbsp;/&nbsp; Free Course &nbsp;/&nbsp; Lesson 3</div>
+    <div class="lesson-eyebrow">Lesson 3 of 9</div>
+    <h1 class="lesson-title">First aid: bites &amp; stings</h1>
+
+    <p>Insect bites and stings are one of the most common reasons people first reach for a homeopathic remedy. This lesson covers the handful of remedies worth knowing — what each is for, and how to tell them apart.</p>
+
+    <div style="background:rgba(var(--gold-rgb),0.1);border:1px solid rgba(var(--gold-rgb),0.35);border-radius:8px;padding:1.1rem 1.4rem;margin:1.5rem 0;font-size:0.92rem;line-height:1.6;color:var(--ink);">
+      <strong>Seek emergency care first when needed.</strong> Signs of a severe allergic reaction — difficulty breathing, swelling of the lips, tongue, or throat, dizziness, or a spreading rash — are a medical emergency. Call emergency services right away. First-aid remedies are for minor, everyday situations, not a substitute for urgent care.
+    </div>
+
+    <h2>The remedies to know</h2>
+    <div class="remedy"><h3>Apis mellifica</h3><p>For stings that are red, swollen, and puffy, with burning, stinging pain that feels better from cold. Think of a bee sting — Apis is made from the honeybee.</p></div>
+    <div class="remedy"><h3>Ledum palustre</h3><p>For puncture wounds and bites where the area feels cold to the touch yet is better for cold applications. A first thought for mosquito and tick bites.</p></div>
+    <div class="remedy"><h3>Hypericum</h3><p>For bites or stings with sharp, shooting, nerve-rich pain — especially on fingertips, toes, or other nerve-dense areas.</p></div>
+
+    <h2>How to choose</h2>
+    <p>Match the picture, not just the label. If swelling and puffiness dominate and cold helps, lean Apis. If the wound is a cold-feeling puncture, lean Ledum. If the pain shoots along a nerve, lean Hypericum. With first-aid situations, observation beats memorization — which is the whole spirit of Heilkunst learning.</p>
+
+    <div class="upsell">
+      <h3>Want to go beyond first aid?</h3>
+      <p>This free course covers acute, everyday situations. Chronic and complex conditions are treated sequentially, by a practitioner. When you're ready, that's where treatment or study begins.</p>
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+        <a href="conditions.html" class="btn-primary">Find treatment</a>
+        <a href="study.html" class="btn-ghost" style="color:var(--cream);border-color:rgba(var(--on-deep-rgb),0.3);">Study Heilkunst</a>
+      </div>
+    </div>
+
+    <div class="lesson-nav">
+      <a href="#" class="btn-ghost" style="color:var(--ink);border-color:rgba(var(--deep-rgb),0.2);">← Previous</a>
+      <a href="#" class="btn-primary">Next lesson →</a>
+    </div>
+  </article>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand-name">Hahnemann Center for Heilkunst</div><div class="footer-brand-sub">&amp; Homeopathy</div><div class="footer-desc">A federally-registered charitable trust established in 1997. Ottawa, Ontario, Canada.</div></div>
+    <div><div class="footer-col-title">Learn</div><ul class="footer-links"><li><a href="heilkunst.html">How Heilkunst works</a></li><li><a href="resources.html">Free resources</a></li></ul></div>
+    <div><div class="footer-col-title">Get Treatment</div><ul class="footer-links"><li><a href="conditions.html">Conditions we treat</a></li><li><a href="animals.html">Animal Heilkunst</a></li><li><a href="new-patients.html">New patients</a></li></ul></div>
+    <div><div class="footer-col-title">Study &amp; Contact</div><ul class="footer-links"><li><a href="study.html">Study Heilkunst</a></li><li><a href="mailto:info@homeopathy.com">info@homeopathy.com</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copyright">© 1997–2026 Hahnemann Center for Heilkunst &amp; Homeopathy. All rights reserved.</div>
+    <div class="footer-copyright">Design: Nate's Studio · Built with Claude Code</div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

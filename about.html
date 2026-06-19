@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>About the HCH — Hahnemann Center for Heilkunst & Homeopathy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .page-wrap { max-width: 820px; margin: 0 auto; padding: 4rem 2rem 5rem; }
+  .page-hero { background: var(--green-deep); padding: 9rem 2rem 4rem; }
+  .page-hero-inner { max-width: 820px; margin: 0 auto; }
+  .breadcrumb { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(var(--on-deep-rgb), 0.5); margin-bottom: 1.25rem; }
+  .breadcrumb a { color: rgba(var(--on-deep-rgb), 0.7); text-decoration: none; }
+  .page-eyebrow { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .page-title { font-family: 'Spectral', serif; font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 500; line-height: 1.12; color: var(--cream); }
+  .page-lead { font-size: 1.1rem; font-weight: 300; line-height: 1.7; color: rgba(var(--on-deep-rgb), 0.72); margin-top: 1.25rem; }
+  .prose h2 { font-family: 'Spectral', serif; font-size: 1.9rem; font-weight: 400; color: var(--ink); margin: 2.5rem 0 1rem; }
+  .prose p { font-size: 1.02rem; line-height: 1.85; color: var(--text-mid); margin-bottom: 1.2rem; }
+  .three-bodies { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin: 2rem 0; }
+  .body-card { background: var(--cream-dark); border-radius: 6px; padding: 1.5rem; }
+  .body-card h3 { font-family: 'Spectral', serif; font-size: 1.25rem; color: var(--ink); margin-bottom: 0.4rem; }
+  .body-card p { font-size: 0.88rem; line-height: 1.6; color: var(--text-mid); margin: 0; }
+  .prose .pull { font-family: 'Spectral', serif; font-style: italic; font-size: 1.5rem; line-height: 1.45; color: var(--ink); border-left: 2px solid var(--gold); padding-left: 1.5rem; margin: 2.5rem 0; }
+  @media (max-width: 700px) { .three-bodies { grid-template-columns: 1fr; } }
+</style>
+<style id="hch-gate-guard">html.hch-locked body>*:not(#hch-gate){visibility:hidden!important}html.hch-locked{background:#15294d}</style>
+<script>if(sessionStorage.getItem('hch-unlocked')!=='1'){document.documentElement.className+=' hch-locked';}</script>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo" style="text-decoration:none;">
+    <img src="assets/logo-mark.jpg" alt="Hahnemann Center" class="nav-logo-mark">
+    <span class="nav-logo-text"><span class="nav-logo-main">Hahnemann Center</span><span class="nav-logo-sub">Heilkunst &amp; Homeopathy</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="heilkunst.html">Learn</a></li>
+    <li><a href="conditions.html">Get Treatment</a></li>
+    <li><a href="study.html">Study</a></li>
+    <li><a href="resources.html">Free Resources</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="membership.html" class="nav-cta">Become a Member</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="heilkunst.html">Learn</a><a href="conditions.html">Get Treatment</a><a href="study.html">Study</a><a href="resources.html">Free Resources</a><a href="about.html">About</a><a href="membership.html" class="mobile-cta">Become a Member</a>
+</div>
+
+<header class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; About</div>
+    <div class="page-eyebrow">Est. 1997 · Ottawa, Canada</div>
+    <h1 class="page-title">About the Hahnemann Center</h1>
+    <p class="page-lead">A federally-registered charitable trust dedicated to the preservation, generation, and dissemination of knowledge about Heilkunst — the complete system of medicine founded by Dr. Samuel Hahnemann.</p>
+  </div>
+</header>
+
+<main class="page-wrap prose">
+  <h2>Three integrated bodies</h2>
+  <div class="three-bodies">
+    <div class="body-card"><h3>The Center</h3><p>The charitable trust that preserves and advances the knowledge and practice of Heilkunst.</p></div>
+    <div class="body-card"><h3>The College</h3><p>Education and training for students, practitioners, and the general public — founded 1997.</p></div>
+    <div class="body-card"><h3>The Clinic</h3><p>The therapeutic arm — vital both for ongoing research and for training practitioners.</p></div>
+  </div>
+
+  <h2>What is Heilkunst?</h2>
+  <p><strong>Heil</strong> = whole, sound, remedial. <strong>Kunst</strong> = art. Heilkunst is the name Dr. Hahnemann gave to the complete system of medicine and health found in his writings — most notably the <em>Organon der Heilkunst</em>. Homeopathy is only one part of this remarkable system.</p>
+  <p>It encompasses nutrition, exercise, and lifestyle; therapies that support natural healing; medicine for first-aid, acute and chronic disease; and spiritual evolution. To be a true physician is to be a Heilkünstler — one who practices the art of making people whole at all levels.</p>
+
+  <p class="pull">"Each and every one of us already contains all the wisdom of the universe within — but we need guidance to bring this inner knowing to conscious knowing." — Rudi Verspoor, Dean</p>
+
+  <h2>Founded on principle</h2>
+  <p>For nearly three decades the HCH has trained students drawing on over 200 years of principle and clinical experience. Heilkunst is grounded in natural law — principled, patient-oriented, and holistic in outlook. Knowledge over information; understanding over memorization.</p>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand-name">Hahnemann Center for Heilkunst</div><div class="footer-brand-sub">&amp; Homeopathy</div><div class="footer-desc">A federally-registered charitable trust established in 1997. Ottawa, Ontario, Canada.</div></div>
+    <div><div class="footer-col-title">Learn</div><ul class="footer-links"><li><a href="heilkunst.html">How Heilkunst works</a></li><li><a href="about.html">About the HCH</a></li><li><a href="blog.html">Articles &amp; blog</a></li><li><a href="resources.html">Free resources</a></li></ul></div>
+    <div><div class="footer-col-title">Get Treatment</div><ul class="footer-links"><li><a href="conditions.html">Conditions we treat</a></li><li><a href="animals.html">Animal Heilkunst</a></li><li><a href="new-patients.html">New patients</a></li></ul></div>
+    <div><div class="footer-col-title">Study &amp; Contact</div><ul class="footer-links"><li><a href="study.html">Study Heilkunst</a></li><li><a href="mailto:info@homeopathy.com">info@homeopathy.com</a></li><li><a href="tel:6132782425">613-278-2425</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copyright">© 1997–2026 Hahnemann Center for Heilkunst &amp; Homeopathy. All rights reserved.</div>
+    <div class="footer-copyright">Design: Nate's Studio · Built with Claude Code</div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>
